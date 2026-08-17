@@ -9,159 +9,135 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/main.css">
-  <style>
-    .settings-nav-tabs {
-      display: flex;
-      gap: var(--space-2);
-      border-bottom: 1px solid var(--color-slate-200);
-      margin-bottom: var(--space-6);
-      overflow-x: auto;
-      padding-bottom: var(--space-2);
-    }
-    .settings-tab-btn {
-      padding: var(--space-2) var(--space-4);
-      border: none;
-      background: transparent;
-      font-size: var(--font-size-sm);
-      font-weight: 600;
-      color: var(--color-slate-600);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .settings-tab-btn:hover {
-      color: var(--color-primary);
-      background: var(--color-primary-light);
-    }
-    .settings-tab-btn.active {
-      color: white;
-      background: var(--color-primary);
-    }
-    .branding-preview-box {
-      width: 80px;
-      height: 80px;
-      border: 2px dashed var(--color-slate-300);
-      border-radius: var(--radius-lg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-slate-50);
-      overflow: hidden;
-    }
-    .branding-preview-box img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .favicon-preview-box {
-      width: 44px;
-      height: 44px;
-      border: 2px dashed var(--color-slate-300);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-slate-50);
-      overflow: hidden;
-    }
-    .favicon-preview-box img {
-      max-width: 32px;
-      max-height: 32px;
-      object-fit: contain;
-    }
-    .settings-section-card {
-      background: white;
-      border: 1px solid var(--color-slate-200);
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      margin-bottom: var(--space-6);
-      box-shadow: var(--shadow-sm);
-    }
-    .settings-grid-2col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-4);
-    }
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-3) 0;
-      border-bottom: 1px solid var(--color-slate-100);
-    }
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 44px;
-      height: 24px;
-    }
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #cbd5e1;
-      transition: .3s;
-      border-radius: 24px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px; width: 18px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .3s;
-      border-radius: 50%;
-    }
-    input:checked + .slider {
-      background-color: var(--color-primary);
-    }
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
-  </style>
 </head>
 <body class="dashboard-layout">
   
-  <!-- ADMIN SIDEBAR -->
   <aside class="dashboard-sidebar">
     <div>
       <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
         <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
         <div>
-          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span>AuraCare</span>
           <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
         </div>
       </a>
 
       <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
-        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
-        <li><a href="/admin/users" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-users-gear"></i> Users Directory</a></li>
-        <li><a href="/admin/roles" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-shield"></i> Roles & Permissions</a></li>
-        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
-        <li><a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
-        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
-        <li><a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
-        <li><a href="/admin/opd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-stethoscope"></i> OPD Queue</a></li>
-        <li><a href="/admin/ipd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-bed-pulse"></i> Inpatient & Wards</a></li>
-        <li><a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-vial-virus"></i> Lab & Pathology</a></li>
-        <li><a href="/admin/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-x-ray"></i> Radiology Imaging</a></li>
-        <li><a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-pills"></i> Pharmacy & Stock</a></li>
-        <li><a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices</a></li>
-        <li><a href="/admin/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-money-bill-wave"></i> Payments Ledger</a></li>
-        <li><a href="/admin/staff" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-id-badge"></i> Hospital Staff</a></li>
-        <li><a href="/admin/reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-line"></i> Reports & Analytics</a></li>
-        <li><a href="/admin/notifications" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-bell"></i> Notifications</a></li>
-        <li><a href="/admin/audit-logs" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-shield-halved"></i> Security Audit Logs</a></li>
-        <li><a href="/admin/settings" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-sliders"></i> System Settings</a></li>
+        
+          <li>
+            <a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-chart-pie"></i> Executive Overview
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/users" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-users-gear"></i> Users Directory
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/roles" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-shield"></i> Roles & Permissions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> Patients Directory
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctors & Faculty
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-building-shield"></i> Clinical Divisions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/opd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> OPD Queue
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/ipd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-bed-pulse"></i> Inpatient & Wards
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab & Pathology
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology Imaging
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-pills"></i> Pharmacy & Stock
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-money-bill-wave"></i> Payments Ledger
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/staff" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-badge"></i> Hospital Staff
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-chart-line"></i> Reports & Analytics
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/notifications" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/audit-logs" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-shield-halved"></i> Security Audit Logs
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/settings" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-sliders"></i> System Settings
+            </a>
+          </li>
+        
       </ul>
     </div>
 
@@ -174,233 +150,35 @@
       </div>
     </div>
   </aside>
+  
 
-  <!-- MAIN VIEWPORT -->
   <div class="dashboard-main">
     <header class="dashboard-topbar-grid">
       <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <h3 style="font-size: var(--font-size-lg); margin: 0;">Hospital Configuration & Global Branding</h3>
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Hospital & System Settings</h3>
       </div>
       <div style="display: flex; align-items: center; gap: var(--space-3);">
         <div class="health-badge" id="admin-health-badge">
           <span class="health-dot online"></span>
-          <span>MySQL Relational Active</span>
+          <span>Live API / MySQL Active</span>
         </div>
         <a href="/" class="btn btn-outline btn-sm">Public Site &rarr;</a>
       </div>
     </header>
 
-    <main class="dashboard-content-grid" style="max-width: 1080px; margin: 0 auto; width: 100%;">
-
-      <!-- TOP ACTION BAR -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); flex-wrap: wrap; gap: var(--space-3);">
-        <div>
-          <h2 style="font-size: var(--font-size-xl); margin: 0; color: var(--color-navy-900);">Global System Settings</h2>
-          <p class="text-muted text-xs" style="margin: 0;">Manage hospital identity, branding, contact info, clinical booking policies, and localization stored in MySQL.</p>
-        </div>
-        <button type="button" class="btn btn-primary" id="btn-save-all-settings">
-          <i class="fa-solid fa-floppy-disk"></i> Save Settings
-        </button>
-      </div>
-
-      <!-- SETTINGS FORM -->
-      <form id="form-hospital-settings">
-        
-        <!-- SECTION 1: BRANDING & HOSPITAL IDENTITY -->
-        <div class="settings-section-card">
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-slate-100); padding-bottom: var(--space-3);">
-            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--color-primary-light); color: var(--color-primary); display: grid; place-items: center; font-size: 1.1rem;">
-              <i class="fa-solid fa-paintbrush"></i>
-            </div>
-            <div>
-              <h4 style="margin: 0; font-size: 1.05rem; color: var(--color-navy-900);">Hospital Branding & Identity</h4>
-              <p class="text-muted text-xs" style="margin: 0;">Controls public website headers, footers, portals, and generated reports.</p>
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-4);">
-            <div>
-              <label class="form-label" for="setting-hospital-name">Hospital / Website Name <span class="text-danger">*</span></label>
-              <input type="text" id="setting-hospital-name" name="hospital_name" class="form-input" placeholder="e.g. AuraCare Medical Center" required>
-              <small class="text-muted text-xs">Dynamically broadcast to all headers, footers, and page titles.</small>
-            </div>
-
-            <div>
-              <label class="form-label" for="setting-hospital-tagline">Hospital Tagline / Motto</label>
-              <input type="text" id="setting-hospital-tagline" name="hospital_tagline" class="form-input" placeholder="e.g. Excellence in Comprehensive Healthcare">
-            </div>
-          </div>
-
-          <!-- LOGO & FAVICON UPLOAD ROW -->
-          <div class="settings-grid-2col" style="background: var(--color-slate-50); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-4);">
-            
-            <!-- Logo Management -->
-            <div>
-              <label class="form-label" style="font-weight: 700;"><i class="fa-solid fa-image"></i> Hospital Logo</label>
-              <div style="display: flex; gap: var(--space-3); align-items: center;">
-                <div class="branding-preview-box" id="logo-preview-box">
-                  <i class="fa-solid fa-hospital fa-2x" style="color: var(--color-slate-400);"></i>
-                </div>
-                <div style="flex: 1;">
-                  <input type="file" id="input-logo-file" accept="image/*" class="form-input" style="padding: 4px; font-size: 0.8rem; margin-bottom: 6px;">
-                  <div style="display: flex; gap: var(--space-2);">
-                    <input type="text" id="setting-logo-url" name="logo_url" class="form-input" placeholder="Or enter Logo Image URL" style="font-size: 0.8rem;">
-                    <button type="button" class="btn btn-outline btn-xs" id="btn-clear-logo" title="Reset to default icon"><i class="fa-solid fa-rotate-left"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Favicon Management -->
-            <div>
-              <label class="form-label" style="font-weight: 700;"><i class="fa-solid fa-globe"></i> Website Favicon</label>
-              <div style="display: flex; gap: var(--space-3); align-items: center;">
-                <div class="favicon-preview-box" id="favicon-preview-box">
-                  <i class="fa-solid fa-icons fa-lg" style="color: var(--color-slate-400);"></i>
-                </div>
-                <div style="flex: 1;">
-                  <input type="file" id="input-favicon-file" accept="image/*,.ico" class="form-input" style="padding: 4px; font-size: 0.8rem; margin-bottom: 6px;">
-                  <div style="display: flex; gap: var(--space-2);">
-                    <input type="text" id="setting-favicon-url" name="favicon_url" class="form-input" placeholder="Or enter Favicon URL" style="font-size: 0.8rem;">
-                    <button type="button" class="btn btn-outline btn-xs" id="btn-clear-favicon" title="Reset to default icon"><i class="fa-solid fa-rotate-left"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div>
-            <label class="form-label" for="setting-footer-copyright">Footer Copyright Text</label>
-            <input type="text" id="setting-footer-copyright" name="footer_copyright" class="form-input" placeholder="e.g. © 2026 AuraCare Medical Center. All rights reserved.">
-          </div>
-        </div>
-
-        <!-- SECTION 2: CONTACT & EMERGENCY COMMUNICATIONS -->
-        <div class="settings-section-card">
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-slate-100); padding-bottom: var(--space-3);">
-            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: #fef2f2; color: var(--color-danger); display: grid; place-items: center; font-size: 1.1rem;">
-              <i class="fa-solid fa-phone-volume"></i>
-            </div>
-            <div>
-              <h4 style="margin: 0; font-size: 1.05rem; color: var(--color-navy-900);">Campus Contacts & Emergency Hotline</h4>
-              <p class="text-muted text-xs" style="margin: 0;">Displayed on public topbar, emergency banners, and appointment confirmation slips.</p>
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-3);">
-            <div>
-              <label class="form-label" for="setting-phone">Concierge Phone <span class="text-danger">*</span></label>
-              <input type="text" id="setting-phone" name="phone" class="form-input" placeholder="+1 (800) 555-CARE" required>
-            </div>
-            <div>
-              <label class="form-label" for="setting-emergency">24/7 Trauma Hotline <span class="text-danger">*</span></label>
-              <input type="text" id="setting-emergency" name="emergency_number" class="form-input" placeholder="+1 (800) 911-AURA" required>
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-3);">
-            <div>
-              <label class="form-label" for="setting-email">Concierge Email <span class="text-danger">*</span></label>
-              <input type="email" id="setting-email" name="email" class="form-input" placeholder="concierge@auracare.org" required>
-            </div>
-            <div>
-              <label class="form-label" for="setting-hours">Operating Hours</label>
-              <input type="text" id="setting-hours" name="opening_hours" class="form-input" placeholder="Mon - Sat: 08:00 AM - 08:00 PM | Emergency 24/7">
-            </div>
-          </div>
-
-          <div>
-            <label class="form-label" for="setting-address">Physical Campus Address</label>
-            <textarea id="setting-address" name="address" class="form-input" rows="2" placeholder="742 Evergreen Healthcare Pavilion, Medical District, NY 10001"></textarea>
-          </div>
-        </div>
-
-        <!-- SECTION 3: CLINICAL APPOINTMENTS & BOOKING POLICIES -->
-        <div class="settings-section-card">
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-slate-100); padding-bottom: var(--space-3);">
-            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: #e0f2fe; color: #0284c7; display: grid; place-items: center; font-size: 1.1rem;">
-              <i class="fa-regular fa-calendar-check"></i>
-            </div>
-            <div>
-              <h4 style="margin: 0; font-size: 1.05rem; color: var(--color-navy-900);">Clinical Appointment & Scheduling Policies</h4>
-              <p class="text-muted text-xs" style="margin: 0;">Controls slot allocation, lead time limits, and public intake.</p>
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-4);">
-            <div>
-              <label class="form-label" for="setting-appt-duration">Default Slot Duration (Minutes)</label>
-              <input type="number" id="setting-appt-duration" name="appointment_duration_minutes" class="form-input" min="5" max="180" value="30">
-            </div>
-            <div>
-              <label class="form-label" for="setting-max-advance-days">Max Advance Booking (Days)</label>
-              <input type="number" id="setting-max-advance-days" name="max_advance_booking_days" class="form-input" min="1" max="365" value="60">
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-3);">
-            <div>
-              <label class="form-label" for="setting-cancellation-lead">Cancellation Cutoff Lead Time (Hours)</label>
-              <input type="number" id="setting-cancellation-lead" name="cancellation_lead_hours" class="form-input" min="0" max="168" value="12">
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--color-slate-50); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg);">
-              <div>
-                <strong style="font-size: 0.9rem;">Allow Online Public Booking</strong>
-                <div class="text-muted text-xs">Enable appointment requests on homepage</div>
-              </div>
-              <label class="toggle-switch">
-                <input type="checkbox" id="setting-allow-online" name="allow_online_booking" checked>
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: LOCALIZATION & FINANCIAL STANDARDS -->
-        <div class="settings-section-card">
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-slate-100); padding-bottom: var(--space-3);">
-            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: #fef3c7; color: #d97706; display: grid; place-items: center; font-size: 1.1rem;">
-              <i class="fa-solid fa-coins"></i>
-            </div>
-            <div>
-              <h4 style="margin: 0; font-size: 1.05rem; color: var(--color-navy-900);">Currency, Prefixes & Localization</h4>
-              <p class="text-muted text-xs" style="margin: 0;">Controls billing display, invoice numbering, and medical IDs.</p>
-            </div>
-          </div>
-
-          <div class="settings-grid-2col" style="margin-bottom: var(--space-3);">
-            <div>
-              <label class="form-label" for="setting-currency-code">Currency Code</label>
-              <input type="text" id="setting-currency-code" name="currency_code" class="form-input" placeholder="USD" value="USD">
-            </div>
-            <div>
-              <label class="form-label" for="setting-currency-symbol">Currency Symbol</label>
-              <input type="text" id="setting-currency-symbol" name="currency_symbol" class="form-input" placeholder="$" value="$">
-            </div>
-          </div>
-
-          <div class="settings-grid-2col">
-            <div>
-              <label class="form-label" for="setting-invoice-prefix">Invoice Number Prefix</label>
-              <input type="text" id="setting-invoice-prefix" name="invoice_prefix" class="form-input" placeholder="INV-2026-" value="INV-2026-">
-            </div>
-            <div>
-              <label class="form-label" for="setting-patient-prefix">Patient ID Prefix</label>
-              <input type="text" id="setting-patient-prefix" name="patient_prefix" class="form-input" placeholder="PAT-2026-" value="PAT-2026-">
-            </div>
-          </div>
-        </div>
-
-        <!-- SAVE BUTTON ROW -->
-        <div style="display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-6); margin-bottom: var(--space-8);">
-          <button type="reset" class="btn btn-outline" id="btn-reset-form"><i class="fa-solid fa-rotate-left"></i> Revert Changes</button>
-          <button type="submit" class="btn btn-primary" id="btn-submit-settings" style="min-width: 180px;">
-            <i class="fa-solid fa-floppy-disk"></i> Save All Settings
-          </button>
-        </div>
-
-      </form>
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="max-width: 600px;">
+  <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;">Clinic Security Configuration</h4></div>
+  <div class="card-body">
+    <div style="display: grid; gap: var(--space-4);">
+      <div><strong>Hospital Name:</strong> AuraCare Medical Center</div>
+      <div><strong>Security Mode:</strong> Production RBAC (JWT + Bcrypt)</div>
+      <div><strong>Database:</strong> MySQL 8.0 (Normalized Relational)</div>
+      <div><strong>Architecture:</strong> True Multi-Page Application (MPA)</div>
+    </div>
+  </div>
+</div>
 
     </main>
   </div>
@@ -410,223 +188,11 @@
   <script src="/js/toast.js"></script>
   <script src="/js/modal.js"></script>
   <script src="/js/auth.js"></script>
-  <script src="/js/settings.js"></script>
   <script src="/js/responsive.js"></script>
-
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // 1. Guard Page for Admin Roles
-      const isAllowed = await Auth.guardPage(['super_admin', 'hospital_admin']);
-      if (!isAllowed) return;
-
-      // 2. Load Existing Settings from API
-      await loadSettingsForm();
-
-      // 3. Bind File Upload Handlers (Logo & Favicon)
-      setupFileUploadHandlers();
-
-      // 4. Bind Form Submission
-      const form = document.getElementById('form-hospital-settings');
-      form.addEventListener('submit', handleSettingsSubmit);
-
-      document.getElementById('btn-save-all-settings').addEventListener('click', () => {
-        form.requestSubmit();
-      });
-
-      document.getElementById('btn-reset-form').addEventListener('click', () => {
-        setTimeout(loadSettingsForm, 50);
-      });
+      await Auth.guardPage(['super_admin', 'hospital_admin']);
     });
-
-    async function loadSettingsForm() {
-      try {
-        const res = await API.get('/settings');
-        if (res.success && res.data) {
-          const s = res.data;
-          
-          document.getElementById('setting-hospital-name').value = s.hospital_name || '';
-          document.getElementById('setting-hospital-tagline').value = s.hospital_tagline || '';
-          document.getElementById('setting-logo-url').value = s.logo_url || '';
-          document.getElementById('setting-favicon-url').value = s.favicon_url || '';
-          document.getElementById('setting-footer-copyright').value = s.footer_copyright || '';
-          
-          document.getElementById('setting-phone').value = s.phone || '';
-          document.getElementById('setting-emergency').value = s.emergency_number || '';
-          document.getElementById('setting-email').value = s.email || '';
-          document.getElementById('setting-hours').value = s.opening_hours || '';
-          document.getElementById('setting-address').value = s.address || '';
-          
-          document.getElementById('setting-appt-duration').value = s.appointment_duration_minutes || 30;
-          document.getElementById('setting-max-advance-days').value = s.max_advance_booking_days || 60;
-          document.getElementById('setting-cancellation-lead').value = s.cancellation_lead_hours || 12;
-          document.getElementById('setting-allow-online').checked = Boolean(s.allow_online_booking);
-
-          document.getElementById('setting-currency-code').value = s.currency_code || 'USD';
-          document.getElementById('setting-currency-symbol').value = s.currency_symbol || '$';
-          document.getElementById('setting-invoice-prefix').value = s.invoice_prefix || 'INV-2026-';
-          document.getElementById('setting-patient-prefix').value = s.patient_prefix || 'PAT-2026-';
-
-          updateLogoPreview(s.logo_url);
-          updateFaviconPreview(s.favicon_url);
-        }
-      } catch (err) {
-        Toast.error(err.message || 'Unable to load hospital settings.');
-      }
-    }
-
-    function setupFileUploadHandlers() {
-      // Logo File Picker
-      const logoFile = document.getElementById('input-logo-file');
-      const logoUrlInput = document.getElementById('setting-logo-url');
-      const clearLogoBtn = document.getElementById('btn-clear-logo');
-
-      logoFile.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (re) => {
-            const dataUrl = re.target.result;
-            logoUrlInput.value = dataUrl;
-            updateLogoPreview(dataUrl);
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-
-      logoUrlInput.addEventListener('input', () => {
-        updateLogoPreview(logoUrlInput.value.trim());
-      });
-
-      clearLogoBtn.addEventListener('click', () => {
-        logoUrlInput.value = '';
-        logoFile.value = '';
-        updateLogoPreview('');
-      });
-
-      // Favicon File Picker
-      const favFile = document.getElementById('input-favicon-file');
-      const favUrlInput = document.getElementById('setting-favicon-url');
-      const clearFavBtn = document.getElementById('btn-clear-favicon');
-
-      favFile.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (re) => {
-            const dataUrl = re.target.result;
-            favUrlInput.value = dataUrl;
-            updateFaviconPreview(dataUrl);
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-
-      favUrlInput.addEventListener('input', () => {
-        updateFaviconPreview(favUrlInput.value.trim());
-      });
-
-      clearFavBtn.addEventListener('click', () => {
-        favUrlInput.value = '';
-        favFile.value = '';
-        updateFaviconPreview('');
-      });
-    }
-
-    function updateLogoPreview(url) {
-      const box = document.getElementById('logo-preview-box');
-      if (url && url.length > 5) {
-        box.innerHTML = `<img src="${url}" alt="Logo Preview">`;
-      } else {
-        box.innerHTML = `<i class="fa-solid fa-hospital fa-2x" style="color: var(--color-slate-400);"></i>`;
-      }
-    }
-
-    function updateFaviconPreview(url) {
-      const box = document.getElementById('favicon-preview-box');
-      if (url && url.length > 5) {
-        box.innerHTML = `<img src="${url}" alt="Favicon Preview">`;
-      } else {
-        box.innerHTML = `<i class="fa-solid fa-icons fa-lg" style="color: var(--color-slate-400);"></i>`;
-      }
-    }
-
-    async function handleSettingsSubmit(e) {
-      e.preventDefault();
-      const submitBtn = document.getElementById('btn-submit-settings');
-      const topSaveBtn = document.getElementById('btn-save-all-settings');
-      const originalText = submitBtn.innerHTML;
-
-      try {
-        submitBtn.disabled = true;
-        topSaveBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Settings...';
-
-        let logoVal = document.getElementById('setting-logo-url').value.trim();
-        let faviconVal = document.getElementById('setting-favicon-url').value.trim();
-
-        // 1. If logo is a base64 Data URL, upload it first to persist file cleanly
-        if (logoVal.startsWith('data:image/')) {
-          const uploadRes = await API.post('/settings/branding-asset', {
-            assetType: 'logo',
-            fileData: logoVal
-          });
-          if (uploadRes.success && uploadRes.data && uploadRes.data.url) {
-            logoVal = uploadRes.data.url;
-            document.getElementById('setting-logo-url').value = logoVal;
-          }
-        }
-
-        // 2. If favicon is a base64 Data URL, upload it first
-        if (faviconVal.startsWith('data:image/')) {
-          const uploadFavRes = await API.post('/settings/branding-asset', {
-            assetType: 'favicon',
-            fileData: faviconVal
-          });
-          if (uploadFavRes.success && uploadFavRes.data && uploadFavRes.data.url) {
-            faviconVal = uploadFavRes.data.url;
-            document.getElementById('setting-favicon-url').value = faviconVal;
-          }
-        }
-
-        const payload = {
-          hospital_name: document.getElementById('setting-hospital-name').value.trim(),
-          hospital_tagline: document.getElementById('setting-hospital-tagline').value.trim(),
-          logo_url: logoVal || null,
-          favicon_url: faviconVal || null,
-          footer_copyright: document.getElementById('setting-footer-copyright').value.trim(),
-          phone: document.getElementById('setting-phone').value.trim(),
-          emergency_number: document.getElementById('setting-emergency').value.trim(),
-          email: document.getElementById('setting-email').value.trim(),
-          opening_hours: document.getElementById('setting-hours').value.trim(),
-          address: document.getElementById('setting-address').value.trim(),
-          appointment_duration_minutes: parseInt(document.getElementById('setting-appt-duration').value, 10),
-          max_advance_booking_days: parseInt(document.getElementById('setting-max-advance-days').value, 10),
-          cancellation_lead_hours: parseInt(document.getElementById('setting-cancellation-lead').value, 10),
-          allow_online_booking: document.getElementById('setting-allow-online').checked ? 1 : 0,
-          currency_code: document.getElementById('setting-currency-code').value.trim(),
-          currency_symbol: document.getElementById('setting-currency-symbol').value.trim(),
-          invoice_prefix: document.getElementById('setting-invoice-prefix').value.trim(),
-          patient_prefix: document.getElementById('setting-patient-prefix').value.trim()
-        };
-
-        const res = await API.put('/settings', payload);
-        if (res.success) {
-          Toast.success('Hospital and branding configuration saved successfully!');
-          // Immediately reload and apply to DOM
-          if (typeof HospitalSettings !== 'undefined') {
-            await HospitalSettings.reload();
-          }
-        } else {
-          Toast.error(res.message || 'Failed to update settings.');
-        }
-      } catch (err) {
-        Toast.error(err.message || 'Error updating settings.');
-      } finally {
-        submitBtn.disabled = false;
-        topSaveBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }
-    }
   </script>
 </body>
 </html>
