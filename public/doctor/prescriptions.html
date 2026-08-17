@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Prescription Management Studio | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Doctor Prescription Management Studio</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="grid-4-col" style="margin-bottom: var(--space-4);">
+  <div class="card" style="padding: var(--space-4); border-left: 4px solid var(--color-primary);">
+    <div class="text-xs text-muted font-bold text-uppercase">Total Prescriptions</div>
+    <div class="text-2xl font-extrabold text-navy" id="rx-stat-total">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-4); border-left: 4px solid #16a34a;">
+    <div class="text-xs text-muted font-bold text-uppercase">Finalized & Dispatched</div>
+    <div class="text-2xl font-extrabold text-success" id="rx-stat-final">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-4); border-left: 4px solid #f59e0b;">
+    <div class="text-xs text-muted font-bold text-uppercase">Draft Prescriptions</div>
+    <div class="text-2xl font-extrabold text-warning" id="rx-stat-draft">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-4); border-left: 4px solid #7c3aed;">
+    <div class="text-xs text-muted font-bold text-uppercase">Active Formularies</div>
+    <div class="text-2xl font-extrabold" style="color: #7c3aed;" id="rx-stat-meds">0</div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom: var(--space-4);">
+  <div class="card-body" style="padding: var(--space-3) var(--space-4);">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto auto; gap: var(--space-3); align-items: center;">
+      <div style="position: relative;">
+        <input type="text" id="rx-search" class="form-input" placeholder="Search Rx #, Patient, Diagnosis..." style="padding-left: 2rem;">
+        <i class="fa-solid fa-magnifying-glass text-muted" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);"></i>
+      </div>
+      <div>
+        <select id="rx-status-filter" class="form-select" onchange="loadPrescriptionList()">
+          <option value="all">All Order Statuses</option>
+          <option value="draft">Drafts (Editable)</option>
+          <option value="finalized">Finalized (Locked)</option>
+          <option value="dispensed">Dispensed (Pharmacy)</option>
+        </select>
+      </div>
+      <div>
+        <select id="rx-patient-filter" class="form-select" onchange="loadPrescriptionList()">
+          <option value="">All Patients</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-sm" onclick="loadPrescriptionList()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+      </div>
+      <div>
+        <button class="btn btn-primary btn-sm" onclick="openNewRxModal()"><i class="fa-solid fa-plus"></i> + New Prescription</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-prescription-bottle-medical text-primary"></i> Master Prescription Orders Archive</h4>
+    <span class="badge badge-success" id="rx-count-badge">0 Prescriptions</span>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Rx Number</th>
+            <th>Date</th>
+            <th>Patient Details</th>
+            <th>Clinical Diagnosis</th>
+            <th>Medications Prescribed</th>
+            <th>Status</th>
+            <th style="text-align: right;">Prescription Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rx-master-tbody">
+          <tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Loading prescriptions...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE / EDIT PRESCRIPTION MODAL (CSS GRID) -->
+<div id="modal-prescription-editor" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+  <div class="card" style="width: 100%; max-width: 850px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-2xl);">
+    <div class="card-header" style="background: var(--color-navy-900); color: white; display: flex; justify-content: space-between; align-items: center;">
+      <h4 style="margin: 0; color: white;" id="rx-editor-title"><i class="fa-solid fa-file-prescription text-primary"></i> New Prescription Order</h4>
+      <button type="button" class="btn btn-outline btn-sm" onclick="closeRxModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+    </div>
+    
+    <div class="card-body" style="overflow-y: auto; padding: var(--space-4); flex: 1;">
+      <input type="hidden" id="edit-rx-id">
+      
+      <div class="grid-2-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+        <div class="form-group">
+          <label class="form-label font-bold">Select Patient *</label>
+          <select id="edit-rx-patient" class="form-select" required onchange="onRxModalPatientChange(this.value)">
+            <option value="">-- Choose Patient --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label font-bold">Prescription Date</label>
+          <input type="date" id="edit-rx-date" class="form-input">
+        </div>
+      </div>
+
+      <!-- ALLERGY ALERT WARNING BANNER -->
+      <div id="modal-rx-allergy-alert" style="display: none; background: #fee2e2; border: 1px solid #f87171; border-radius: var(--radius-md); padding: 8px 12px; font-size: 0.8rem; color: #991b1b; margin-bottom: var(--space-3);">
+        <i class="fa-solid fa-triangle-exclamation"></i> <strong>PATIENT ALLERGY ALERT:</strong> <span id="modal-rx-allergy-text"></span>
+      </div>
+
+      <div class="form-group" style="margin-bottom: var(--space-4);">
+        <label class="form-label font-bold">Clinical Diagnosis / Indication *</label>
+        <input type="text" id="edit-rx-diagnosis" class="form-input" placeholder="e.g. Stage 1 Hypertension, Acute Pharyngitis..." required>
+      </div>
+
+      <!-- DYNAMIC MEDICINE ITEMS (CSS GRID) -->
+      <div style="border-top: 1px solid var(--color-slate-200); padding-top: var(--space-3); margin-bottom: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+          <h5 class="text-xs font-bold text-uppercase" style="margin: 0;"><i class="fa-solid fa-pills text-primary"></i> Prescribed Medicines Formulary</h5>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addModalRxItemRow()"><i class="fa-solid fa-plus"></i> Add Medication</button>
+        </div>
+        <div id="modal-rx-items-container" style="display: flex; flex-direction: column; gap: var(--space-3);">
+          <!-- Dynamic Medicine Rows -->
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: var(--space-3);">
+        <label class="form-label font-bold text-xs">Patient Advice & Dietary Instructions</label>
+        <textarea id="edit-rx-advice" class="form-textarea" rows="2" placeholder="e.g. Avoid high-sodium meals. Drink plenty of water. Take antibiotic course completely."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label font-bold text-xs">Doctor Clinical Notes (Internal)</label>
+        <input type="text" id="edit-rx-doc-notes" class="form-input text-xs" placeholder="Confidential provider notes...">
+      </div>
+
+    </div>
+
+    <div class="card-footer" style="background: var(--color-slate-50); display: flex; justify-content: space-between; align-items: center;">
+      <button type="button" class="btn btn-outline" onclick="closeRxModal()">Cancel</button>
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="button" class="btn btn-outline" id="btn-save-draft" onclick="submitRxModal(false)">
+          <i class="fa-solid fa-pen-to-square"></i> Save as Draft
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-save-finalize" onclick="submitRxModal(true)">
+          <i class="fa-solid fa-lock"></i> Finalize & Lock Rx
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW & PRINT PRESCRIPTION MODAL (CLINICAL LETTERHEAD) -->
+<div id="modal-rx-print-view" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.75); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+  <div class="card" style="width: 100%; max-width: 780px; max-height: 92vh; display: flex; flex-direction: column; box-shadow: var(--shadow-2xl);">
+    <div class="card-header" style="background: var(--color-navy-900); color: white; display: flex; justify-content: space-between; align-items: center;">
+      <h4 style="margin: 0; color: white;"><i class="fa-solid fa-print text-primary"></i> Prescription Order Document</h4>
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="button" class="btn btn-primary btn-sm" onclick="printPrescriptionDoc()"><i class="fa-solid fa-print"></i> Print Rx</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closePrintViewModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+    </div>
+
+    <div class="card-body" id="printable-rx-document" style="overflow-y: auto; padding: 2.5rem; background: white; color: var(--color-slate-900);">
+      
+      <!-- HOSPITAL CLINICAL LETTERHEAD -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #0f766e; padding-bottom: var(--space-3); margin-bottom: var(--space-4);">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-hospital" style="font-size: 1.75rem; color: #0f766e;"></i>
+            <div>
+              <h2 style="margin: 0; font-size: 1.4rem; color: var(--color-navy-900); font-weight: 800;">AURACARE MEDICAL CENTRE</h2>
+              <span style="font-size: 0.75rem; color: var(--color-slate-500); letter-spacing: 0.05em; font-weight: 700;">OUTPATIENT CLINICAL DISPENSARY & PHARMACY</span>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: right; font-size: 0.75rem; color: var(--color-slate-600);">
+          <div>100 Healthcare Boulevard, Suite 400</div>
+          <div>Tel: +1 (800) 555-AURA • contact@auracare.com</div>
+          <div>Rx License: <strong>HOSP-RX-994182</strong></div>
+        </div>
+      </div>
+
+      <!-- ATTENDING DOCTOR & ENCOUNTER META -->
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: var(--space-3); background: #f8fafc; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--color-slate-200);">
+        <div>
+          <div style="font-size: 1rem; font-weight: 800; color: var(--color-navy-900);" id="prx-doc-name">Dr. Name</div>
+          <div class="text-xs text-muted" id="prx-doc-spec">Specialization • Department</div>
+          <div class="text-xs text-muted">License: <code id="prx-doc-lic">DOC-LIC</code></div>
+        </div>
+        <div style="text-align: right;">
+          <div>Prescription Ref: <strong id="prx-number" style="font-size: 1rem; color: #0f766e;">RX-2026-000000</strong></div>
+          <div>Date: <strong id="prx-date">2026-08-15</strong></div>
+          <div>Status: <span class="badge badge-success" id="prx-status-pill">Finalized</span></div>
+        </div>
+      </div>
+
+      <!-- PATIENT DEMOGRAPHICS BAR -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 0.8rem; background: #f1f5f9; padding: 10px; border-radius: var(--radius-md); margin-bottom: var(--space-4); border: 1px solid var(--color-slate-200);">
+        <div><span class="text-muted">Patient:</span> <strong id="prx-pat-name">Arthur Pendleton</strong></div>
+        <div><span class="text-muted">MRN / Code:</span> <code id="prx-pat-code">PAT-0001</code></div>
+        <div><span class="text-muted">Age / Gender:</span> <strong id="prx-pat-demog">52 yrs / Male</strong></div>
+        <div><span class="text-muted">Blood Group:</span> <strong id="prx-pat-blood">O+</strong></div>
+      </div>
+
+      <!-- CRITICAL ALLERGY ALERT IF ANY -->
+      <div id="prx-allergy-bar" style="display: none; background: #fee2e2; border: 1px solid #f87171; border-radius: var(--radius-md); padding: 6px 12px; font-size: 0.75rem; color: #991b1b; margin-bottom: var(--space-3);">
+        <strong>⚠️ ALLERGY WARNING:</strong> <span id="prx-allergy-text"></span>
+      </div>
+
+      <div style="margin-bottom: var(--space-4);">
+        <span class="text-muted text-xs">Clinical Diagnosis:</span>
+        <strong style="display: block; font-size: 0.95rem; color: var(--color-navy-900);" id="prx-diagnosis">Diagnosis text</strong>
+      </div>
+
+      <!-- RX SYMBOL & MEDICINES TABLE -->
+      <div style="margin-bottom: var(--space-4);">
+        <div style="font-family: serif; font-size: 2.2rem; font-weight: bold; color: #0f766e; line-height: 1; margin-bottom: 4px;">&#8478;</div>
+        <table class="table-modern" style="width: 100%; border: 1px solid var(--color-slate-200); font-size: 0.8rem;">
+          <thead style="background: #f8fafc;">
+            <tr>
+              <th>#</th>
+              <th>Medication & Generic Name</th>
+              <th>Dosage</th>
+              <th>Frequency & Route</th>
+              <th>Duration</th>
+              <th>Quantity</th>
+              <th>Instructions</th>
+            </tr>
+          </thead>
+          <tbody id="prx-items-tbody">
+            <!-- Dynamic Printable Lines -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ADVICE & NOTES -->
+      <div id="prx-advice-box" style="background: #fafaf9; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 10px 14px; font-size: 0.8rem; margin-bottom: 3rem;">
+        <strong>Patient Instructions / Advice:</strong>
+        <p id="prx-advice-text" style="margin: 4px 0 0 0; color: var(--color-slate-700);"></p>
+      </div>
+
+      <!-- SIGNATURE BLOCK & STAMP -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 1rem; border-top: 1px dashed var(--color-slate-300);">
+        <div class="text-xs text-muted">
+          <div>This digital prescription is electronically signed and secured.</div>
+          <div>Dispense strictly in accordance with regulatory pharmacy standards.</div>
+        </div>
+        <div style="text-align: center; width: 220px;">
+          <div style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 1.4rem; color: #0f766e; border-bottom: 1px solid var(--color-slate-400); padding-bottom: 4px;" id="prx-sig-doctor">Dr. Doctor Signature</div>
+          <div class="text-xs font-bold" style="margin-top: 4px;">Authorized Attending Physician</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  let allAvailableMeds = [];
+  let allPatientsRegistry = [];
+  let currentEditingRx = null;
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await Auth.guardPage(["doctor","super_admin","hospital_admin"]);
+    loadPrescriptionStats();
+    loadMedsAndPatients();
+    loadPrescriptionList();
+
+    document.getElementById('rx-search').addEventListener('input', () => {
+      loadPrescriptionList();
+    });
+  });
+
+  async function loadPrescriptionStats() {
+    try {
+      const res = await API.get('/prescriptions/stats');
+      if (res.success && res.data) {
+        document.getElementById('rx-stat-total').textContent = res.data.total || 0;
+        document.getElementById('rx-stat-final').textContent = res.data.finalized_count || 0;
+        document.getElementById('rx-stat-draft').textContent = res.data.draft_count || 0;
+        document.getElementById('rx-stat-meds').textContent = res.data.active_medicines || 0;
+      }
+    } catch (_) {}
+  }
+
+  async function loadMedsAndPatients() {
+    try {
+      const [medRes, patRes] = await Promise.all([
+        API.get('/prescriptions/medicines'),
+        API.get('/patients', { limit: 100 })
+      ]);
+
+      if (medRes.success && medRes.data) allAvailableMeds = medRes.data;
+
+      if (patRes.success && patRes.data) {
+        allPatientsRegistry = patRes.data;
+        const filterSelect = document.getElementById('rx-patient-filter');
+        const modalSelect = document.getElementById('edit-rx-patient');
+        allPatientsRegistry.forEach(p => {
+          filterSelect.innerHTML += `<option value="${p.id}">${p.first_name} ${p.last_name} (${p.patient_code})</option>`;
+          modalSelect.innerHTML += `<option value="${p.id}">${p.first_name} ${p.last_name} (${p.patient_code}) - ${p.phone}</option>`;
+        });
+      }
+    } catch (_) {}
+  }
+
+  async function loadPrescriptionList() {
+    const tbody = document.getElementById('rx-master-tbody');
+    try {
+      const params = {
+        search: document.getElementById('rx-search').value.trim() || undefined,
+        status: document.getElementById('rx-status-filter').value,
+        patient_id: document.getElementById('rx-patient-filter').value || undefined,
+        limit: 50
+      };
+
+      const res = await API.get('/prescriptions', params);
+      if (res.success && res.data) {
+        document.getElementById('rx-count-badge').textContent = res.data.length + ' Prescriptions';
+
+        if (res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);">No prescription orders matching filter criteria.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        res.data.forEach(po => {
+          const tr = document.createElement('tr');
+          const isDraft = po.status === 'draft';
+
+          tr.innerHTML = `
+            <td><code class="font-bold">${po.prescription_number}</code></td>
+            <td><strong>${po.prescription_date}</strong></td>
+            <td>
+              <strong>${po.patient_name}</strong><br>
+              <span class="text-xs text-muted"><code>${po.patient_code}</code> • ${po.patient_gender}</span>
+            </td>
+            <td><strong class="text-primary">${po.diagnosis || 'Clinical Prescription'}</strong></td>
+            <td><span class="badge badge-light">${po.items_count} Medication(s)</span></td>
+            <td><span class="badge status-badge-${po.status}">${po.status.toUpperCase()}</span></td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn btn-primary btn-sm" onclick="openPrintViewModal(${po.id})" title="View & Print"><i class="fa-solid fa-print"></i> View / Print</button>
+              ${isDraft ? `
+                <button class="btn btn-outline btn-sm" onclick="editPrescriptionModal(${po.id})" title="Edit Draft"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-success btn-sm" onclick="finalizePrescriptionOrder(${po.id})" title="Finalize & Lock"><i class="fa-solid fa-lock"></i></button>
+              ` : ''}
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger" style="padding: var(--space-6);">Error: ${err.message}</td></tr>`;
+    }
+  }
+
+  function openNewRxModal() {
+    currentEditingRx = null;
+    document.getElementById('edit-rx-id').value = '';
+    document.getElementById('rx-editor-title').innerHTML = '<i class="fa-solid fa-file-prescription text-primary"></i> New Prescription Order';
+    document.getElementById('edit-rx-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('edit-rx-patient').value = '';
+    document.getElementById('edit-rx-diagnosis').value = '';
+    document.getElementById('edit-rx-advice').value = '';
+    document.getElementById('edit-rx-doc-notes').value = '';
+    document.getElementById('modal-rx-allergy-alert').style.display = 'none';
+    document.getElementById('modal-rx-items-container').innerHTML = '';
+    addModalRxItemRow();
+    document.getElementById('modal-prescription-editor').style.display = 'flex';
+  }
+
+  function closeRxModal() {
+    document.getElementById('modal-prescription-editor').style.display = 'none';
+  }
+
+  function onRxModalPatientChange(patId) {
+    if (!patId) {
+      document.getElementById('modal-rx-allergy-alert').style.display = 'none';
+      return;
+    }
+    const pat = allPatientsRegistry.find(p => p.id == patId);
+    if (pat && pat.allergies && pat.allergies.trim().length > 0 && !pat.allergies.toLowerCase().includes('nkda')) {
+      document.getElementById('modal-rx-allergy-text').textContent = pat.allergies;
+      document.getElementById('modal-rx-allergy-alert').style.display = 'block';
+    } else {
+      document.getElementById('modal-rx-allergy-alert').style.display = 'none';
+    }
+  }
+
+  function addModalRxItemRow(prefill = {}) {
+    const container = document.getElementById('modal-rx-items-container');
+    const row = document.createElement('div');
+    row.className = 'rx-modal-item-row';
+    row.style.cssText = 'background: #f8fafc; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 10px; display: flex; flex-direction: column; gap: 6px;';
+
+    let medOptions = '<option value="">-- Choose Medicine from Formulary or Enter Below --</option>';
+    allAvailableMeds.forEach(m => {
+      medOptions += `<option value="${m.id}" data-name="${m.name}" data-generic="${m.generic_name}" data-strength="${m.strength}">${m.name} (${m.generic_name} - ${m.strength})</option>`;
+    });
+
+    row.innerHTML = `
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 6px; align-items: center;">
+        <select class="form-select text-xs rx-med-select" onchange="onMedSelectChange(this)">
+          ${medOptions}
+        </select>
+        <input type="text" class="form-input text-xs rx-custom-name" placeholder="Medicine Name *" value="${prefill.medicine_name || ''}" required>
+        <input type="text" class="form-input text-xs rx-generic" placeholder="Generic Name" value="${prefill.generic_name || ''}">
+        <input type="text" class="form-input text-xs rx-dosage" placeholder="Dosage (500mg) *" value="${prefill.dosage || ''}" required>
+        <button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest('.rx-modal-item-row').remove()" style="padding: 4px 8px;">&times;</button>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 2fr; gap: 6px; align-items: center;">
+        <select class="form-select text-xs rx-freq">
+          <option value="Once daily (OD)">Once daily (OD)</option>
+          <option value="Twice daily (BD)">Twice daily (BD)</option>
+          <option value="Thrice daily (TDS)">Thrice daily (TDS)</option>
+          <option value="Four times daily (QDS)">Four times daily (QDS)</option>
+          <option value="Every 8 hours">Every 8 hours</option>
+          <option value="As needed (PRN)">As needed (PRN)</option>
+          <option value="At bedtime">At bedtime</option>
+        </select>
+        <select class="form-select text-xs rx-route">
+          <option value="Oral">Oral</option>
+          <option value="Intravenous">Intravenous</option>
+          <option value="Intramuscular">Intramuscular</option>
+          <option value="Inhalation">Inhalation</option>
+          <option value="Topical">Topical</option>
+          <option value="Sublingual">Sublingual</option>
+          <option value="Ophthalmic">Ophthalmic</option>
+          <option value="Otic">Otic</option>
+        </select>
+        <input type="text" class="form-input text-xs rx-dur" placeholder="Duration (7 days) *" value="${prefill.duration || '7 days'}" required>
+        <input type="text" class="form-input text-xs rx-qty" placeholder="Quantity (14 Tabs)" value="${prefill.quantity || ''}">
+        <input type="text" class="form-input text-xs rx-inst" placeholder="Instructions (after meals)" value="${prefill.instructions || ''}">
+      </div>
+    `;
+
+    container.appendChild(row);
+    if (prefill.medicine_id) {
+      row.querySelector('.rx-med-select').value = prefill.medicine_id;
+    }
+    if (prefill.frequency) {
+      row.querySelector('.rx-freq').value = prefill.frequency;
+    }
+    if (prefill.route) {
+      row.querySelector('.rx-route').value = prefill.route;
+    }
+  }
+
+  function onMedSelectChange(selectElem) {
+    const row = selectElem.closest('.rx-modal-item-row');
+    const opt = selectElem.selectedOptions[0];
+    if (opt && opt.value) {
+      row.querySelector('.rx-custom-name').value = opt.getAttribute('data-name');
+      row.querySelector('.rx-generic').value = opt.getAttribute('data-generic');
+      row.querySelector('.rx-dosage').value = opt.getAttribute('data-strength') || '';
+    }
+  }
+
+  async function editPrescriptionModal(id) {
+    try {
+      const res = await API.get('/prescriptions/' + id);
+      if (res.success && res.data) {
+        const po = res.data;
+        currentEditingRx = po;
+
+        document.getElementById('edit-rx-id').value = po.id;
+        document.getElementById('rx-editor-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-primary"></i> Edit Draft Prescription (${po.prescription_number})`;
+        document.getElementById('edit-rx-date').value = po.prescription_date;
+        document.getElementById('edit-rx-patient').value = po.patient_id;
+        onRxModalPatientChange(po.patient_id);
+        document.getElementById('edit-rx-diagnosis').value = po.diagnosis || '';
+        document.getElementById('edit-rx-advice').value = po.patient_advice || '';
+        document.getElementById('edit-rx-doc-notes').value = po.doctor_notes || '';
+
+        const container = document.getElementById('modal-rx-items-container');
+        container.innerHTML = '';
+        if (po.items && po.items.length > 0) {
+          po.items.forEach(it => addModalRxItemRow(it));
+        } else {
+          addModalRxItemRow();
+        }
+
+        document.getElementById('modal-prescription-editor').style.display = 'flex';
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Failed to load prescription.');
+    }
+  }
+
+  async function submitRxModal(finalize = false) {
+    const patId = document.getElementById('edit-rx-patient').value;
+    const diagnosis = document.getElementById('edit-rx-diagnosis').value.trim();
+
+    if (!patId || !diagnosis) {
+      Toast.warning('Please select patient and specify clinical diagnosis.');
+      return;
+    }
+
+    const rows = document.querySelectorAll('.rx-modal-item-row');
+    const items = [];
+    rows.forEach(r => {
+      const medId = r.querySelector('.rx-med-select').value;
+      const medName = r.querySelector('.rx-custom-name').value.trim();
+      const generic = r.querySelector('.rx-generic').value.trim();
+      const dosage = r.querySelector('.rx-dosage').value.trim();
+      const freq = r.querySelector('.rx-freq').value;
+      const route = r.querySelector('.rx-route').value;
+      const dur = r.querySelector('.rx-dur').value.trim();
+      const qty = r.querySelector('.rx-qty').value.trim();
+      const inst = r.querySelector('.rx-inst').value.trim();
+
+      if (medName && dosage && dur) {
+        items.push({
+          medicine_id: medId ? parseInt(medId, 10) : undefined,
+          medicine_name: medName,
+          generic_name: generic || undefined,
+          dosage,
+          frequency: freq,
+          route,
+          duration: dur,
+          quantity: qty || undefined,
+          instructions: inst || undefined
+        });
+      }
+    });
+
+    if (items.length === 0) {
+      Toast.warning('Please add at least one valid medication item with dosage and duration.');
+      return;
+    }
+
+    const payload = {
+      patient_id: parseInt(patId, 10),
+      prescription_date: document.getElementById('edit-rx-date').value || undefined,
+      diagnosis,
+      patient_advice: document.getElementById('edit-rx-advice').value.trim() || undefined,
+      doctor_notes: document.getElementById('edit-rx-doc-notes').value.trim() || undefined,
+      status: finalize ? 'finalized' : 'draft',
+      items
+    };
+
+    const editId = document.getElementById('edit-rx-id').value;
+
+    try {
+      let res = null;
+      if (editId) {
+        res = await API.put('/prescriptions/' + editId, payload);
+      } else {
+        res = await API.post('/prescriptions', payload);
+      }
+
+      if (res.success) {
+        Toast.success(res.message);
+        closeRxModal();
+        loadPrescriptionStats();
+        loadPrescriptionList();
+      } else {
+        Toast.error(res.message || 'Prescription save failed.');
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Server error.');
+    }
+  }
+
+  async function finalizePrescriptionOrder(id) {
+    if (!confirm('Are you sure you want to finalize this prescription? Once finalized, the order is locked and dispatched to the pharmacy.')) return;
+
+    try {
+      const res = await API.patch('/prescriptions/' + id + '/finalize');
+      if (res.success) {
+        Toast.success(res.message);
+        loadPrescriptionStats();
+        loadPrescriptionList();
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Failed to finalize prescription.');
+    }
+  }
+
+  async function openPrintViewModal(id) {
+    try {
+      const res = await API.get('/prescriptions/' + id);
+      if (res.success && res.data) {
+        const po = res.data;
+        document.getElementById('prx-doc-name').textContent = 'Dr. ' + po.doctor_name;
+        document.getElementById('prx-doc-spec').textContent = (po.doctor_specialization || 'Clinical Specialist') + ' • ' + (po.department_name || 'Hospital Department');
+        document.getElementById('prx-doc-lic').textContent = po.doctor_license || 'LIC-REG-2026';
+        document.getElementById('prx-sig-doctor').textContent = 'Dr. ' + po.doctor_name;
+
+        document.getElementById('prx-number').textContent = po.prescription_number;
+        document.getElementById('prx-date').textContent = po.prescription_date;
+        document.getElementById('prx-status-pill').textContent = po.status.toUpperCase();
+
+        document.getElementById('prx-pat-name').textContent = po.patient_name;
+        document.getElementById('prx-pat-code').textContent = po.patient_code;
+        document.getElementById('prx-pat-demog').textContent = (po.patient_age ? po.patient_age + ' yrs' : 'Age N/A') + ' / ' + po.patient_gender;
+        document.getElementById('prx-pat-blood').textContent = po.patient_blood_group || 'Unknown';
+
+        const allergyBar = document.getElementById('prx-allergy-bar');
+        if (po.patient_allergies && po.patient_allergies.trim().length > 0 && !po.patient_allergies.toLowerCase().includes('nkda')) {
+          document.getElementById('prx-allergy-text').textContent = po.patient_allergies;
+          allergyBar.style.display = 'block';
+        } else {
+          allergyBar.style.display = 'none';
+        }
+
+        document.getElementById('prx-diagnosis').textContent = po.diagnosis || 'Clinical Outpatient Encounter';
+        document.getElementById('prx-advice-text').textContent = po.patient_advice || 'Take prescribed medications strictly according to directions. Complete full course.';
+
+        const tbody = document.getElementById('prx-items-tbody');
+        tbody.innerHTML = '';
+        if (po.items && po.items.length > 0) {
+          po.items.forEach((it, idx) => {
+            tbody.innerHTML += `
+              <tr>
+                <td><strong>${idx + 1}</strong></td>
+                <td>
+                  <strong>${it.medicine_name}</strong>
+                  ${it.generic_name ? `<div class="text-xs text-muted">${it.generic_name}</div>` : ''}
+                </td>
+                <td><strong>${it.dosage}</strong></td>
+                <td>${it.frequency} (${it.route || 'Oral'})</td>
+                <td>${it.duration}</td>
+                <td>${it.quantity || '—'}</td>
+                <td class="text-xs">${it.instructions || 'Standard dosing'}</td>
+              </tr>
+            `;
+          });
+        }
+
+        document.getElementById('modal-rx-print-view').style.display = 'flex';
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Failed to load printable prescription.');
+    }
+  }
+
+  function closePrintViewModal() {
+    document.getElementById('modal-rx-print-view').style.display = 'none';
+  }
+
+  function printPrescriptionDoc() {
+    const printContents = document.getElementById('printable-rx-document').innerHTML;
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Prescription - AuraCare Medical Centre</title>
+          <link rel="stylesheet" href="/css/main.css">
+          <style>
+            body { background: white; color: black; padding: 20px; font-family: Outfit, sans-serif; }
+            @media print {
+              body { padding: 0; }
+              @page { margin: 15mm; }
+            }
+          </style>
+        </head>
+        <body onload="window.print(); window.close();">
+          ${printContents}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

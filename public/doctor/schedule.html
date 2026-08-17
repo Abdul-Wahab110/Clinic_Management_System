@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Consultation Timetable | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Weekly Consultation Timetable</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="margin-bottom: var(--space-5);">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-calendar-days text-primary"></i> My Weekly Consultation Timetable</h4>
+    <span class="badge badge-success">Live OPD Roster</span>
+  </div>
+  <div class="card-body">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-3);" id="doc-my-schedules-grid">
+      <div class="text-center text-muted" style="padding: 2rem; grid-column: 1 / -1;">Loading weekly duty schedule...</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-split-40-60" style="gap: var(--space-5);">
+  <div class="card">
+    <div class="card-header">
+      <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-plane-departure text-primary"></i> Request Leave / Block Date</h4>
+    </div>
+    <div class="card-body">
+      <form id="doctor-my-leave-form">
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label">Start Date *</label>
+          <input type="date" id="my-leave-start" class="form-input" required>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label">End Date *</label>
+          <input type="date" id="my-leave-end" class="form-input" required>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label">Leave Category</label>
+          <select id="my-leave-type" class="form-select">
+            <option value="annual">Annual / Vacation</option>
+            <option value="conference">Conference / Research Symposium</option>
+            <option value="sick">Sick / Medical Recovery</option>
+            <option value="emergency">Emergency / Personal</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-4);">
+          <label class="form-label">Reason / Clinical Notes</label>
+          <input type="text" id="my-leave-reason" class="form-input" placeholder="e.g. Attending European Neuro Congress">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="btn-my-leave-submit">Submit Leave Request</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-list-check text-primary"></i> My Recorded Leaves & Blocks</h4>
+    </div>
+    <div class="card-body" style="padding: 0;">
+      <div class="table-responsive" style="border: none;">
+        <table class="table-modern">
+          <thead>
+            <tr>
+              <th>Date Range</th>
+              <th>Type</th>
+              <th>Reason</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="my-leaves-tbody">
+            <tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">Loading leaves...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  let currentDoctorId = null;
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const prof = await Auth.fetchProfile();
+      if (prof && prof.doctor) {
+        currentDoctorId = prof.doctor.id;
+        loadMySchedules(currentDoctorId);
+        loadMyLeaves(currentDoctorId);
+      }
+
+      document.getElementById('doctor-my-leave-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentDoctorId) return;
+
+        const start = document.getElementById('my-leave-start').value;
+        const end = document.getElementById('my-leave-end').value;
+        const type = document.getElementById('my-leave-type').value;
+        const reason = document.getElementById('my-leave-reason').value.trim();
+
+        if (!start || !end) {
+          Toast.warning('Please select leave dates.');
+          return;
+        }
+
+        const btn = document.getElementById('btn-my-leave-submit');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        try {
+          const res = await API.post('/schedules/leaves', {
+            doctor_id: currentDoctorId,
+            start_date: start,
+            end_date: end,
+            leave_type: type,
+            reason,
+            is_full_day: true,
+            status: 'approved'
+          });
+
+          if (res.success) {
+            Toast.success('Leave / blocked dates recorded successfully!');
+            document.getElementById('doctor-my-leave-form').reset();
+            loadMyLeaves(currentDoctorId);
+          } else {
+            Toast.error(res.message || 'Failed to submit leave.');
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Server error.');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Submit Leave Request';
+        }
+      });
+    } catch (err) { console.error(err); }
+  });
+
+  async function loadMySchedules(docId) {
+    const res = await API.get('/schedules/doctors/' + docId);
+    if (res.success && res.data) {
+      const grid = document.getElementById('doc-my-schedules-grid');
+      grid.innerHTML = '';
+      weekDays.forEach(day => {
+        const slot = res.data.find(s => s.day_of_week === day);
+        const isAct = slot && slot.is_active;
+        const card = document.createElement('div');
+        card.style.cssText = 'background: ' + (isAct ? '#f0fdf4' : '#f8fafc') + '; border: 1px solid ' + (isAct ? '#86efac' : '#e2e8f0') + '; border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;';
+        card.innerHTML = `
+          <div style="font-weight: 700; color: ${isAct ? '#047857' : '#64748b'};">${day.substring(0, 3)}</div>
+          <div style="font-size: 0.72rem; color: var(--color-slate-500); margin: 2px 0;">${day}</div>
+          <div style="margin: 6px 0;"><span class="badge ${isAct ? 'badge-success' : 'badge-light'}" style="font-size: 0.65rem;">${isAct ? 'ON DUTY' : 'OFF'}</span></div>
+          <div style="font-size: 0.75rem; font-weight: 600; color: var(--color-navy-900);">${isAct ? slot.start_time.substring(0, 5) + ' - ' + slot.end_time.substring(0, 5) : '—'}</div>
+          <div class="text-xs text-muted" style="font-size: 0.65rem;">${isAct ? slot.slot_duration_minutes + 'm / ' + (slot.break_start_time ? 'Break ' + slot.break_start_time.substring(0,5) : '') : 'No Clinic'}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  }
+
+  async function loadMyLeaves(docId) {
+    const tbody = document.getElementById('my-leaves-tbody');
+    try {
+      const res = await API.get('/schedules/leaves', { doctor_id: docId });
+      if (res.success && res.data) {
+        if (res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">No leaves currently recorded.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        res.data.forEach(l => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${l.start_date}</strong> &rarr; <strong>${l.end_date}</strong></td>
+            <td><span class="badge badge-warning" style="text-transform: uppercase;">${l.leave_type}</span></td>
+            <td class="text-xs text-muted">${l.reason || 'General Leave'}</td>
+            <td><span class="badge ${l.status === 'approved' ? 'badge-success' : 'badge-warning'}">${l.status}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (_) {}
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnostic Laboratory Reports | AuraCare Patient Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital-user"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PATIENT PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/patient/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Health Home
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/medical-history" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription-bottle-medical"></i> My Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/lab-reports" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-vials"></i> Lab Reports
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/invoices" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-receipt"></i> Billing Invoices
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-credit-card"></i> Payment Receipts
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/documents" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-folder-open"></i> My Documents
+            </a>
+          </li>
+        
+          <li>
+            <a href="/patient/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-pen"></i> Personal Profile
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-hospital-user"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Patient</div>
+          <div class="sidebar-user-role" data-user-role>Patient Portal</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/patient/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-user-pen"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Diagnostic Laboratory Reports</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <a href="/appointments" class="btn btn-primary btn-sm"><i class="fa-regular fa-calendar-plus"></i> Request Appointment</a>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card">
+  <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;">Diagnostic Laboratory Results</h4></div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead><tr><th>Order #</th><th>Test Name</th><th>Date</th><th>Result</th><th>Reference Range</th><th>Status</th></tr></thead>
+        <tbody id="pat-lab-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading lab results...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const prof = await Auth.fetchProfile();
+    const patId = prof?.patient?.id || 1;
+    try {
+      const res = await API.get('/patients/' + patId + '/lab-reports');
+      const tbody = document.getElementById('pat-lab-tbody');
+      if (res.success && res.data?.length > 0) {
+        tbody.innerHTML = '';
+        res.data.forEach(l => {
+          tbody.innerHTML += `
+            <tr>
+              <td><code>${l.order_number}</code></td>
+              <td><strong>${l.test_name}</strong></td>
+              <td>${l.order_date}</td>
+              <td><strong class="text-primary">${l.result_value || 'Pending'}</strong></td>
+              <td class="text-xs font-mono">${l.normal_range || ''}</td>
+              <td><span class="badge badge-success">${l.status}</span></td>
+            </tr>
+          `;
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No lab results on file.</td></tr>';
+      }
+    } catch(err) { console.error(err); }
+  });
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['patient', 'super_admin']);
+    });
+  </script>
+</body>
+</html>

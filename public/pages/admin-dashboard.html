@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User, Role & Access Management | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* Tab Styling */
+    .admin-nav-tabs {
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: start;
+      gap: var(--space-2);
+      border-bottom: 2px solid var(--color-slate-200);
+      margin-bottom: var(--space-6);
+    }
+    .admin-tab-btn {
+      padding: var(--space-3) var(--space-5);
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-sm);
+      color: var(--color-slate-600);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: var(--space-2);
+      align-items: center;
+      transition: all var(--transition-fast);
+    }
+    .admin-tab-btn:hover {
+      color: var(--color-primary);
+    }
+    .admin-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .tab-content-pane {
+      display: none;
+    }
+    .tab-content-pane.active {
+      display: grid;
+      gap: var(--space-6);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    /* Matrix Table Styles */
+    .matrix-table th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .matrix-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+    .module-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: var(--font-weight-bold);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-sm);
+      background: var(--color-slate-100);
+      color: var(--color-slate-600);
+    }
+  </style>
+</head>
+<body class="dashboard-layout">
+
+  <!-- =======================================================
+       1. SIDEBAR NAVIGATION
+       ======================================================= -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-hospital"></i>
+        </div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li>
+          <button class="btn btn-primary btn-block" style="justify-content: start; text-align: left;" onclick="switchTab('users')">
+            <i class="fa-solid fa-users-gear"></i> User Directory
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);" onclick="switchTab('roles')">
+            <i class="fa-solid fa-user-shield"></i> Roles Management
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);" onclick="switchTab('matrix')">
+            <i class="fa-solid fa-table-cells"></i> Permission Matrix
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);" onclick="switchTab('audit')">
+            <i class="fa-solid fa-shield-halved"></i> Audit Trails
+          </button>
+        </li>
+        <li style="margin-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-3);">
+          <a href="/pages/doctor-dashboard.html" class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-400); border-color: transparent;">
+            <i class="fa-solid fa-user-doctor"></i> Doctor Portal
+          </a>
+        </li>
+        <li>
+          <a href="/pages/patient-portal.html" class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-400); border-color: transparent;">
+            <i class="fa-solid fa-hospital-user"></i> Patient Portal
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- User Profile Footer Card in Sidebar -->
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Administrator</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- =======================================================
+       2. MAIN DASHBOARD CONTENT AREA
+       ======================================================= -->
+  <div class="dashboard-main">
+    <!-- Topbar -->
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">User, Role & Permission Administration</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <div class="health-badge" id="admin-health-badge">
+          <span class="health-dot online"></span>
+          <span>Live API / MySQL Active</span>
+        </div>
+        <button class="btn btn-primary btn-sm" data-modal-target="modal-create-user">
+          <i class="fa-solid fa-user-plus"></i> New User
+        </button>
+        <button class="btn btn-outline btn-sm" data-modal-target="modal-create-role">
+          <i class="fa-solid fa-shield-plus"></i> New Role
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-content-grid">
+      
+      <!-- Summary Metrics Bar (CSS Grid) -->
+      <div class="dashboard-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-teal">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-total-users">--</div>
+            <div class="stat-label">System Users</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-blue">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-total-roles">9</div>
+            <div class="stat-label">Configured Roles</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-green">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-total-permissions">32</div>
+            <div class="stat-label">Granular Permissions</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-amber">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-audit-events">--</div>
+            <div class="stat-label">Audit Log Events</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="admin-nav-tabs">
+        <button class="admin-tab-btn active" id="tab-btn-users" onclick="switchTab('users')">
+          <i class="fa-solid fa-users"></i> User Accounts
+        </button>
+        <button class="admin-tab-btn" id="tab-btn-roles" onclick="switchTab('roles')">
+          <i class="fa-solid fa-id-card"></i> System Roles
+        </button>
+        <button class="admin-tab-btn" id="tab-btn-matrix" onclick="switchTab('matrix')">
+          <i class="fa-solid fa-table-cells"></i> Permission Matrix (RBAC)
+        </button>
+        <button class="admin-tab-btn" id="tab-btn-audit" onclick="switchTab('audit')">
+          <i class="fa-solid fa-clock-rotate-left"></i> Security Audit Trail
+        </button>
+      </nav>
+
+      <!-- =======================================================
+           TAB 1: USER ACCOUNTS DIRECTORY
+           ======================================================= -->
+      <section class="tab-content-pane active" id="pane-users">
+        <div class="card">
+          <!-- Filters & Sorting Bar -->
+          <div class="card-header" style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-4); align-items: center;">
+            <div style="display: grid; grid-template-columns: 240px 150px 140px 160px; gap: var(--space-2);">
+              <input type="text" id="filter-search" class="form-input" placeholder="Search name, email, phone...">
+              <select id="filter-role" class="form-select">
+                <option value="">All Roles</option>
+              </select>
+              <select id="filter-status" class="form-select">
+                <option value="">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="suspended">Suspended</option>
+              </select>
+              <select id="filter-sort" class="form-select">
+                <option value="created_at_desc">Newest First</option>
+                <option value="name_asc">Name (A-Z)</option>
+                <option value="email_asc">Email (A-Z)</option>
+                <option value="role_asc">Role (A-Z)</option>
+                <option value="status_asc">Status</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: var(--space-2);">
+              <button class="btn btn-outline btn-sm" onclick="loadUsers()">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+              </button>
+              <button class="btn btn-primary btn-sm" data-modal-target="modal-create-user">
+                <i class="fa-solid fa-plus"></i> Add User
+              </button>
+            </div>
+          </div>
+
+          <!-- Users Table -->
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>User & Credentials</th>
+                    <th>System Role</th>
+                    <th>Status</th>
+                    <th>Created / Last Login</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table-body">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted" style="padding: var(--space-8);">Loading user directory from MySQL...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="users-count-meta" style="font-size: var(--font-size-xs); color: var(--color-slate-500);">Showing accounts</div>
+            <div style="display: flex; gap: var(--space-2); align-items: center;">
+              <button id="btn-prev-page" class="btn btn-outline btn-sm" disabled>&larr; Previous</button>
+              <span id="users-page-indicator" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-slate-600); padding: 0 var(--space-2);">Page 1</span>
+              <button id="btn-next-page" class="btn btn-outline btn-sm" disabled>Next &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           TAB 2: ROLES MANAGEMENT
+           ======================================================= -->
+      <section class="tab-content-pane" id="pane-roles">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="font-size: var(--font-size-lg); margin: 0;">System & Custom Roles</h4>
+            <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Manage clinical hierarchy and role definitions</p>
+          </div>
+          <button class="btn btn-primary btn-sm" data-modal-target="modal-create-role">
+            <i class="fa-solid fa-plus"></i> Create Custom Role
+          </button>
+        </div>
+
+        <!-- Role Cards Grid (CSS Grid) -->
+        <div class="grid-cards-auto" id="roles-cards-grid">
+          <div class="card" style="padding: var(--space-6); text-align: center; grid-column: 1 / -1;">
+            <p class="text-muted">Loading roles from database...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           TAB 3: PERMISSION MATRIX (RBAC)
+           ======================================================= -->
+      <section class="tab-content-pane" id="pane-matrix">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin: 0;">Role-Based Access Control (RBAC) Matrix</h4>
+              <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Assign or revoke permissions for each role. Changes persist immediately to MySQL.</p>
+            </div>
+            <div style="display: flex; gap: var(--space-2);">
+              <button class="btn btn-outline btn-sm" onclick="loadPermissionMatrix()">
+                <i class="fa-solid fa-arrows-rotate"></i> Reload Matrix
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="max-height: 600px; overflow-y: auto; border: none;">
+              <table class="table-modern matrix-table">
+                <thead id="matrix-table-head">
+                  <tr>
+                    <th style="min-width: 260px;">Permission Code & Module</th>
+                    <!-- Dynamic Role Headers -->
+                  </tr>
+                </thead>
+                <tbody id="matrix-table-body">
+                  <tr>
+                    <td colspan="10" class="text-center text-muted" style="padding: var(--space-8);">Building RBAC matrix...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           TAB 4: SECURITY AUDIT TRAIL
+           ======================================================= -->
+      <section class="tab-content-pane" id="pane-audit">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin: 0;">Security & Authentication Audit Trail</h4>
+              <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Immutable activity logging for compliance and monitoring</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="loadAuditLogs()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Log
+            </button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>Log #</th>
+                    <th>Action Event</th>
+                    <th>Entity</th>
+                    <th>Actor User</th>
+                    <th>IP Address</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-table-body">
+                  <tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading audit history...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- =======================================================
+       MODAL 1: CREATE USER (ADMIN)
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-create-user" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New User Account</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-create-user">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="cu-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="cu-name" name="full_name" class="form-input" placeholder="e.g. Dr. Jennifer Adams" required>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="cu-email">Email Address <span class="required">*</span></label>
+                <input type="email" id="cu-email" name="email" class="form-input" placeholder="jennifer@auracare.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cu-phone">Phone Number</label>
+                <input type="tel" id="cu-phone" name="phone" class="form-input" placeholder="+1 (555) 019-2233">
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="cu-role">Assigned Role <span class="required">*</span></label>
+                <select id="cu-role" name="role_id" class="form-select" required>
+                  <!-- Populated from MySQL -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cu-status">Initial Status</label>
+                <select id="cu-status" name="status" class="form-select">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cu-password">Initial Password <span class="required">*</span></label>
+              <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2);">
+                <input type="text" id="cu-password" name="password" class="form-input" value="Clinic2026!" required>
+                <button type="button" class="btn btn-outline btn-sm" onclick="generateRandomPassword('cu-password')">Generate</button>
+              </div>
+              <span class="form-help">Default password for demo setup: Clinic2026!</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Create User Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 2: EDIT USER DETAILS
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-edit-user" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit User Account</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-edit-user">
+        <input type="hidden" id="eu-id" name="user_id">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="eu-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="eu-name" name="full_name" class="form-input" required>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="eu-email">Email Address <span class="required">*</span></label>
+                <input type="email" id="eu-email" name="email" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="eu-phone">Phone Number</label>
+                <input type="tel" id="eu-phone" name="phone" class="form-input">
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="eu-role">Role <span class="required">*</span></label>
+                <select id="eu-role" name="role_id" class="form-select" required>
+                  <!-- Populated from MySQL -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="eu-status">Account Status <span class="required">*</span></label>
+                <select id="eu-status" name="status" class="form-select" required>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 3: VIEW USER DETAILS (RICH MODAL)
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-view-user" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">User Account & Permission Details</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body" id="vu-content">
+        <p class="text-muted">Loading user profile...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-modal-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 4: ADMIN RESET PASSWORD
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-admin-reset-pw" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset User Password</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-admin-reset-pw">
+        <input type="hidden" id="arp-user-id">
+        <div class="modal-body">
+          <p style="font-size: var(--font-size-sm); margin-bottom: var(--space-4);">
+            Resetting password for: <strong id="arp-user-name">User</strong>
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="arp-password">New Password <span class="required">*</span></label>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2);">
+              <input type="text" id="arp-password" name="new_password" class="form-input" value="Clinic2026!" required>
+              <button type="button" class="btn btn-outline btn-sm" onclick="generateRandomPassword('arp-password')">Generate</button>
+            </div>
+            <span class="form-help">Min 8 chars with uppercase, lowercase, digit, and special char.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-danger">Confirm Password Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 5: CREATE CUSTOM ROLE
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-create-role" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Custom System Role</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-create-role">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="cr-display-name">Role Display Name <span class="required">*</span></label>
+              <input type="text" id="cr-display-name" name="display_name" class="form-input" placeholder="e.g. Clinical Director" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cr-name">Role System Key <span class="required">*</span></label>
+              <input type="text" id="cr-name" name="name" class="form-input" placeholder="e.g. clinical_director" required>
+              <span class="form-help">Lowercase letters and underscores only.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cr-desc">Description</label>
+              <textarea id="cr-desc" name="description" rows="2" class="form-textarea" placeholder="Responsibilities and scope of this role..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Role</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 6: EDIT PROFILE (SELF)
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-edit-profile" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit My Administrator Profile</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-edit-profile">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="ep-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="ep-name" name="full_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ep-phone">Phone Number</label>
+              <input type="tel" id="ep-phone" name="phone" class="form-input">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       MODAL 7: CHANGE PASSWORD (SELF)
+       ======================================================= -->
+  <div class="modal-backdrop" id="modal-change-password" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Password</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-change-password">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="cp-current">Current Password <span class="required">*</span></label>
+              <input type="password" id="cp-current" name="current_password" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cp-new">New Password <span class="required">*</span></label>
+              <input type="password" id="cp-new" name="new_password" class="form-input" required>
+              <span class="form-help">Min 8 chars, 1 uppercase, 1 digit, 1 special character.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let currentPage = 1;
+    let cachedRoles = [];
+    let cachedMatrix = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Route Guard for Administrators
+      const isAuthorized = await Auth.guardPage(['super_admin', 'hospital_admin']);
+      if (!isAuthorized) return;
+
+      const user = Auth.getUser();
+      if (user) {
+        document.getElementById('ep-name').value = user.fullName || '';
+        document.getElementById('ep-phone').value = user.phone || '';
+      }
+
+      await loadRoles();
+      loadStats();
+      loadUsers();
+
+      // Search & Filter listeners with debounce
+      let debounceTimeout;
+      const searchInput = document.getElementById('filter-search');
+      searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          currentPage = 1;
+          loadUsers();
+        }, 250);
+      });
+
+      document.getElementById('filter-role').addEventListener('change', () => {
+        currentPage = 1;
+        loadUsers();
+      });
+
+      document.getElementById('filter-status').addEventListener('change', () => {
+        currentPage = 1;
+        loadUsers();
+      });
+
+      document.getElementById('filter-sort').addEventListener('change', () => {
+        currentPage = 1;
+        loadUsers();
+      });
+
+      // Pagination listeners
+      document.getElementById('btn-prev-page').addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          loadUsers();
+        }
+      });
+
+      document.getElementById('btn-next-page').addEventListener('click', () => {
+        currentPage++;
+        loadUsers();
+      });
+
+      // Create User Form
+      const formCreate = document.getElementById('form-create-user');
+      formCreate.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          full_name: formCreate.full_name.value.trim(),
+          email: formCreate.email.value.trim(),
+          phone: formCreate.phone.value.trim() || undefined,
+          role_id: parseInt(formCreate.role_id.value, 10),
+          status: formCreate.status.value,
+          password: formCreate.password.value
+        };
+
+        try {
+          const res = await API.post('/admin/users', payload);
+          if (res.success) {
+            Toast.success(`User created: ${payload.full_name}`);
+            formCreate.reset();
+            Modal.close('modal-create-user');
+            loadUsers();
+            loadStats();
+            loadRoles();
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Failed to create user account.');
+        }
+      });
+
+      // Edit User Form
+      const formEdit = document.getElementById('form-edit-user');
+      formEdit.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userId = formEdit.user_id.value;
+        const payload = {
+          full_name: formEdit.full_name.value.trim(),
+          email: formEdit.email.value.trim(),
+          phone: formEdit.phone.value.trim() || undefined,
+          role_id: parseInt(formEdit.role_id.value, 10),
+          status: formEdit.status.value
+        };
+
+        try {
+          const res = await API.put(`/admin/users/${userId}`, payload);
+          if (res.success) {
+            Toast.success('User updated successfully.');
+            Modal.close('modal-edit-user');
+            loadUsers();
+            loadStats();
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Failed to update user.');
+        }
+      });
+
+      // Admin Reset Password Form
+      const formARP = document.getElementById('form-admin-reset-pw');
+      formARP.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userId = document.getElementById('arp-user-id').value;
+        const newPassword = formARP.new_password.value;
+
+        try {
+          const res = await API.post(`/admin/users/${userId}/reset-password`, { new_password: newPassword });
+          Toast.success(res.message || 'Password reset completed.');
+          Modal.close('modal-admin-reset-pw');
+        } catch (err) {
+          Toast.error(err.message || 'Password reset failed.');
+        }
+      });
+
+      // Create Custom Role Form
+      const formCR = document.getElementById('form-create-role');
+      formCR.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          display_name: formCR.display_name.value.trim(),
+          name: formCR.name.value.trim(),
+          description: formCR.description.value.trim() || undefined
+        };
+
+        try {
+          const res = await API.post('/admin/roles', payload);
+          if (res.success) {
+            Toast.success(`Role created: ${payload.display_name}`);
+            formCR.reset();
+            Modal.close('modal-create-role');
+            loadRoles();
+            loadStats();
+            if (document.getElementById('pane-matrix').classList.contains('active')) {
+              loadPermissionMatrix();
+            }
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Failed to create role.');
+        }
+      });
+
+      // Edit Profile (Self)
+      const formEP = document.getElementById('form-edit-profile');
+      formEP.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const res = await API.put('/auth/me', {
+            full_name: formEP.full_name.value.trim(),
+            phone: formEP.phone.value.trim() || undefined
+          });
+          if (res.success) {
+            Toast.success('Profile updated.');
+            Auth.setUser(res.data);
+            Modal.close('modal-edit-profile');
+            Auth.guardPage(['super_admin', 'hospital_admin']);
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Profile update failed.');
+        }
+      });
+
+      // Change Password (Self)
+      const formCP = document.getElementById('form-change-password');
+      formCP.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const res = await API.post('/auth/change-password', {
+            current_password: formCP.current_password.value,
+            new_password: formCP.new_password.value
+          });
+          Toast.success(res.message || 'Password changed successfully.');
+          formCP.reset();
+          Modal.close('modal-change-password');
+        } catch (err) {
+          Toast.error(err.message || 'Failed to change password.');
+        }
+      });
+    });
+
+    /**
+     * Tab Switcher
+     */
+    function switchTab(tabKey) {
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content-pane').forEach(pane => pane.classList.remove('active'));
+
+      const targetBtn = document.getElementById(`tab-btn-${tabKey}`);
+      const targetPane = document.getElementById(`pane-${tabKey}`);
+      if (targetBtn) targetBtn.classList.add('active');
+      if (targetPane) targetPane.classList.add('active');
+
+      if (tabKey === 'roles') loadRoles();
+      if (tabKey === 'matrix') loadPermissionMatrix();
+      if (tabKey === 'audit') loadAuditLogs();
+    }
+
+    /**
+     * Load Roles list into memory & dropdowns
+     */
+    async function loadRoles() {
+      try {
+        const res = await API.get('/admin/roles');
+        if (res.success && res.data) {
+          cachedRoles = res.data;
+          document.getElementById('stat-total-roles').textContent = res.data.length;
+
+          // Populate filter dropdown
+          const filterSelect = document.getElementById('filter-role');
+          const createSelect = document.getElementById('cu-role');
+          const editSelect = document.getElementById('eu-role');
+
+          filterSelect.innerHTML = '<option value="">All Roles</option>';
+          createSelect.innerHTML = '';
+          editSelect.innerHTML = '';
+
+          res.data.forEach(r => {
+            const opt1 = document.createElement('option');
+            opt1.value = r.name;
+            opt1.textContent = r.display_name;
+            filterSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = r.id;
+            opt2.textContent = r.display_name;
+            createSelect.appendChild(opt2);
+
+            const opt3 = document.createElement('option');
+            opt3.value = r.id;
+            opt3.textContent = r.display_name;
+            editSelect.appendChild(opt3);
+          });
+
+          // Render Roles Cards Tab
+          renderRolesCards(res.data);
+        }
+      } catch (err) {
+        console.warn('Failed to load roles:', err.message);
+      }
+    }
+
+    function renderRolesCards(roles) {
+      const container = document.getElementById('roles-cards-grid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      roles.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-body">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-3);">
+              <div>
+                <h4 style="font-size: var(--font-size-base); margin-bottom: 2px;">${escapeHtml(r.display_name)}</h4>
+                <code style="font-size: 0.75rem; color: var(--color-slate-400);">${r.name}</code>
+              </div>
+              ${r.is_system ? '<span class="badge badge-info">System</span>' : '<span class="badge badge-primary">Custom</span>'}
+            </div>
+            <p class="text-muted" style="font-size: var(--font-size-xs); min-height: 38px; margin-bottom: var(--space-4);">
+              ${escapeHtml(r.description || 'No description provided.')}
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); padding: var(--space-2) 0; border-top: 1px solid var(--color-slate-100); border-bottom: 1px solid var(--color-slate-100); margin-bottom: var(--space-4); font-size: var(--font-size-xs);">
+              <div><strong>${r.user_count || 0}</strong> Users</div>
+              <div><strong>${r.permission_count || 0}</strong> Permissions</div>
+            </div>
+            <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+              <button class="btn btn-outline-primary btn-sm" onclick="switchTab('matrix')">
+                <i class="fa-solid fa-key"></i> Permissions
+              </button>
+              ${!r.is_system ? `<button class="btn btn-danger btn-sm" onclick="deleteRole(${r.id}, '${r.name}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function loadStats() {
+      try {
+        const [usersRes, auditRes] = await Promise.all([
+          API.get('/admin/users?limit=1'),
+          API.get('/auth/audit-logs?limit=1')
+        ]);
+        if (usersRes.success && usersRes.meta && usersRes.meta.pagination) {
+          document.getElementById('stat-total-users').textContent = usersRes.meta.pagination.total;
+        }
+        if (auditRes.success && auditRes.meta && auditRes.meta.pagination) {
+          document.getElementById('stat-audit-events').textContent = auditRes.meta.pagination.total;
+        }
+      } catch (err) {
+        console.warn('Failed to load stats:', err.message);
+      }
+    }
+
+    /**
+     * Load Users with Sorting, Search, Filter & Pagination
+     */
+    async function loadUsers() {
+      const tbody = document.getElementById('users-table-body');
+      const search = document.getElementById('filter-search').value.trim();
+      const role = document.getElementById('filter-role').value;
+      const status = document.getElementById('filter-status').value;
+      const sortVal = document.getElementById('filter-sort').value;
+
+      let sortBy = 'created_at';
+      let sortOrder = 'DESC';
+      if (sortVal === 'name_asc') { sortBy = 'name'; sortOrder = 'ASC'; }
+      if (sortVal === 'email_asc') { sortBy = 'email'; sortOrder = 'ASC'; }
+      if (sortVal === 'role_asc') { sortBy = 'role'; sortOrder = 'ASC'; }
+      if (sortVal === 'status_asc') { sortBy = 'status'; sortOrder = 'ASC'; }
+
+      try {
+        const res = await API.get('/admin/users', {
+          page: currentPage,
+          limit: 10,
+          search: search || undefined,
+          role: role || undefined,
+          status: status || undefined,
+          sortBy,
+          sortOrder
+        });
+
+        if (res.success && res.data.length > 0) {
+          tbody.innerHTML = '';
+          res.data.forEach(u => {
+            let statusBadge = `<span class="badge badge-success">Active</span>`;
+            if (u.status === 'suspended') statusBadge = `<span class="badge badge-danger">Suspended</span>`;
+            if (u.status === 'inactive') statusBadge = `<span class="badge badge-warning">Inactive</span>`;
+
+            let roleBadge = `<span class="badge badge-primary">${escapeHtml(u.role_display_name || u.role_name)}</span>`;
+            if (u.role_name === 'doctor') roleBadge = `<span class="badge badge-info">${escapeHtml(u.role_display_name)}</span>`;
+            if (u.role_name === 'patient') roleBadge = `<span class="badge badge-warning">${escapeHtml(u.role_display_name)}</span>`;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><span style="font-family: monospace; font-size: 0.75rem; color: var(--color-slate-400);">#${u.id}</span></td>
+              <td>
+                <div style="font-weight: var(--font-weight-bold); color: var(--color-navy-900);">${escapeHtml(u.full_name)}</div>
+                <div style="font-size: var(--font-size-xs); color: var(--color-slate-500);">${escapeHtml(u.email)}</div>
+                ${u.phone ? `<div style="font-size: var(--font-size-xs); color: var(--color-slate-400);"><i class="fa-solid fa-phone"></i> ${escapeHtml(u.phone)}</div>` : ''}
+              </td>
+              <td>
+                ${roleBadge}
+                <div style="font-size: 0.7rem; color: var(--color-slate-400); margin-top: 2px;">${u.permissions_count || 0} permissions</div>
+              </td>
+              <td>${statusBadge}</td>
+              <td style="font-size: var(--font-size-xs); color: var(--color-slate-500);">
+                <div>${new Date(u.created_at).toLocaleDateString()}</div>
+                <div style="color: var(--color-slate-400);">${u.last_login ? 'Seen: ' + new Date(u.last_login).toLocaleDateString() : 'Never logged in'}</div>
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div style="display: inline-flex; gap: var(--space-1);">
+                  <button class="btn btn-outline btn-sm" onclick="viewUserDetails(${u.id})" title="View Complete Profile"><i class="fa-regular fa-eye"></i></button>
+                  <button class="btn btn-outline btn-sm" onclick="openEditUserModal(${u.id})" title="Edit User"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="btn btn-outline btn-sm" onclick="openAdminResetPassword(${u.id}, '${escapeHtml(u.full_name)}')" title="Reset Password"><i class="fa-solid fa-key"></i></button>
+                  <select class="form-select" style="width: auto; display: inline-block; padding: 0.2rem 0.4rem; font-size: var(--font-size-xs);" onchange="updateUserStatus(${u.id}, this.value, '${u.status}')">
+                    <option value="" disabled selected>Status...</option>
+                    <option value="active" ${u.status === 'active' ? 'disabled' : ''}>Active</option>
+                    <option value="inactive" ${u.status === 'inactive' ? 'disabled' : ''}>Inactive</option>
+                    <option value="suspended" ${u.status === 'suspended' ? 'disabled' : ''}>Suspended</option>
+                  </select>
+                  <button class="btn btn-danger btn-sm" onclick="deleteUserAccount(${u.id}, '${escapeHtml(u.full_name)}')" title="Delete Account"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          const p = res.meta.pagination;
+          document.getElementById('users-count-meta').textContent = `Showing ${(p.page - 1) * p.limit + 1} - ${Math.min(p.page * p.limit, p.total)} of ${p.total} accounts`;
+          document.getElementById('users-page-indicator').textContent = `Page ${p.page} of ${p.totalPages || 1}`;
+          document.getElementById('btn-prev-page').disabled = !p.hasPrev;
+          document.getElementById('btn-next-page').disabled = !p.hasNext;
+        } else {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-8);">No matching user accounts found.</td></tr>`;
+          document.getElementById('btn-prev-page').disabled = true;
+          document.getElementById('btn-next-page').disabled = true;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger" style="padding: var(--space-8);">Failed to load users: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    /**
+     * View Detailed User Profile Modal
+     */
+    async function viewUserDetails(userId) {
+      Modal.open('modal-view-user');
+      const container = document.getElementById('vu-content');
+      container.innerHTML = '<p class="text-muted text-center" style="padding: var(--space-4);"><i class="fa-solid fa-circle-notch fa-spin"></i> Fetching user details...</p>';
+
+      try {
+        const res = await API.get(`/admin/users/${userId}`);
+        if (res.success && res.data) {
+          const u = res.data;
+          container.innerHTML = `
+            <div style="display: grid; gap: var(--space-5);">
+              <!-- User Header Card -->
+              <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-4); align-items: center; background: var(--color-slate-50); padding: var(--space-4); border-radius: var(--radius-lg);">
+                <div class="doctor-avatar-placeholder" style="width: 56px; height: 56px; font-size: 1.5rem;">
+                  ${u.fullName.charAt(0)}
+                </div>
+                <div>
+                  <h3 style="font-size: var(--font-size-lg); margin-bottom: 2px;">${escapeHtml(u.fullName)}</h3>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-slate-500);">${escapeHtml(u.email)} • ${escapeHtml(u.phone || 'No phone')}</div>
+                </div>
+                <div>
+                  <span class="badge badge-primary">${escapeHtml(u.role.displayName)}</span>
+                  <span class="badge ${u.status === 'active' ? 'badge-success' : 'badge-danger'}" style="margin-left: 4px;">${u.status}</span>
+                </div>
+              </div>
+
+              <!-- Linked Clinical Profile (If Doctor or Patient) -->
+              ${u.doctor ? `
+                <div class="card" style="padding: var(--space-4); background: var(--color-primary-light);">
+                  <h5 style="color: var(--color-primary); margin-bottom: var(--space-1);"><i class="fa-solid fa-user-doctor"></i> Physician Profile</h5>
+                  <div style="font-size: var(--font-size-sm);">
+                    <strong>${escapeHtml(u.doctor.specialization)}</strong> (${escapeHtml(u.doctor.department)})<br>
+                    Credentials: ${escapeHtml(u.doctor.qualification)} • Experience: ${u.doctor.experienceYears} yrs • Fee: $${parseFloat(u.doctor.consultationFee).toFixed(2)}
+                  </div>
+                </div>
+              ` : ''}
+
+              ${u.patient ? `
+                <div class="card" style="padding: var(--space-4); background: var(--color-info-light);">
+                  <h5 style="color: var(--color-info); margin-bottom: var(--space-1);"><i class="fa-solid fa-hospital-user"></i> Patient Medical File</h5>
+                  <div style="font-size: var(--font-size-sm);">
+                    MRN: <strong>${u.patient.patientCode}</strong> • Gender: ${u.patient.gender} • Blood Group: <strong>${u.patient.bloodGroup}</strong> • DOB: ${u.patient.dateOfBirth}
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- Assigned Permissions List -->
+              <div>
+                <h5 style="margin-bottom: var(--space-2);">Assigned Permissions (${u.permissions ? u.permissions.length : 0})</h5>
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-1); max-height: 180px; overflow-y: auto; padding: var(--space-2); background: var(--color-slate-50); border-radius: var(--radius-md);">
+                  ${u.permissions && u.permissions.length > 0 ? u.permissions.map(p => `
+                    <span class="badge badge-info" style="font-family: monospace; font-size: 0.7rem;" title="${escapeHtml(p.description)}">${p.code}</span>
+                  `).join('') : '<span class="text-muted text-xs">No explicit permissions assigned.</span>'}
+                </div>
+              </div>
+
+              <!-- Recent Activity History -->
+              <div>
+                <h5 style="margin-bottom: var(--space-2);">Recent Audit Actions</h5>
+                <div style="font-size: var(--font-size-xs); background: var(--color-slate-50); border-radius: var(--radius-md); padding: var(--space-3); max-height: 140px; overflow-y: auto;">
+                  ${u.recentActivity && u.recentActivity.length > 0 ? u.recentActivity.map(a => `
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-slate-200); padding: 4px 0;">
+                      <span><code>${a.action}</code></span>
+                      <span class="text-muted">${new Date(a.created_at).toLocaleString()}</span>
+                    </div>
+                  `).join('') : '<span class="text-muted">No recent logged actions.</span>'}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        container.innerHTML = `<p class="text-danger">Failed to fetch user details: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    /**
+     * Open Edit User Modal
+     */
+    async function openEditUserModal(userId) {
+      try {
+        const res = await API.get(`/admin/users/${userId}`);
+        if (res.success && res.data) {
+          const u = res.data;
+          document.getElementById('eu-id').value = u.id;
+          document.getElementById('eu-name').value = u.fullName;
+          document.getElementById('eu-email').value = u.email;
+          document.getElementById('eu-phone').value = u.phone || '';
+          document.getElementById('eu-role').value = u.roleId;
+          document.getElementById('eu-status').value = u.status;
+          Modal.open('modal-edit-user');
+        }
+      } catch (err) {
+        Toast.error('Could not fetch user for editing.');
+      }
+    }
+
+    /**
+     * Open Admin Reset Password Modal
+     */
+    function openAdminResetPassword(userId, userName) {
+      document.getElementById('arp-user-id').value = userId;
+      document.getElementById('arp-user-name').textContent = userName;
+      document.getElementById('arp-password').value = 'Clinic2026!';
+      Modal.open('modal-admin-reset-pw');
+    }
+
+    /**
+     * Toggle User Status
+     */
+    async function updateUserStatus(userId, newStatus, currentStatus) {
+      if (!newStatus || newStatus === currentStatus) return;
+      if (!confirm(`Are you sure you want to change user #${userId} status to ${newStatus}?`)) {
+        loadUsers();
+        return;
+      }
+      try {
+        const res = await API.patch(`/admin/users/${userId}/status`, { status: newStatus });
+        Toast.success(res.message || 'Status updated.');
+        loadUsers();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update status.');
+        loadUsers();
+      }
+    }
+
+    /**
+     * Delete or Deactivate User Account
+     */
+    async function deleteUserAccount(userId, userName) {
+      if (!confirm(`Are you sure you want to delete or deactivate account for "${userName}" (#${userId})?`)) {
+        return;
+      }
+      try {
+        const res = await API.delete(`/admin/users/${userId}`);
+        Toast.success(res.message || 'User deleted/deactivated.');
+        loadUsers();
+        loadStats();
+        loadRoles();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to delete user.');
+      }
+    }
+
+    /**
+     * Delete Custom Role
+     */
+    async function deleteRole(roleId, roleName) {
+      if (!confirm(`Are you sure you want to delete custom role "${roleName}"?`)) return;
+      try {
+        const res = await API.delete(`/admin/roles/${roleId}`);
+        Toast.success(res.message || 'Role deleted.');
+        loadRoles();
+        loadStats();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to delete role.');
+      }
+    }
+
+    /**
+     * Load & Build Interactive Role-Permission Matrix (RBAC)
+     */
+    async function loadPermissionMatrix() {
+      const thead = document.getElementById('matrix-table-head');
+      const tbody = document.getElementById('matrix-table-body');
+      tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading RBAC matrix...</td></tr>';
+
+      try {
+        const res = await API.get('/admin/matrix');
+        if (res.success && res.data) {
+          cachedMatrix = res.data;
+          const { roles, permissions, matrix } = res.data;
+
+          // Build Dynamic Header Row
+          thead.innerHTML = `
+            <tr>
+              <th style="min-width: 240px; background: var(--color-slate-100);">Permission / Module</th>
+              ${roles.map(r => `
+                <th style="text-align: center; min-width: 110px; background: var(--color-slate-100);">
+                  <div>${escapeHtml(r.display_name)}</div>
+                  <button class="btn btn-outline-primary btn-sm mt-1" style="font-size: 0.65rem; padding: 2px 6px;" onclick="saveRolePermissionsMatrix(${r.id})">
+                    Save
+                  </button>
+                </th>
+              `).join('')}
+            </tr>
+          `;
+
+          // Group permissions by module and render rows
+          tbody.innerHTML = '';
+          let currentModule = '';
+
+          permissions.forEach(p => {
+            if (p.module !== currentModule) {
+              currentModule = p.module;
+              const sectionHeader = document.createElement('tr');
+              sectionHeader.style.background = 'var(--color-slate-50)';
+              sectionHeader.innerHTML = `
+                <td colspan="${roles.length + 1}" style="font-weight: bold; color: var(--color-navy-900); padding: 8px 12px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                  <i class="fa-solid fa-folder"></i> ${currentModule.replace('_', ' ')} Module
+                </td>
+              `;
+              tbody.appendChild(sectionHeader);
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>
+                <div style="font-family: monospace; font-size: 0.8rem; font-weight: 600; color: var(--color-navy-900);">${p.code}</div>
+                <div style="font-size: 0.75rem; color: var(--color-slate-500);">${escapeHtml(p.description)}</div>
+              </td>
+              ${matrix.map(roleMatrix => {
+                const isGranted = roleMatrix.permissions.some(rp => rp.code === p.code && rp.granted);
+                return `
+                  <td style="text-align: center;">
+                    <input type="checkbox" class="matrix-checkbox" data-role-id="${roleMatrix.roleId}" data-perm-id="${p.id}" ${isGranted ? 'checked' : ''} ${roleMatrix.name === 'super_admin' ? 'disabled' : ''}>
+                  </td>
+                `;
+              }).join('')}
+            </tr>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="10" class="text-center text-danger" style="padding: var(--space-4);">Failed to load permission matrix: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    /**
+     * Save Role Permissions from Matrix Table
+     */
+    async function saveRolePermissionsMatrix(roleId) {
+      const checkboxes = document.querySelectorAll(`input.matrix-checkbox[data-role-id="${roleId}"]:checked`);
+      const permissionIds = Array.from(checkboxes).map(cb => parseInt(cb.getAttribute('data-perm-id'), 10));
+
+      try {
+        const res = await API.put(`/admin/roles/${roleId}/permissions`, { permission_ids: permissionIds });
+        if (res.success) {
+          Toast.success(`Permissions updated for role (${permissionIds.length} granted).`);
+          loadRoles();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update role permissions.');
+      }
+    }
+
+    /**
+     * Load Audit Logs
+     */
+    async function loadAuditLogs() {
+      const tbody = document.getElementById('audit-table-body');
+      try {
+        const res = await API.get('/auth/audit-logs', { limit: 15 });
+        if (res.success && res.data.length > 0) {
+          tbody.innerHTML = '';
+          res.data.forEach(log => {
+            let actionBadge = `<span class="badge badge-info">${escapeHtml(log.action)}</span>`;
+            if (log.action.includes('SUCCESS') || log.action.includes('CREATED') || log.action.includes('REGISTERED')) {
+              actionBadge = `<span class="badge badge-success">${escapeHtml(log.action)}</span>`;
+            } else if (log.action.includes('FAILED') || log.action.includes('BLOCKED') || log.action.includes('SUSPENDED') || log.action.includes('DELETED')) {
+              actionBadge = `<span class="badge badge-danger">${escapeHtml(log.action)}</span>`;
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><span style="font-family: monospace; font-size: 0.75rem; color: var(--color-slate-400);">#${log.id}</span></td>
+              <td>${actionBadge}</td>
+              <td><span style="font-family: monospace; font-size: var(--font-size-xs);">${escapeHtml(log.entity || 'system')}${log.entity_id ? ` #${log.entity_id}` : ''}</span></td>
+              <td>
+                <div style="font-weight: 500;">${escapeHtml(log.user_name || 'System / Guest')}</div>
+                <div style="font-size: var(--font-size-xs); color: var(--color-slate-400);">${escapeHtml(log.user_email || '')}</div>
+              </td>
+              <td><span style="font-family: monospace; font-size: var(--font-size-xs);">${escapeHtml(log.ip_address || '127.0.0.1')}</span></td>
+              <td style="font-size: var(--font-size-xs); color: var(--color-slate-500);">${new Date(log.created_at).toLocaleString()}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-4);">No audit events recorded yet.</td></tr>`;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger" style="padding: var(--space-4);">Error loading audit records.</td></tr>`;
+      }
+    }
+
+    function generateRandomPassword(elementId) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+      let pass = '';
+      for (let i = 0; i < 12; i++) {
+        pass += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById(elementId).value = pass;
+      Toast.info(`Generated password: ${pass}`);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

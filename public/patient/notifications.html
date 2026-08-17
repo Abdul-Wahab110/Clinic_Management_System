@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications & Alerts | AuraCare Patient Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital-user"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PATIENT PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
+        <li>
+          <a href="/patient/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-house-chimney-medical"></i> My Health Home
+          </a>
+        </li>
+        <li>
+          <a href="/patient/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-calendar-check"></i> Appointments
+          </a>
+        </li>
+        <li>
+          <a href="/patient/medical-history" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-file-waveform"></i> Medical History
+          </a>
+        </li>
+        <li>
+          <a href="/patient/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-prescription-bottle-medical"></i> My Prescriptions
+          </a>
+        </li>
+        <li>
+          <a href="/patient/lab-reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-vials"></i> Lab Reports
+          </a>
+        </li>
+        <li>
+          <a href="/patient/invoices" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-receipt"></i> Billing Invoices
+          </a>
+        </li>
+        <li>
+          <a href="/patient/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-credit-card"></i> Payment Receipts
+          </a>
+        </li>
+        <li>
+          <a href="/patient/documents" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-folder-open"></i> My Documents
+          </a>
+        </li>
+        <li>
+          <a href="/patient/notifications" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;">
+            <i class="fa-solid fa-bell"></i> Notifications
+          </a>
+        </li>
+        <li>
+          <a href="/patient/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-user-pen"></i> Personal Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-hospital-user"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Patient</div>
+          <div class="sidebar-user-role" data-user-role>Verified Patient</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/patient/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-user-pen"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;"><i class="fa-solid fa-bell text-primary"></i> Patient Notification Center</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <button class="btn btn-outline-primary btn-sm" onclick="markAllNotificationsRead()"><i class="fa-solid fa-check-double"></i> Mark All as Read</button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      <div class="card">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 style="font-size: 0.95rem; margin: 0; color: var(--color-navy-900);">Clinical & Account Alerts</h4>
+          <span class="badge badge-primary" id="notif-count-badge">0 Alerts</span>
+        </div>
+        <div class="card-body" id="notif-list-container" style="padding: var(--space-4);">
+          <div class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Loading notifications...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['patient', 'super_admin', 'hospital_admin']);
+      loadPatientNotifications();
+    });
+
+    async function loadPatientNotifications() {
+      const container = document.getElementById('notif-list-container');
+      try {
+        const res = await API.get('/notifications');
+        if (res.success && res.data) {
+          const notifs = res.data;
+          document.getElementById('notif-count-badge').textContent = `${notifs.length} Alerts`;
+
+          if (notifs.length === 0) {
+            container.innerHTML = '<div class="text-center text-muted" style="padding: var(--space-6);">You have no notifications at this time.</div>';
+            return;
+          }
+
+          container.innerHTML = '';
+          notifs.forEach(n => {
+            const card = document.createElement('div');
+            card.style.padding = 'var(--space-4)';
+            card.style.background = n.is_read ? 'var(--color-slate-50)' : 'white';
+            card.style.border = '1px solid var(--color-slate-200)';
+            card.style.borderLeft = n.is_read ? '4px solid var(--color-slate-300)' : '4px solid var(--color-primary)';
+            card.style.borderRadius = 'var(--radius-md)';
+            card.style.marginBottom = 'var(--space-3)';
+            card.style.display = 'flex';
+            card.style.justifyContent = 'space-between';
+            card.style.alignItems = 'flex-start';
+            card.style.gap = 'var(--space-3)';
+
+            card.innerHTML = `
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <strong style="color: var(--color-navy-900); font-size: 0.95rem;">${n.title}</strong>
+                  ${!n.is_read ? '<span class="badge badge-primary" style="font-size: 0.6rem;">NEW</span>' : ''}
+                </div>
+                <p style="margin: 0 0 6px 0; font-size: 0.85rem; color: var(--color-slate-700); line-height: 1.5;">${n.message}</p>
+                <span class="text-xs text-muted"><i class="fa-regular fa-clock"></i> ${new Date(n.created_at).toLocaleString()}</span>
+              </div>
+              <div style="display: flex; gap: var(--space-2); align-items: center;">
+                ${n.action_url ? `<a href="${n.action_url}" class="btn btn-outline-primary btn-xs">View Details &rarr;</a>` : ''}
+                ${!n.is_read ? `<button class="btn btn-outline btn-xs" onclick="markRead(${n.id})" title="Mark as read"><i class="fa-solid fa-check"></i></button>` : ''}
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        container.innerHTML = `<div class="text-danger text-center" style="padding: var(--space-4);">Failed to load notifications: ${err.message}</div>`;
+      }
+    }
+
+    async function markRead(notifId) {
+      try {
+        await API.patch(`/notifications/${notifId}/read`);
+        Toast.success('Notification marked as read.');
+        loadPatientNotifications();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update notification.');
+      }
+    }
+
+    async function markAllNotificationsRead() {
+      try {
+        await API.patch('/notifications/read-all');
+        Toast.success('All notifications marked as read.');
+        loadPatientNotifications();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update notifications.');
+      }
+    }
+  </script>
+</body>
+</html>

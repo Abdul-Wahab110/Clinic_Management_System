@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physician Consultation Portal | AuraCare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+
+  <!-- Sidebar (CSS Grid) -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-user-doctor"></i>
+        </div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li>
+          <a href="/pages/doctor-dashboard.html" class="btn btn-primary btn-block" style="justify-content: start;">
+            <i class="fa-solid fa-calendar-days"></i> Appointments Queue
+          </a>
+        </li>
+        <li>
+          <a href="/pages/reception-dashboard.html" class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);">
+            <i class="fa-solid fa-id-card-clip"></i> Reception Desk
+          </a>
+        </li>
+        <li>
+          <a href="/pages/patient-portal.html" class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);">
+            <i class="fa-solid fa-hospital-user"></i> Patient View
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Physician</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div>
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Clinical Consultation & Triage Workspace</h3>
+      </div>
+      <div style="display: flex; gap: var(--space-3); align-items: center;">
+        <span class="badge badge-success">Physician Authenticated</span>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      <!-- Doctor Profile Banner (CSS Grid) -->
+      <div class="card" style="background: var(--gradient-card);">
+        <div class="card-body">
+          <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-6); align-items: center;">
+            <div class="doctor-avatar-placeholder" style="width: 80px; height: 80px; font-size: 2rem;">
+              <i class="fa-solid fa-stethoscope"></i>
+            </div>
+            <div>
+              <h3 id="doc-full-name" style="margin-bottom: var(--space-1);">Loading Physician Profile...</h3>
+              <p id="doc-department-spec" class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">
+                Specialization & Credentials
+              </p>
+              <div id="doc-meta-tags" style="display: flex; gap: var(--space-2); margin-top: var(--space-2);">
+                <span class="badge badge-primary" id="doc-fee-badge">Fee: $0.00</span>
+                <span class="badge badge-info" id="doc-room-badge">Room: OPD</span>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-outline btn-sm" onclick="loadDoctorWorkspace()">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule & Consultation Queue (CSS Grid 2-col) -->
+      <div class="grid-split-60-40">
+        <!-- Assigned Appointments -->
+        <div class="card">
+          <div class="card-header">
+            <h4 style="font-size: var(--font-size-base); margin: 0;">Assigned Patient Appointments (MySQL)</h4>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Patient</th>
+                    <th>Reason / Chief Complaint</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="doctor-appointments-tbody">
+                  <tr>
+                    <td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">Loading appointments from database...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Timetable Card -->
+        <div class="card">
+          <div class="card-header">
+            <h4 style="font-size: var(--font-size-base); margin: 0;">My Weekly Duty Roster</h4>
+          </div>
+          <div class="card-body">
+            <ul style="list-style: none; display: grid; gap: var(--space-3);" id="doctor-schedules-list">
+              <li class="text-muted text-sm">Loading weekly schedule...</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-backdrop" id="modal-change-password" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Password</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-doc-cp">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="doc-cp-current">Current Password <span class="required">*</span></label>
+              <input type="password" id="doc-cp-current" name="current_password" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="doc-cp-new">New Password <span class="required">*</span></label>
+              <input type="password" id="doc-cp-new" name="new_password" class="form-input" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const isAuth = await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+      if (!isAuth) return;
+
+      loadDoctorWorkspace();
+
+      const formCP = document.getElementById('form-doc-cp');
+      formCP.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const res = await API.post('/auth/change-password', {
+            current_password: formCP.current_password.value,
+            new_password: formCP.new_password.value
+          });
+          Toast.success(res.message || 'Password updated.');
+          formCP.reset();
+          Modal.close('modal-change-password');
+        } catch (err) {
+          Toast.error(err.message || 'Password update failed.');
+        }
+      });
+    });
+
+    async function loadDoctorWorkspace() {
+      const profile = await Auth.fetchProfile();
+      if (!profile) return;
+
+      document.getElementById('doc-full-name').textContent = profile.fullName;
+      if (profile.doctor) {
+        document.getElementById('doc-department-spec').textContent = `${profile.doctor.specialization} • ${profile.doctor.department}`;
+        document.getElementById('doc-fee-badge').textContent = `Fee: $${parseFloat(profile.doctor.consultationFee).toFixed(2)}`;
+        document.getElementById('doc-room-badge').textContent = `Room: ${profile.doctor.roomNumber || 'OPD Suite'}`;
+      } else {
+        document.getElementById('doc-department-spec').textContent = 'Administrator with Clinical Overlook Privileges';
+      }
+
+      // Fetch isolated doctor appointments
+      try {
+        const res = await API.get('/doctor/my-appointments');
+        if (res.success && res.data) {
+          const appts = res.data.appointments;
+          const tbody = document.getElementById('doctor-appointments-tbody');
+          if (appts && appts.length > 0) {
+            tbody.innerHTML = '';
+            appts.forEach((a) => {
+              let statusBadge = `<span class="badge badge-warning">${a.status}</span>`;
+              if (a.status === 'confirmed') statusBadge = `<span class="badge badge-success">Confirmed</span>`;
+              if (a.status === 'completed') statusBadge = `<span class="badge badge-info">Completed</span>`;
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>
+                  <strong>${a.appointment_date}</strong><br>
+                  <span style="font-size: var(--font-size-xs); color: var(--color-slate-400);">${a.appointment_time}</span>
+                </td>
+                <td>
+                  <strong>${escapeHtml(a.first_name)} ${escapeHtml(a.last_name)}</strong>
+                  <div style="font-size: var(--font-size-xs); color: var(--color-slate-400);">${a.patient_code} • ${a.gender}</div>
+                </td>
+                <td>${escapeHtml(a.reason)}</td>
+                <td>${statusBadge}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          } else {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">No appointments booked for your schedule yet.</td></tr>`;
+          }
+
+          // Render Weekly Schedules
+          const schedList = document.getElementById('doctor-schedules-list');
+          if (res.data.schedules && res.data.schedules.length > 0) {
+            schedList.innerHTML = '';
+            res.data.schedules.forEach((s) => {
+              const li = document.createElement('li');
+              li.style.cssText = 'display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-slate-100); padding-bottom: var(--space-2);';
+              li.innerHTML = `
+                <span class="font-medium">${s.day_of_week}</span>
+                <span class="badge badge-info">${s.start_time.slice(0, 5)} – ${s.end_time.slice(0, 5)} (${s.max_patients} max)</span>
+              `;
+              schedList.appendChild(li);
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch doctor appointments:', err.message);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency & Trauma Department | AuraCare Medical Center</title>
+  <meta name="description" content="Level-1 Emergency department equipped for cardiac STEMI arrest, acute stroke, and multi-system trauma resuscitation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="page-shell">
+
+            <!-- Top Bar -->
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-phone" style="color: #2dd4bf;"></i> 24/7 Trauma: <strong>+1 (800) 555-AURA</strong></span>
+        <span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-clock"></i> Open 24/7</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fa-solid fa-location-dot" style="color: #2dd4bf;"></i> 100 Medical Plaza, Metro Health District</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo-grid">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <div>
+          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span class="brand-sub">MEDICAL CENTER</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/about" class="nav-link ">About</a></li>
+          <li><a href="/departments" class="nav-link ">Departments</a></li>
+          <li><a href="/doctors" class="nav-link ">Doctors</a></li>
+          <li><a href="/services" class="nav-link ">Services</a></li>
+          <li><a href="/appointments" class="nav-link ">Appointments</a></li>
+          <li><a href="/emergency" class="nav-link nav-link-emergency active"><i class="fa-solid fa-truck-medical"></i> Emergency</a></li>
+          <li><a href="/contact" class="nav-link ">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Live System Health Badge (Pill) -->
+        <div class="health-badge" id="system-health-badge" title="Connecting to backend...">
+          <span class="health-dot" id="health-dot"></span>
+          <span class="health-text" id="health-text">Online • MySQL</span>
+        </div>
+
+        <!-- Auth Action Buttons (Desktop & Tablet) -->
+        <div id="header-auth-actions" class="header-auth-actions">
+          <button class="btn btn-outline-primary btn-sm" data-modal-target="modal-login">
+            <i class="fa-solid fa-user-lock"></i> <span>Sign In</span>
+          </button>
+          <a href="/appointments" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-calendar-check"></i> <span>Book Visit</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars" id="mobile-nav-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer / Dropdown -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="/" class="mobile-nav-link "><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/about" class="mobile-nav-link "><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+        <li><a href="/departments" class="mobile-nav-link "><i class="fa-solid fa-hospital"></i> Medical Departments</a></li>
+        <li><a href="/doctors" class="mobile-nav-link "><i class="fa-solid fa-user-doctor"></i> Our Physicians</a></li>
+        <li><a href="/services" class="mobile-nav-link "><i class="fa-solid fa-stethoscope"></i> Clinical Services</a></li>
+        <li><a href="/appointments" class="mobile-nav-link "><i class="fa-regular fa-calendar-check"></i> Book Appointment</a></li>
+        <li><a href="/emergency" class="mobile-nav-link text-danger font-bold active"><i class="fa-solid fa-truck-medical"></i> Emergency 24/7</a></li>
+        <li><a href="/contact" class="mobile-nav-link "><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+      </ul>
+      <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <button class="btn btn-outline-primary btn-block" data-modal-target="modal-login">
+          <i class="fa-solid fa-user-lock"></i> Staff / Patient Sign In
+        </button>
+        <a href="/appointments" class="btn btn-primary btn-block">
+          <i class="fa-regular fa-calendar-check"></i> Request Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner (CSS Grid) -->
+  <section style="background: var(--gradient-primary); color: white; padding: var(--space-10) var(--space-6);">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <span class="badge badge-primary" style="background: rgba(255,255,255,0.15); color: #2dd4bf; margin-bottom: var(--space-2);">EMERGENCY</span>
+      <h1 style="color: white; font-size: var(--font-size-3xl); margin-bottom: var(--space-2);">Emergency & Trauma Department</h1>
+      <p style="color: var(--color-slate-200); font-size: var(--font-size-base); max-width: 720px; margin: 0;">Level-1 Emergency department equipped for cardiac STEMI arrest, acute stroke, and multi-system trauma resuscitation.</p>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main style="max-width: 1280px; margin: var(--space-8) auto; padding: 0 var(--space-6); min-height: 50vh;">
+    
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center;">
+  <div>
+    <span class="badge badge-danger" style="margin-bottom: var(--space-2);">LEVEL-1 TRAUMA CENTER</span>
+    <h2 style="font-size: var(--font-size-3xl); color: var(--color-danger); margin-bottom: var(--space-3);">24/7 Emergency & Acute Resuscitation</h2>
+    <p class="text-muted" style="margin-bottom: var(--space-4);">
+      AuraCare Emergency Department operates 24 hours a day, 365 days a year. Our board-certified emergency physicians, trauma surgeons, and critical care nurses are on standby with zero triage delay for life-threatening conditions.
+    </p>
+    <div style="background: var(--color-danger-light); border-left: 4px solid var(--color-danger); padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-6);">
+      <h4 style="color: var(--color-danger); margin-bottom: var(--space-1);">Immediate Emergency Hotline</h4>
+      <div style="font-size: 1.75rem; font-weight: bold; color: var(--color-danger);">+1 (800) 555-AURA</div>
+      <div style="font-size: var(--font-size-xs); color: var(--color-slate-600);">Direct ambulance dispatch & trauma team alert</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+      <div class="card" style="padding: var(--space-4);"><i class="fa-solid fa-heart-pulse text-danger"></i> <strong>STEMI Center</strong><p class="text-muted text-xs">90-minute door-to-balloon cardiac cath lab</p></div>
+      <div class="card" style="padding: var(--space-4);"><i class="fa-solid fa-brain text-primary"></i> <strong>Comprehensive Stroke</strong><p class="text-muted text-xs">24/7 tPA & neuro-endovascular intervention</p></div>
+    </div>
+  </div>
+  <div class="card" style="padding: var(--space-8); background: var(--color-slate-900); color: white;">
+    <h3 style="color: white; margin-bottom: var(--space-4);">When to Seek Emergency Care</h3>
+    <ul style="list-style: none; display: grid; gap: var(--space-3); font-size: var(--font-size-sm); color: var(--color-slate-300);">
+      <li><i class="fa-solid fa-triangle-exclamation text-danger"></i> Sudden crushing chest pain or pressure</li>
+      <li><i class="fa-solid fa-triangle-exclamation text-danger"></i> Facial drooping, arm weakness, slurred speech</li>
+      <li><i class="fa-solid fa-triangle-exclamation text-danger"></i> Severe respiratory distress or anaphylaxis</li>
+      <li><i class="fa-solid fa-triangle-exclamation text-danger"></i> Uncontrolled bleeding or major fractures</li>
+      <li><i class="fa-solid fa-triangle-exclamation text-danger"></i> Sudden loss of consciousness or head trauma</li>
+    </ul>
+    <div style="margin-top: var(--space-6);">
+      <a href="tel:8005552872" class="btn btn-danger btn-lg btn-block"><i class="fa-solid fa-phone"></i> Call Emergency Dispatch</a>
+    </div>
+  </div>
+</div>
+
+  </main>
+
+  <!-- Portal Login Modal with Background Blur, Dummy Passwords & Cancel Option -->
+  <div class="modal-backdrop" id="modal-login" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 520px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div class="brand-icon-box" style="width: 38px; height: 38px; font-size: 1.1rem;">
+            <i class="fa-solid fa-user-lock"></i>
+          </div>
+          <div>
+            <h3 class="modal-title" style="font-size: var(--font-size-base); margin: 0;">AuraCare Portal Sign In</h3>
+            <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Multi-Role Clinical & Patient Access</p>
+          </div>
+        </div>
+        <button class="modal-close" data-modal-close aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: var(--space-6);">
+        <div id="modal-auth-alert-box" class="hidden mb-4" style="padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--font-size-xs);"></div>
+
+        <form id="form-modal-login">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="modal-login-email">Email Address <span class="required">*</span></label>
+              <input type="email" id="modal-login-email" name="email" class="form-input" placeholder="e.g. admin@auracare.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="form-label" for="modal-login-password">Password <span class="required">*</span></label>
+                <a href="/forgot-password" style="font-size: var(--font-size-xs);">Forgot Password?</a>
+              </div>
+              <div class="input-password-wrapper">
+                <input type="password" id="modal-login-password" name="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('modal-login-password', this)" aria-label="Toggle password view" title="Show password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
+              <button type="submit" id="btn-modal-login-submit" class="btn btn-primary btn-block">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+              </button>
+              <button type="button" class="btn btn-outline" data-modal-close>
+                <i class="fa-solid fa-xmark"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-slate-200);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+            <span style="font-size: 0.7rem; font-weight: bold; color: var(--color-slate-600); text-transform: uppercase;">
+              <i class="fa-solid fa-key" style="color: var(--color-primary);"></i> Quick Demo Role Sign In (Password: <code>Clinic2026!</code>)
+            </span>
+          </div>
+          <div class="role-pills-grid">
+            <button type="button" class="role-pill-btn" data-demo-email="superadmin@auracare.com" onclick="fillModalCredentials('superadmin@auracare.com', this)">👑 Super Admin</button>
+            <button type="button" class="role-pill-btn" data-demo-email="admin@auracare.com" onclick="fillModalCredentials('admin@auracare.com', this)">🏥 Hospital Admin</button>
+            <button type="button" class="role-pill-btn" data-demo-email="marcus.vance@auracare.com" onclick="fillModalCredentials('marcus.vance@auracare.com', this)">🩺 Doctor</button>
+            <button type="button" class="role-pill-btn" data-demo-email="patient@auracare.com" onclick="fillModalCredentials('patient@auracare.com', this)">👤 Patient</button>
+            <button type="button" class="role-pill-btn" data-demo-email="reception@auracare.com" onclick="fillModalCredentials('reception@auracare.com', this)">📋 Receptionist</button>
+            <button type="button" class="role-pill-btn" data-demo-email="nurse@auracare.com" onclick="fillModalCredentials('nurse@auracare.com', this)">💉 Nurse</button>
+            <button type="button" class="role-pill-btn" data-demo-email="lab@auracare.com" onclick="fillModalCredentials('lab@auracare.com', this)">🔬 Lab Tech</button>
+            <button type="button" class="role-pill-btn" data-demo-email="pharmacy@auracare.com" onclick="fillModalCredentials('pharmacy@auracare.com', this)">💊 Pharmacist</button>
+            <button type="button" class="role-pill-btn" data-demo-email="billing@auracare.com" onclick="fillModalCredentials('billing@auracare.com', this)">💰 Accountant</button>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-4); font-size: var(--font-size-xs); color: var(--color-slate-500);">
+          New Patient? <a href="/register" class="font-semibold">Register for Patient Account</a>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <span style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          <i class="fa-solid fa-lock" style="color: #2dd4bf;"></i> Secure JWT & MySQL RBAC
+        </span>
+        <button type="button" class="btn btn-outline btn-sm" data-modal-close>
+          <i class="fa-solid fa-arrow-left"></i> Cancel & Return
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Public Footer -->
+  <footer style="background: var(--color-navy-950); color: var(--color-slate-400); padding: var(--space-12) var(--space-6) var(--space-6); margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: var(--space-8); margin-bottom: var(--space-8);">
+      <div>
+        <div class="brand-logo-grid" style="color: white; margin-bottom: var(--space-3);">
+          <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+          <span>AuraCare Medical</span>
+        </div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-slate-400); margin-bottom: var(--space-4);">
+          International healthcare excellence delivering specialized cardiology, neurology, pediatrics, and diagnostic pathology with board-certified physicians.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Quick Links</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/about" style="color: inherit; text-decoration: none;">About Hospital</a></li>
+          <li><a href="/departments" style="color: inherit; text-decoration: none;">Clinical Departments</a></li>
+          <li><a href="/doctors" style="color: inherit; text-decoration: none;">Find a Doctor</a></li>
+          <li><a href="/appointments" style="color: inherit; text-decoration: none;">Book Consultation</a></li>
+          <li><a href="/emergency" style="color: inherit; text-decoration: none;">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Patient Care</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/pages/login.html" data-modal-target="modal-login" style="color: inherit; text-decoration: none;">Patient Portal</a></li>
+          <li><a href="/register" style="color: inherit; text-decoration: none;">Register Online</a></li>
+          <li><a href="/blog" style="color: inherit; text-decoration: none;">Health Articles</a></li>
+          <li><a href="/faq" style="color: inherit; text-decoration: none;">Patient FAQs</a></li>
+          <li><a href="/contact" style="color: inherit; text-decoration: none;">Contact & Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Emergency & Support</h4>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-300); margin-bottom: var(--space-2);">
+          <strong>24/7 Trauma Hotline:</strong><br>
+          <span style="font-size: var(--font-size-base); color: #2dd4bf; font-weight: bold;">+1 (800) 555-AURA</span>
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          100 Medical Plaza, Metro Health District<br>
+          Email: concierge@auracare.com
+        </p>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: var(--font-size-xs); color: var(--color-slate-500);">
+      &copy; 2026 AuraCare Medical Center. True Multi-Page Application (MPA) Architecture.
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+</body>
+</html>

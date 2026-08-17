@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="meta-page-title">Medical Article | AuraCare Medical Center</title>
+  <meta name="description" id="meta-page-desc" content="Evidence-based clinical health insights from board-certified medical faculty.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .article-body-content h3 {
+      font-size: 1.25rem;
+      color: var(--color-navy-900);
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-2);
+    }
+    .article-body-content p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--color-slate-700);
+      margin-bottom: var(--space-4);
+    }
+    .article-body-content ul {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-5);
+      color: var(--color-slate-700);
+      line-height: 1.8;
+    }
+    .article-body-content li {
+      margin-bottom: 4px;
+    }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--color-slate-200);
+      background: white;
+      color: var(--color-slate-600);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .social-btn:hover {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body class="page-shell">
+
+        <!-- Top Bar -->
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-phone" style="color: #2dd4bf;"></i> 24/7 Trauma: <strong>+1 (800) 555-AURA</strong></span>
+        <span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-clock"></i> Open 24/7</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fa-solid fa-location-dot" style="color: #2dd4bf;"></i> 100 Medical Plaza, Metro Health District</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo-grid">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <div>
+          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span class="brand-sub">MEDICAL CENTER</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/about" class="nav-link ">About</a></li>
+          <li><a href="/departments" class="nav-link ">Departments</a></li>
+          <li><a href="/doctors" class="nav-link ">Doctors</a></li>
+          <li><a href="/services" class="nav-link ">Services</a></li>
+          <li><a href="/appointments" class="nav-link ">Appointments</a></li>
+          <li><a href="/emergency" class="nav-link nav-link-emergency "><i class="fa-solid fa-truck-medical"></i> Emergency</a></li>
+          <li><a href="/contact" class="nav-link ">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Live System Health Badge (Pill) -->
+        <div class="health-badge" id="system-health-badge" title="Connecting to backend...">
+          <span class="health-dot" id="health-dot"></span>
+          <span class="health-text" id="health-text">Online • MySQL</span>
+        </div>
+
+        <!-- Auth Action Buttons (Desktop & Tablet) -->
+        <div id="header-auth-actions" class="header-auth-actions">
+          <button class="btn btn-outline-primary btn-sm" data-modal-target="modal-login">
+            <i class="fa-solid fa-user-lock"></i> <span>Sign In</span>
+          </button>
+          <a href="/appointments" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-calendar-check"></i> <span>Book Visit</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars" id="mobile-nav-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer / Dropdown -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="/" class="mobile-nav-link "><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/about" class="mobile-nav-link "><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+        <li><a href="/departments" class="mobile-nav-link "><i class="fa-solid fa-hospital"></i> Medical Departments</a></li>
+        <li><a href="/doctors" class="mobile-nav-link "><i class="fa-solid fa-user-doctor"></i> Our Physicians</a></li>
+        <li><a href="/services" class="mobile-nav-link "><i class="fa-solid fa-stethoscope"></i> Clinical Services</a></li>
+        <li><a href="/appointments" class="mobile-nav-link "><i class="fa-regular fa-calendar-check"></i> Book Appointment</a></li>
+        <li><a href="/emergency" class="mobile-nav-link text-danger font-bold "><i class="fa-solid fa-truck-medical"></i> Emergency 24/7</a></li>
+        <li><a href="/contact" class="mobile-nav-link "><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+      </ul>
+      <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <button class="btn btn-outline-primary btn-block" data-modal-target="modal-login">
+          <i class="fa-solid fa-user-lock"></i> Staff / Patient Sign In
+        </button>
+        <a href="/appointments" class="btn btn-primary btn-block">
+          <i class="fa-regular fa-calendar-check"></i> Request Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Article Content Container -->
+  <main style="max-width: 900px; margin: var(--space-8) auto; padding: 0 var(--space-6); min-height: 60vh;">
+    
+    <div style="margin-bottom: var(--space-4);">
+      <a href="/blog" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> All Health Articles</a>
+    </div>
+
+    <!-- ARTICLE HEADER -->
+    <article id="article-container">
+      <div class="card" style="padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: var(--space-2);"></i>
+        <div>Loading verified medical article...</div>
+      </div>
+    </article>
+
+    <!-- RELATED ARTICLES SECTION (CSS GRID) -->
+    <div id="related-articles-section" style="margin-top: var(--space-12); display: none;">
+      <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4); color: var(--color-navy-900);">
+        <i class="fa-solid fa-file-medical text-primary"></i> Related Clinical Articles
+      </h3>
+      <div id="related-articles-grid" class="grid-3-col" style="gap: var(--space-6);"></div>
+    </div>
+
+  </main>
+
+  <!-- Public Footer -->
+  <footer style="background: var(--color-navy-950); color: var(--color-slate-400); padding: var(--space-12) var(--space-6) var(--space-6); margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: var(--space-8); margin-bottom: var(--space-8);">
+      <div>
+        <div class="brand-logo-grid" style="color: white; margin-bottom: var(--space-3);">
+          <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+          <span>AuraCare Medical</span>
+        </div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-slate-400); margin-bottom: var(--space-4);">
+          International healthcare excellence delivering specialized cardiology, neurology, pediatrics, and diagnostic pathology with board-certified physicians.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Quick Links</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/about" style="color: inherit; text-decoration: none;">About Hospital</a></li>
+          <li><a href="/departments" style="color: inherit; text-decoration: none;">Clinical Departments</a></li>
+          <li><a href="/doctors" style="color: inherit; text-decoration: none;">Find a Doctor</a></li>
+          <li><a href="/appointments" style="color: inherit; text-decoration: none;">Book Consultation</a></li>
+          <li><a href="/emergency" style="color: inherit; text-decoration: none;">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Patient Care</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/pages/login.html" data-modal-target="modal-login" style="color: inherit; text-decoration: none;">Patient Portal</a></li>
+          <li><a href="/register" style="color: inherit; text-decoration: none;">Register Online</a></li>
+          <li><a href="/blog" style="color: inherit; text-decoration: none;">Health Articles</a></li>
+          <li><a href="/faq" style="color: inherit; text-decoration: none;">Patient FAQs</a></li>
+          <li><a href="/contact" style="color: inherit; text-decoration: none;">Contact & Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Emergency & Support</h4>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-300); margin-bottom: var(--space-2);">
+          <strong>24/7 Trauma Hotline:</strong><br>
+          <span style="font-size: var(--font-size-base); color: #2dd4bf; font-weight: bold;">+1 (800) 555-AURA</span>
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          100 Medical Plaza, Metro Health District<br>
+          Email: concierge@auracare.com
+        </p>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: var(--font-size-xs); color: var(--color-slate-500);">
+      &copy; 2026 AuraCare Medical Center. True Multi-Page Application (MPA) Architecture.
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Determine slug from URL pathname (/blog/slug) or query param (?slug=slug)
+      const pathParts = window.location.pathname.split('/');
+      let slug = null;
+      if (pathParts[1] === 'blog' && pathParts[2]) {
+        slug = pathParts[2];
+      } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        slug = urlParams.get('slug') || 'early-detection-cardiovascular-disease';
+      }
+
+      try {
+        const res = await API.get(`/blog/articles/${slug}`);
+        if (res.success && res.data) {
+          const a = res.data.article;
+          const related = res.data.related_articles || [];
+
+          // Set Dynamic SEO Metadata
+          document.title = `${a.seo_title || a.title} | AuraCare Medical`;
+          if (a.meta_description) {
+            document.getElementById('meta-page-desc').setAttribute('content', a.meta_description);
+          }
+
+          // Format content markdown headings & paragraphs
+          const formattedContent = (a.content || '')
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+            .replace(/^\- (.*$)/gim, '<li>$1</li>')
+            .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+            .replace(/\n\n/g, '</p><p>');
+
+          document.getElementById('article-container').innerHTML = `
+            <div class="card" style="overflow: hidden; padding: 0;">
+              ${a.featured_image ? `<img src="${a.featured_image}" alt="${a.title}" style="width: 100%; height: 360px; object-fit: cover;">` : ''}
+              
+              <div style="padding: var(--space-8);">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: var(--space-3); flex-wrap: wrap;">
+                  <span class="badge badge-info">${a.category_name}</span>
+                  <span class="text-xs text-muted"><i class="fa-regular fa-clock"></i> ${a.reading_time_minutes} min read &bull; <i class="fa-regular fa-eye"></i> ${a.views_count} views</span>
+                </div>
+
+                <h1 style="font-size: var(--font-size-2xl); color: var(--color-navy-900); margin-bottom: var(--space-4); line-height: 1.3;">${a.title}</h1>
+
+                <!-- AUTHOR BOX & SHARE -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) 0; border-top: 1px solid var(--color-slate-100); border-bottom: 1px solid var(--color-slate-100); margin-bottom: var(--space-6); flex-wrap: wrap; gap: var(--space-3);">
+                  <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #e0f2fe; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                      <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.85rem; color: var(--color-slate-800);">${a.author_name}</div>
+                      <div style="font-size: 0.72rem; color: var(--color-slate-400);">Published on ${new Date(a.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span class="text-xs text-muted" style="margin-right: 4px;">Share:</span>
+                    <button class="social-btn" onclick="shareArticle('twitter')" title="Share on Twitter"><i class="fa-brands fa-x-twitter"></i></button>
+                    <button class="social-btn" onclick="shareArticle('linkedin')" title="Share on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></button>
+                    <button class="social-btn" onclick="copyArticleLink()" title="Copy Link"><i class="fa-solid fa-link"></i></button>
+                  </div>
+                </div>
+
+                <!-- ARTICLE BODY -->
+                <div class="article-body-content">
+                  <p>${formattedContent}</p>
+                </div>
+
+                <!-- TAGS CLOUD -->
+                ${a.tags ? `
+                  <div style="margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--color-slate-100); display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                    <span class="text-xs font-bold text-muted"><i class="fa-solid fa-tags text-primary"></i> Topics:</span>
+                    ${a.tags.split(',').map(t => `<a href="/blog?tag=${encodeURIComponent(t.trim())}" class="badge badge-light" style="text-decoration: none;">#${t.trim()}</a>`).join('')}
+                  </div>
+                ` : ''}
+
+              </div>
+            </div>
+          `;
+
+          // Render Related Articles
+          if (related.length > 0) {
+            const relSection = document.getElementById('related-articles-section');
+            const relGrid = document.getElementById('related-articles-grid');
+            relSection.style.display = 'block';
+            relGrid.innerHTML = '';
+
+            related.forEach(r => {
+              const rCard = document.createElement('div');
+              rCard.className = 'card';
+              rCard.style.overflow = 'hidden';
+              rCard.innerHTML = `
+                <a href="/blog/${r.slug}">
+                  <img src="${r.featured_image || 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80'}" alt="${r.title}" style="width: 100%; height: 140px; object-fit: cover;">
+                </a>
+                <div class="card-body" style="padding: var(--space-4);">
+                  <span class="badge badge-info" style="font-size: 0.6rem; margin-bottom: 4px;">${r.category_name}</span>
+                  <h4 style="font-size: 0.9rem; margin-bottom: 6px; line-height: 1.3;">
+                    <a href="/blog/${r.slug}" style="color: var(--color-navy-900); text-decoration: none;">${r.title}</a>
+                  </h4>
+                  <div style="font-size: 0.7rem; color: var(--color-slate-400);">
+                    <i class="fa-regular fa-clock"></i> ${r.reading_time_minutes} min read
+                  </div>
+                </div>
+              `;
+              relGrid.appendChild(rCard);
+            });
+          }
+        }
+      } catch (err) {
+        document.getElementById('article-container').innerHTML = `
+          <div class="card" style="padding: var(--space-8); text-align: center;">
+            <i class="fa-regular fa-face-frown text-danger" style="font-size: 2.5rem; margin-bottom: var(--space-2);"></i>
+            <h3>Medical Article Not Found</h3>
+            <p class="text-muted" style="font-size: var(--font-size-sm); margin-bottom: var(--space-4);">The requested clinical article does not exist or has been archived.</p>
+            <a href="/blog" class="btn btn-primary btn-sm">&larr; Return to Health Articles</a>
+          </div>
+        `;
+      }
+    });
+
+    function shareArticle(network) {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent(document.title);
+      if (network === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+      } else if (network === 'linkedin') {
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+      }
+    }
+
+    function copyArticleLink() {
+      navigator.clipboard.writeText(window.location.href);
+      Toast.success('Article link copied to clipboard!');
+    }
+  </script>
+  <script src="/js/responsive.js"></script>
+</body>
+</html>

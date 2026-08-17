@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Duty Schedules & Live Availability | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .timetable-matrix-grid {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .shift-cell {
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: 0.725rem;
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+    .shift-cell.active {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #065f46;
+    }
+    .shift-cell.inactive {
+      background: #f8fafc;
+      color: #94a3b8;
+      border: 1px solid #f1f5f9;
+    }
+    .slots-interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: var(--space-2);
+    }
+    .slot-chip {
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border: 1px solid transparent;
+      transition: all var(--transition-fast);
+    }
+    .slot-chip.available {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #047857;
+    }
+    .slot-chip.booked {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+      opacity: 0.75;
+    }
+    .slot-chip.break {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #b45309;
+      opacity: 0.8;
+    }
+    .slot-chip.leave {
+      background: #fdf4ff;
+      border-color: #f5d0fe;
+      color: #a855f7;
+      opacity: 0.8;
+    }
+    .slot-chip.past {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      color: #94a3b8;
+      opacity: 0.6;
+    }
+    .tab-btn.active {
+      border-bottom: 3px solid var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="dashboard-layout">
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
+        <li><a href="/admin/users" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-users-gear"></i> Users Directory</a></li>
+        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
+        <li><a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
+        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
+        <li><a href="/admin/schedules" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-calendar-days"></i> Shifts & Availability</a></li>
+        <li><a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Master Bookings</a></li>
+        <li><a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-invoice-dollar"></i> Finance & Invoices</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Hospital Admin</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/admin/settings" class="btn btn-outline btn-sm" title="Settings" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;"><i class="fa-solid fa-calendar-days text-primary"></i> Doctor Duty Schedules & Real-Time Availability Engine</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <button class="btn btn-primary btn-sm" onclick="openRecordLeaveModal()">
+          <i class="fa-solid fa-calendar-plus"></i> Record Leave / Block Date
+        </button>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+      <!-- TOP STATS KPI CARDS (CSS GRID) -->
+      <div class="grid-4-col" style="margin-bottom: var(--space-4);">
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid var(--color-primary);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="text-xs text-muted font-bold text-uppercase">Faculty Specialists</div>
+              <div class="text-2xl font-extrabold text-navy" id="stat-sched-doctors">8</div>
+            </div>
+            <div class="brand-icon-box" style="background: var(--color-primary-light); color: var(--color-primary);"><i class="fa-solid fa-user-doctor"></i></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #10b981;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="text-xs text-muted font-bold text-uppercase">Active Weekly Shifts</div>
+              <div class="text-2xl font-extrabold text-navy" id="stat-sched-active-shifts">38</div>
+            </div>
+            <div class="brand-icon-box" style="background: #d1fae5; color: #059669;"><i class="fa-solid fa-calendar-check"></i></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #f59e0b;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="text-xs text-muted font-bold text-uppercase">Approved Leaves / Blocks</div>
+              <div class="text-2xl font-extrabold text-navy" id="stat-sched-leaves">2</div>
+            </div>
+            <div class="brand-icon-box" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-plane-departure"></i></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #6366f1;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="text-xs text-muted font-bold text-uppercase">Availability Engine</div>
+              <div class="text-2xl font-extrabold" style="color: #6366f1;">100% Live</div>
+            </div>
+            <div class="brand-icon-box" style="background: #ede9fe; color: #6366f1;"><i class="fa-solid fa-microchip"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABBED CONTROLS BAR -->
+      <div class="card" style="margin-bottom: var(--space-4);">
+        <div style="display: flex; gap: var(--space-6); padding: 0 var(--space-6); border-bottom: 1px solid var(--color-slate-200);">
+          <button type="button" class="tab-btn active" id="tab-btn-matrix" onclick="switchScheduleTab('matrix')" style="background: none; border: none; padding: var(--space-4) 0; cursor: pointer; font-size: var(--font-size-sm); color: var(--color-slate-600);">
+            <i class="fa-solid fa-table-cells"></i> 7-Day Timetable Matrix
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-simulator" onclick="switchScheduleTab('simulator')" style="background: none; border: none; padding: var(--space-4) 0; cursor: pointer; font-size: var(--font-size-sm); color: var(--color-slate-600);">
+            <i class="fa-solid fa-clock"></i> Live Slot Availability Simulator
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-leaves" onclick="switchScheduleTab('leaves')" style="background: none; border: none; padding: var(--space-4) 0; cursor: pointer; font-size: var(--font-size-sm); color: var(--color-slate-600);">
+            <i class="fa-solid fa-plane-departure"></i> Faculty Leaves & Blocked Dates
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 1: 7-DAY TIMETABLE MATRIX -->
+      <div id="tab-matrix-container">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin: 0;">Weekly Duty Schedule Matrix</h4>
+              <span class="text-xs text-muted">Weekly shift timings, clinical break hours, and slot durations</span>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="loadOverviewMatrix()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th style="min-width: 220px;">Physician & Specialty</th>
+                    <th style="text-align: center;">Mon</th>
+                    <th style="text-align: center;">Tue</th>
+                    <th style="text-align: center;">Wed</th>
+                    <th style="text-align: center;">Thu</th>
+                    <th style="text-align: center;">Fri</th>
+                    <th style="text-align: center;">Sat</th>
+                    <th style="text-align: center;">Sun</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-matrix-tbody">
+                  <tr><td colspan="9" class="text-center text-muted" style="padding: var(--space-8);"><i class="fa-solid fa-spinner fa-spin"></i> Loading timetable matrix...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: LIVE AVAILABILITY SIMULATOR -->
+      <div id="tab-simulator-container" style="display: none;">
+        <div class="grid-split-40-60" style="gap: var(--space-5);">
+          
+          <!-- Simulator Controls -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-sliders text-primary"></i> Availability Query Parameters</h4>
+            </div>
+            <div class="card-body">
+              <p class="text-xs text-muted" style="margin-bottom: var(--space-4);">
+                Select any physician and target consultation date to query the live calculation engine. The system evaluates duty shifts, break times, approved leaves, and existing booked appointments in MySQL.
+              </p>
+
+              <div class="form-group" style="margin-bottom: var(--space-4);">
+                <label class="form-label font-bold">Select Specialist *</label>
+                <select id="sim-doctor-select" class="form-select" onchange="runAvailabilitySimulator()">
+                  <option value="">Select Doctor...</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: var(--space-4);">
+                <label class="form-label font-bold">Consultation Date *</label>
+                <input type="date" id="sim-date-input" class="form-input" onchange="runAvailabilitySimulator()">
+              </div>
+
+              <button class="btn btn-primary btn-block" onclick="runAvailabilitySimulator()">
+                <i class="fa-solid fa-bolt"></i> Execute Availability Calculation
+              </button>
+
+              <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-slate-200);">
+                <h5 class="text-xs text-muted font-bold text-uppercase" style="margin-bottom: var(--space-2);">Slot Legend</h5>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); font-size: 0.725rem;">
+                  <div><span class="badge badge-success" style="padding: 2px 6px;">Available</span> Open slot</div>
+                  <div><span class="badge badge-primary" style="padding: 2px 6px;">Booked</span> Taken in MySQL</div>
+                  <div><span class="badge badge-warning" style="padding: 2px 6px;">Break</span> Clinical pause</div>
+                  <div><span class="badge badge-danger" style="padding: 2px 6px;">Leave</span> On leave / block</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulator Real-Time Output -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-microchip text-primary"></i> Real Generated Slots Output</h4>
+                <span class="text-xs text-muted" id="sim-output-subtitle">Live MySQL result</span>
+              </div>
+              <span class="badge badge-success" id="sim-output-badge">Available</span>
+            </div>
+            <div class="card-body">
+              <div id="sim-diagnostic-banner" style="background: var(--color-slate-50); padding: var(--space-4); border-radius: var(--radius-lg); margin-bottom: var(--space-4); border: 1px solid var(--color-slate-200);">
+                <div class="text-center text-muted"><i class="fa-solid fa-arrow-left"></i> Select a physician and date to calculate availability</div>
+              </div>
+
+              <h5 class="text-xs text-muted font-bold text-uppercase" style="margin-bottom: var(--space-3);">Calculated Time Slots</h5>
+              <div class="slots-interactive-grid" id="sim-slots-container">
+                <div class="text-center text-muted" style="grid-column: 1 / -1; padding: 2rem;">No query executed yet.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 3: FACULTY LEAVES & BLOCKED DATES -->
+      <div id="tab-leaves-container" style="display: none;">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-plane-departure text-primary"></i> Physician Approved Leaves & Blocked Dates</h4>
+              <span class="text-xs text-muted">All active leaves automatically suspend consultation slot generation</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openRecordLeaveModal()">
+              <i class="fa-solid fa-plus"></i> Record New Leave
+            </button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>Physician</th>
+                    <th>Department</th>
+                    <th>Date Range</th>
+                    <th>Leave Type</th>
+                    <th>Duration</th>
+                    <th>Reason / Details</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="leaves-table-tbody">
+                  <tr><td colspan="8" class="text-center text-muted" style="padding: var(--space-8);"><i class="fa-solid fa-spinner fa-spin"></i> Fetching doctor leaves...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- RECORD LEAVE / BLOCK TIME MODAL -->
+  <div id="modal-record-leave" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 600px; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; background: var(--color-navy-900); color: white;">
+        <h4 style="margin: 0; color: white;"><i class="fa-solid fa-calendar-plus text-primary"></i> Record Leave / Blocked Dates</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeRecordLeaveModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="padding: var(--space-5);">
+        <form id="form-leave-record">
+          <div class="form-group" style="margin-bottom: var(--space-3);">
+            <label class="form-label font-bold">Physician *</label>
+            <select id="form-leave-doc" class="form-select" required>
+              <option value="">Select Doctor...</option>
+            </select>
+          </div>
+
+          <div class="grid-2-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label font-bold">Start Date *</label>
+              <input type="date" id="form-leave-start" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label font-bold">End Date *</label>
+              <input type="date" id="form-leave-end" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="grid-2-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label font-bold">Leave Type *</label>
+              <select id="form-leave-type" class="form-select">
+                <option value="annual">Annual / Vacation Leave</option>
+                <option value="conference">Scientific Conference / Symposium</option>
+                <option value="sick">Sick / Medical Recovery</option>
+                <option value="emergency">Emergency / Compassionate</option>
+                <option value="blocked_time">Administrative Blocked Time</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label font-bold">Initial Status</label>
+              <select id="form-leave-status" class="form-select">
+                <option value="approved">Approved & Active</option>
+                <option value="pending">Pending Approval</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-3);">
+            <label class="form-label font-bold">Reason & Justification</label>
+            <input type="text" id="form-leave-reason" class="form-input" placeholder="e.g. Attending Annual Cardiology Congress in Chicago">
+          </div>
+        </form>
+      </div>
+      <div class="card-footer" style="display: flex; justify-content: flex-end; gap: var(--space-2); background: var(--color-slate-50);">
+        <button type="button" class="btn btn-outline" onclick="closeRecordLeaveModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btn-submit-leave" onclick="submitLeaveRecord()">
+          <i class="fa-solid fa-check"></i> Record & Save Leave
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let activeTab = 'matrix';
+    let doctorsList = [];
+    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin', 'doctor', 'receptionist']);
+
+      // Default simulator date to upcoming Monday
+      const d = new Date();
+      d.setDate(d.getDate() + ((1 + 7 - d.getDay()) % 7 || 7));
+      document.getElementById('sim-date-input').value = d.toISOString().split('T')[0];
+
+      loadDoctors();
+      loadOverviewMatrix();
+      loadLeavesTable();
+    });
+
+    function switchScheduleTab(tab) {
+      activeTab = tab;
+      document.getElementById('tab-btn-matrix').classList.toggle('active', tab === 'matrix');
+      document.getElementById('tab-btn-simulator').classList.toggle('active', tab === 'simulator');
+      document.getElementById('tab-btn-leaves').classList.toggle('active', tab === 'leaves');
+
+      document.getElementById('tab-matrix-container').style.display = tab === 'matrix' ? 'block' : 'none';
+      document.getElementById('tab-simulator-container').style.display = tab === 'simulator' ? 'block' : 'none';
+      document.getElementById('tab-leaves-container').style.display = tab === 'leaves' ? 'block' : 'none';
+
+      if (tab === 'simulator' && !document.getElementById('sim-doctor-select').value && doctorsList.length > 0) {
+        document.getElementById('sim-doctor-select').value = doctorsList[0].id;
+        runAvailabilitySimulator();
+      }
+    }
+
+    async function loadDoctors() {
+      try {
+        const res = await API.get('/doctors', { limit: 100 });
+        if (res.success && res.data) {
+          doctorsList = res.data;
+          document.getElementById('stat-sched-doctors').textContent = doctorsList.length;
+
+          const simSelect = document.getElementById('sim-doctor-select');
+          const leaveSelect = document.getElementById('form-leave-doc');
+          simSelect.innerHTML = '<option value="">Select Doctor...</option>';
+          leaveSelect.innerHTML = '<option value="">Select Doctor...</option>';
+
+          doctorsList.forEach(doc => {
+            simSelect.innerHTML += `<option value="${doc.id}">${doc.name} (${doc.doctor_code}) - ${doc.department_name}</option>`;
+            leaveSelect.innerHTML += `<option value="${doc.id}">${doc.name} (${doc.doctor_code}) - ${doc.department_name}</option>`;
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadOverviewMatrix() {
+      const tbody = document.getElementById('overview-matrix-tbody');
+      tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted" style="padding: var(--space-8);"><i class="fa-solid fa-spinner fa-spin"></i> Loading timetable matrix...</td></tr>';
+
+      try {
+        const res = await API.get('/schedules/overview');
+        if (res.success && res.data) {
+          tbody.innerHTML = '';
+          let totalActiveShifts = 0;
+
+          res.data.forEach(doc => {
+            const tr = document.createElement('tr');
+            let shiftCellsHtml = '';
+
+            weekDays.forEach(day => {
+              const shift = doc.week_schedule[day];
+              if (shift && shift.active) {
+                totalActiveShifts++;
+                shiftCellsHtml += `
+                  <td>
+                    <div class="shift-cell active" title="Break: ${shift.break} | ${shift.slot}m slots | ${shift.max} max">
+                      <strong>${shift.shift}</strong><br>
+                      <span style="font-size: 0.65rem; color: #047857;">${shift.slot}m</span>
+                    </div>
+                  </td>
+                `;
+              } else {
+                shiftCellsHtml += `<td><div class="shift-cell inactive">—</div></td>`;
+              }
+            });
+
+            tr.innerHTML = `
+              <td>
+                <div style="font-weight: 700; color: var(--color-navy-900);">${doc.doctor_name}</div>
+                <div class="text-xs text-primary">${doc.department_name}</div>
+                <div class="text-xs text-muted"><code>${doc.doctor_code}</code> • ${doc.room_number || 'Room TBD'}</div>
+              </td>
+              ${shiftCellsHtml}
+              <td style="text-align: right; white-space: nowrap;">
+                <a href="/admin/doctor-profile?id=${doc.doctor_id}" class="btn btn-outline btn-sm" title="View Doctor File">
+                  <i class="fa-solid fa-user-doctor text-primary"></i>
+                </a>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          document.getElementById('stat-sched-active-shifts').textContent = totalActiveShifts;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-center text-danger" style="padding: 2rem;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function runAvailabilitySimulator() {
+      const docId = document.getElementById('sim-doctor-select').value;
+      const dateVal = document.getElementById('sim-date-input').value;
+      if (!docId || !dateVal) return;
+
+      const banner = document.getElementById('sim-diagnostic-banner');
+      const slotsContainer = document.getElementById('sim-slots-container');
+      const badge = document.getElementById('sim-output-badge');
+      const subtitle = document.getElementById('sim-output-subtitle');
+
+      slotsContainer.innerHTML = '<div class="text-center text-muted" style="grid-column: 1 / -1; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin"></i> Calculating slots in MySQL...</div>';
+
+      try {
+        const res = await API.get('/schedules/availability', { doctor_id: docId, date: dateVal });
+        if (res.success && res.data) {
+          const d = res.data;
+          subtitle.textContent = `${d.doctor_name} on ${d.day_of_week}, ${d.date}`;
+
+          badge.textContent = d.is_available ? 'AVAILABLE' : 'UNAVAILABLE';
+          badge.className = `badge ${d.is_available ? 'badge-success' : 'badge-danger'}`;
+
+          banner.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-2);">
+              <div>
+                <h5 style="margin: 0 0 4px 0; color: var(--color-navy-900);">${d.doctor_name} (${d.specialization})</h5>
+                <div class="text-xs text-muted">
+                  <strong>Department:</strong> ${d.department_name} | <strong>Room:</strong> ${d.room_number} | <strong>Fee:</strong> $${d.consultation_fee.toFixed(2)}
+                </div>
+                ${d.working_shift ? `<div class="text-xs" style="margin-top: 4px; color: var(--color-primary); font-weight: 600;">Working Shift: ${d.working_shift.formatted} (${d.working_shift.slot_duration_minutes}m slots)</div>` : ''}
+                ${d.break_time ? `<div class="text-xs text-warning">Clinical Break: ${d.break_time.formatted}</div>` : ''}
+                ${d.reason ? `<div class="text-xs text-danger" style="margin-top: 4px; font-weight: bold;">Status Note: ${d.reason}</div>` : ''}
+              </div>
+              <div style="text-align: right;">
+                <div class="text-xs text-muted">Total Slots: <strong>${d.total_slots_generated}</strong></div>
+                <div class="text-xs" style="color: #059669;">Available: <strong>${d.available_slots_count}</strong></div>
+                <div class="text-xs" style="color: #2563eb;">Booked: <strong>${d.booked_slots_count}</strong></div>
+              </div>
+            </div>
+          `;
+
+          slotsContainer.innerHTML = '';
+          if (d.slots.length === 0) {
+            slotsContainer.innerHTML = `
+              <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; background: white; border-radius: var(--radius-md); border: 1px dashed var(--color-slate-300);">
+                <i class="fa-regular fa-calendar-xmark fa-2x" style="color: var(--color-slate-400); margin-bottom: 6px;"></i>
+                <p class="text-muted text-xs" style="margin: 0;">${d.reason || 'No consultation slots available on this date.'}</p>
+              </div>
+            `;
+            return;
+          }
+
+          d.slots.forEach(s => {
+            const chip = document.createElement('div');
+            chip.className = `slot-chip ${s.status}`;
+            chip.title = s.notes || (s.is_booked ? 'Booked appointment' : 'Available for scheduling');
+            chip.innerHTML = `
+              <span style="font-size: 0.8rem;">${s.time}</span>
+              <span style="font-size: 0.65rem; text-transform: uppercase;">${s.status}</span>
+            `;
+            slotsContainer.appendChild(chip);
+          });
+        }
+      } catch (err) {
+        slotsContainer.innerHTML = `<div class="text-danger text-center" style="grid-column: 1 / -1; padding: 2rem;">Error: ${err.message}</div>`;
+      }
+    }
+
+    async function loadLeavesTable() {
+      const tbody = document.getElementById('leaves-table-tbody');
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted" style="padding: var(--space-8);"><i class="fa-solid fa-spinner fa-spin"></i> Fetching leaves...</td></tr>';
+
+      try {
+        const res = await API.get('/schedules/leaves');
+        if (res.success && res.data) {
+          tbody.innerHTML = '';
+          document.getElementById('stat-sched-leaves').textContent = res.data.length;
+
+          if (res.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted" style="padding: var(--space-6);">No physician leaves recorded.</td></tr>';
+            return;
+          }
+
+          res.data.forEach(l => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>
+                <div style="font-weight: 700; color: var(--color-navy-900);">${l.doctor_name}</div>
+                <code style="font-size: 0.725rem;">${l.doctor_code}</code>
+              </td>
+              <td>${l.department_name}</td>
+              <td>
+                <strong>${l.start_date}</strong> &rarr; <strong>${l.end_date}</strong>
+              </td>
+              <td><span class="badge badge-warning" style="text-transform: uppercase;">${l.leave_type}</span></td>
+              <td><span class="badge ${l.is_full_day ? 'badge-primary' : 'badge-light'}">${l.is_full_day ? 'Full Day' : l.start_time + ' - ' + l.end_time}</span></td>
+              <td class="text-xs text-muted" style="max-width: 250px;">${l.reason || 'Personal / Clinical leave'}</td>
+              <td><span class="badge ${l.status === 'approved' ? 'badge-success' : 'badge-warning'}">${l.status}</span></td>
+              <td style="text-align: right; white-space: nowrap;">
+                ${l.status === 'pending' ? `<button class="btn btn-outline btn-sm" onclick="updateLeaveStatus(${l.id}, 'approved')"><i class="fa-solid fa-check text-success"></i> Approve</button>` : ''}
+                ${l.status === 'approved' ? `<button class="btn btn-outline-danger btn-sm" onclick="updateLeaveStatus(${l.id}, 'cancelled')"><i class="fa-solid fa-ban"></i> Cancel</button>` : ''}
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger" style="padding: 2rem;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    function openRecordLeaveModal() {
+      document.getElementById('form-leave-record').reset();
+      document.getElementById('modal-record-leave').style.display = 'flex';
+    }
+
+    function closeRecordLeaveModal() {
+      document.getElementById('modal-record-leave').style.display = 'none';
+    }
+
+    async function submitLeaveRecord() {
+      const docId = document.getElementById('form-leave-doc').value;
+      const start = document.getElementById('form-leave-start').value;
+      const end = document.getElementById('form-leave-end').value;
+
+      if (!docId || !start || !end) {
+        Toast.warning('Please select a physician and date interval.');
+        return;
+      }
+
+      const payload = {
+        doctor_id: parseInt(docId, 10),
+        start_date: start,
+        end_date: end,
+        leave_type: document.getElementById('form-leave-type').value,
+        status: document.getElementById('form-leave-status').value,
+        reason: document.getElementById('form-leave-reason').value.trim(),
+        is_full_day: true
+      };
+
+      const btn = document.getElementById('btn-submit-leave');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+
+      try {
+        const res = await API.post('/schedules/leaves', payload);
+        if (res.success) {
+          Toast.success('Doctor leave recorded successfully!');
+          closeRecordLeaveModal();
+          loadLeavesTable();
+        } else {
+          Toast.error(res.message || 'Failed to record leave.');
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Server error.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Record & Save Leave';
+      }
+    }
+
+    async function updateLeaveStatus(leaveId, status) {
+      try {
+        const res = await API.patch(`/schedules/leaves/${leaveId}/status`, { status });
+        if (res.success) {
+          Toast.success(`Leave status updated to ${status}`);
+          loadLeavesTable();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update leave.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Inquiries & Concierge Desk | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
+        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
+        <li><a href="/admin/inquiries" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-envelope-open-text"></i> Patient Inquiries</a></li>
+        <li><a href="/admin/reviews" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-star"></i> Reviews & Feedback</a></li>
+        <li><a href="/admin/blog" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-newspaper"></i> Health Articles CMS</a></li>
+        <li><a href="/admin/notifications" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-bell"></i> Notification Center</a></li>
+        <li><a href="/admin/reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-line"></i> Intelligence & Analytics</a></li>
+        <li><a href="/admin/staff" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-users-gear"></i> Staff & HR Directory</a></li>
+        <li><a href="/admin/emergency" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-truck-medical"></i> Emergency & Trauma</a></li>
+        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
+        <li><a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
+        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
+        <li><a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+        <li><a href="/admin/opd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-stethoscope"></i> OPD Queue</a></li>
+        <li><a href="/admin/ipd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-bed-pulse"></i> Inpatient & Wards</a></li>
+        <li><a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-vial-virus"></i> Lab & Pathology</a></li>
+        <li><a href="/admin/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-x-ray"></i> Radiology Imaging</a></li>
+        <li><a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-pills"></i> Pharmacy & Stock</a></li>
+        <li><a href="/admin/inventory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-boxes-stacked"></i> Supply Inventory</a></li>
+        <li><a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Patient Concierge</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;"><i class="fa-solid fa-envelope-open-text text-primary"></i> Patient Inquiries & Concierge Desk</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <a href="/contact" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Public Contact Form</a>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+      <!-- 4 TOP KPI STAT CARDS (CSS GRID) -->
+      <div class="grid-4-col" style="margin-bottom: var(--space-4);">
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid var(--color-primary);">
+          <div class="text-xs text-muted font-bold text-uppercase">Total Inquiries</div>
+          <div class="text-2xl font-extrabold text-navy" id="stat-total">0</div>
+          <div class="text-xs text-muted">All messages received</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #ef4444;">
+          <div class="text-xs text-muted font-bold text-uppercase">New / Unread</div>
+          <div class="text-2xl font-extrabold text-danger" id="stat-new">0</div>
+          <div class="text-xs text-muted">Awaiting initial review</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #22c55e;">
+          <div class="text-xs text-muted font-bold text-uppercase">Replied / Resolved</div>
+          <div class="text-2xl font-extrabold text-success" id="stat-replied">0</div>
+          <div class="text-xs text-muted">Concierge response dispatched</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #64748b;">
+          <div class="text-xs text-muted font-bold text-uppercase">Archived Inquiries</div>
+          <div class="text-2xl font-extrabold text-muted" id="stat-archived">0</div>
+          <div class="text-xs text-muted">Closed historical inquiries</div>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH BAR (CSS GRID) -->
+      <div class="card" style="margin-bottom: var(--space-4);">
+        <div class="card-body" style="padding: var(--space-3) var(--space-4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
+          <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+            <input type="text" id="inq-search" class="form-input text-xs" placeholder="Search sender, email, subject, text..." style="width: 260px;" oninput="debounceInquirySearch()">
+            
+            <select id="inq-status" class="form-select text-xs" style="width: 150px;" onchange="loadInquiries()">
+              <option value="all">All Statuses</option>
+              <option value="new">New (Unread)</option>
+              <option value="read">Read</option>
+              <option value="replied">Replied / Resolved</option>
+              <option value="archived">Archived</option>
+            </select>
+
+            <select id="inq-type" class="form-select text-xs" style="width: 170px;" onchange="loadInquiries()">
+              <option value="all">All Inquiry Types</option>
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Appointment Question">Appointment Question</option>
+              <option value="Billing & Insurance">Billing & Insurance</option>
+              <option value="Medical Records">Medical Records</option>
+              <option value="Feedback / Complaint">Patient Feedback</option>
+            </select>
+          </div>
+
+          <div>
+            <button class="btn btn-outline btn-sm" onclick="loadInquiries()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- INQUIRIES CARDS GRID (CSS GRID) -->
+      <div id="inquiries-grid" class="grid-cards-auto" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: var(--space-5);">
+        <div class="card" style="padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: var(--space-2);"></i>
+          <div>Loading inquiries from MySQL...</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- VIEW & REPLY MODAL -->
+  <div id="modal-reply" class="modal-backdrop" style="display: none;">
+    <div class="modal-dialog" style="max-width: 650px;">
+      <div class="modal-header">
+        <h4 id="modal-reply-title"><i class="fa-solid fa-envelope-open-text text-primary"></i> Patient Inquiry Details</h4>
+        <button class="btn btn-link" onclick="closeReplyModal()">&times;</button>
+      </div>
+      <form id="form-reply" onsubmit="handleReplySubmit(event)">
+        <input type="hidden" id="reply-inq-id">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-3); max-height: 75vh; overflow-y: auto;">
+          
+          <div style="background: var(--color-slate-50); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-slate-200);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+              <span class="badge badge-info" id="view-inq-type">Inquiry Type</span>
+              <span class="text-xs text-muted" id="view-inq-date">Date</span>
+            </div>
+            <h4 style="font-size: 1.05rem; color: var(--color-navy-900); margin-bottom: var(--space-2);" id="view-inq-subject">Subject</h4>
+            <p style="font-size: 0.85rem; line-height: 1.6; color: var(--color-slate-700); margin-bottom: var(--space-3);" id="view-inq-message">Message details...</p>
+            
+            <div style="font-size: 0.75rem; color: var(--color-slate-500); display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-top: 1px solid var(--color-slate-200); padding-top: var(--space-2);">
+              <div>Sender: <strong id="view-inq-sender">Name</strong></div>
+              <div>Email: <a id="view-inq-email" href="#" style="color: var(--color-primary);">email</a></div>
+              <div>Phone: <span id="view-inq-phone">N/A</span></div>
+              <div>Department: <span id="view-inq-dept">General</span></div>
+            </div>
+          </div>
+
+          <div id="existing-reply-box" style="display: none; background: #ecfdf5; border-left: 4px solid #10b981; padding: var(--space-3); border-radius: var(--radius-sm);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #065f46; margin-bottom: 2px;">RESOLVED / REPLIED BY CLINICAL CONCIERGE:</div>
+            <p style="font-size: 0.8rem; color: #047857; margin: 0;" id="existing-reply-text"></p>
+          </div>
+
+          <div>
+            <label class="form-label text-xs font-bold">Reply Notes / Concierge Resolution <span class="text-danger">*</span></label>
+            <textarea id="reply-notes" class="form-input" rows="4" placeholder="Enter clinical advice, appointment details, or direct response sent to the patient..." required></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer" style="justify-content: space-between;">
+          <div>
+            <button type="button" class="btn btn-outline-warning btn-sm" onclick="archiveCurrentInquiry()"><i class="fa-solid fa-box-archive"></i> Archive</button>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeReplyModal()">Close</button>
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-paper-plane"></i> Save Reply & Resolve</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script>
+    let searchTimer = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin', 'receptionist']);
+      loadStats();
+      loadInquiries();
+    });
+
+    function debounceInquirySearch() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadInquiries(), 300);
+    }
+
+    async function loadStats() {
+      try {
+        const res = await API.get('/contact/inquiries/stats');
+        if (res.success && res.data) {
+          const s = res.data;
+          document.getElementById('stat-total').textContent = s.total_inquiries || 0;
+          document.getElementById('stat-new').textContent = s.new_inquiries || 0;
+          document.getElementById('stat-replied').textContent = s.replied_inquiries || 0;
+          document.getElementById('stat-archived').textContent = s.archived_inquiries || 0;
+        }
+      } catch (_) {}
+    }
+
+    async function loadInquiries() {
+      const grid = document.getElementById('inquiries-grid');
+      const search = document.getElementById('inq-search').value;
+      const status = document.getElementById('inq-status').value;
+      const type = document.getElementById('inq-type').value;
+
+      try {
+        const res = await API.get('/contact/inquiries', {
+          search: search || undefined,
+          status: status !== 'all' ? status : undefined,
+          inquiry_type: type !== 'all' ? type : undefined,
+          limit: 50
+        });
+
+        if (res.success && res.data) {
+          const list = res.data;
+          if (list.length === 0) {
+            grid.innerHTML = `
+              <div class="card" style="grid-column: 1 / -1; padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+                <i class="fa-regular fa-envelope-open" style="font-size: 2.5rem; margin-bottom: var(--space-2); color: var(--color-slate-300);"></i>
+                <h4>No Inquiries Found</h4>
+                <p class="text-xs text-muted">All incoming patient messages have been handled.</p>
+              </div>
+            `;
+            return;
+          }
+
+          grid.innerHTML = '';
+          list.forEach(i => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.padding = 'var(--space-5)';
+
+            let statusBadge = 'badge-danger';
+            let borderCol = '#ef4444';
+            if (i.status === 'read') { statusBadge = 'badge-warning'; borderCol = '#f59e0b'; }
+            else if (i.status === 'replied') { statusBadge = 'badge-success'; borderCol = '#22c55e'; }
+            else if (i.status === 'archived') { statusBadge = 'badge-light'; borderCol = '#94a3b8'; }
+
+            card.style.borderLeft = `4px solid ${borderCol}`;
+
+            card.innerHTML = `
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2);">
+                <span class="badge badge-info" style="font-size: 0.65rem;">${i.inquiry_type}</span>
+                <span class="badge ${statusBadge}" style="font-size: 0.65rem; text-transform: uppercase;">${i.status}</span>
+              </div>
+
+              <h4 style="font-size: 0.95rem; color: var(--color-navy-900); margin-bottom: 4px; line-height: 1.3;">${i.subject}</h4>
+              <p class="text-muted" style="font-size: 0.8rem; line-height: 1.5; margin-bottom: var(--space-3); flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                "${i.message}"
+              </p>
+
+              <div style="font-size: 0.72rem; color: var(--color-slate-400); margin-bottom: var(--space-3); border-top: 1px solid var(--color-slate-100); padding-top: var(--space-2);">
+                <div>From: <strong>${i.name}</strong> &bull; ${i.email}</div>
+                ${i.phone ? `<div>Phone: ${i.phone}</div>` : ''}
+                ${i.department_name ? `<div>Division: <strong>${i.department_name}</strong></div>` : ''}
+                <div>Received: ${new Date(i.created_at).toLocaleString()}</div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--space-2); border-top: 1px solid var(--color-slate-100);">
+                <button class="btn btn-outline-primary btn-xs" onclick="openReplyModal(${i.id})">
+                  <i class="fa-solid fa-reply"></i> View & Reply
+                </button>
+
+                <div style="display: flex; gap: 4px;">
+                  ${i.status === 'new' ? `<button class="btn btn-outline-secondary btn-xs" title="Mark Read" onclick="markAsRead(${i.id})"><i class="fa-solid fa-envelope-open"></i></button>` : ''}
+                  ${i.status !== 'archived' ? `<button class="btn btn-outline-warning btn-xs" title="Archive" onclick="archiveInquiry(${i.id})"><i class="fa-solid fa-box-archive"></i></button>` : ''}
+                  <button class="btn btn-outline-danger btn-xs" title="Delete" onclick="deleteInquiry(${i.id})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      } catch (err) {
+        grid.innerHTML = `<div class="card" style="padding: var(--space-4); text-align: center; color: var(--color-danger);">Failed to load inquiries: ${err.message}</div>`;
+      }
+    }
+
+    async function openReplyModal(id) {
+      try {
+        const res = await API.get(`/contact/inquiries/${id}`);
+        if (res.success && res.data) {
+          const i = res.data;
+          document.getElementById('reply-inq-id').value = i.id;
+          document.getElementById('view-inq-type').textContent = i.inquiry_type;
+          document.getElementById('view-inq-date').textContent = new Date(i.created_at).toLocaleString();
+          document.getElementById('view-inq-subject').textContent = i.subject;
+          document.getElementById('view-inq-message').textContent = i.message;
+          document.getElementById('view-inq-sender').textContent = i.name;
+          document.getElementById('view-inq-email').textContent = i.email;
+          document.getElementById('view-inq-email').href = `mailto:${i.email}`;
+          document.getElementById('view-inq-phone').textContent = i.phone || 'N/A';
+          document.getElementById('view-inq-dept').textContent = i.department_name || 'General Campus';
+
+          const replyBox = document.getElementById('existing-reply-box');
+          if (i.reply_notes) {
+            replyBox.style.display = 'block';
+            document.getElementById('existing-reply-text').textContent = i.reply_notes;
+            document.getElementById('reply-notes').value = i.reply_notes;
+          } else {
+            replyBox.style.display = 'none';
+            document.getElementById('reply-notes').value = '';
+          }
+
+          document.getElementById('modal-reply').style.display = 'flex';
+        }
+      } catch (err) {
+        Toast.error(err.message);
+      }
+    }
+
+    function closeReplyModal() {
+      document.getElementById('modal-reply').style.display = 'none';
+    }
+
+    async function handleReplySubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('reply-inq-id').value;
+      const replyNotes = document.getElementById('reply-notes').value;
+
+      try {
+        await API.patch(`/contact/inquiries/${id}/reply`, { reply_notes: replyNotes });
+        Toast.success('Inquiry reply saved and status resolved.');
+        closeReplyModal();
+        loadStats();
+        loadInquiries();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to submit reply.');
+      }
+    }
+
+    async function markAsRead(id) {
+      try {
+        await API.patch(`/contact/inquiries/${id}/read`);
+        Toast.info('Inquiry marked as read.');
+        loadStats();
+        loadInquiries();
+      } catch (err) {
+        Toast.error(err.message);
+      }
+    }
+
+    async function archiveInquiry(id) {
+      try {
+        await API.patch(`/contact/inquiries/${id}/archive`);
+        Toast.info('Inquiry archived.');
+        loadStats();
+        loadInquiries();
+      } catch (err) {
+        Toast.error(err.message);
+      }
+    }
+
+    async function archiveCurrentInquiry() {
+      const id = document.getElementById('reply-inq-id').value;
+      if (id) {
+        await archiveInquiry(id);
+        closeReplyModal();
+      }
+    }
+
+    async function deleteInquiry(id) {
+      if (!confirm('Are you sure you want to permanently delete this patient inquiry?')) return;
+      try {
+        await API.delete(`/contact/inquiries/${id}`);
+        Toast.success('Inquiry deleted.');
+        loadStats();
+        loadInquiries();
+      } catch (err) {
+        Toast.error(err.message);
+      }
+    }
+  </script>
+</body>
+</html>

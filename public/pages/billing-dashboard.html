@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Financial Ledger & Invoicing | AuraCare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em;">FINANCE & BILLING</span>
+        </div>
+      </a>
+      <ul class="sidebar-nav-grid">
+        <li><a href="/pages/billing-dashboard.html" class="btn btn-primary btn-block" style="justify-content: start;"><i class="fa-solid fa-receipt"></i> Invoices & Ledger</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Accountant</div>
+          <div class="sidebar-user-role" data-user-role>Accountant</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div><h3 style="font-size: var(--font-size-lg); margin: 0;">Invoicing, Revenue Collection & Ledger</h3></div>
+      <div style="display: flex; gap: var(--space-3); align-items: center;">
+        <span class="badge badge-success">Accounting Active</span>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+    <main class="dashboard-content-grid">
+      <div class="dashboard-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-green"><i class="fa-solid fa-dollar-sign"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">$199.50</div>
+            <div class="stat-label">Collected Today</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-amber"><i class="fa-solid fa-file-invoice"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Active Invoices</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;">Clinic Invoice Directory</h4></div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-responsive" style="border: none;">
+            <table class="table-modern">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Patient</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>INV-2026-001</code></td>
+                  <td>Arthur Pendleton</td>
+                  <td><strong>$115.50</strong></td>
+                  <td><span class="badge badge-success">Paid (Card)</span></td>
+                  <td style="text-align: right;"><button class="btn btn-outline btn-sm" onclick="Toast.info('Invoice receipt printed.')">Receipt</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.guardPage(['accountant', 'hospital_admin', 'super_admin']);
+    });
+  </script>
+</body>
+</html>

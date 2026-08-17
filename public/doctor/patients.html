@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Patient Roster & EMR Charts | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">My Patient Roster & EMR Charts</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="margin-bottom: var(--space-4);">
+  <div class="card-body" style="padding: var(--space-4);">
+    <div class="filter-bar-grid">
+      <div style="position: relative;">
+        <input type="text" id="doc-filter-search" class="form-input" placeholder="Search patient name, ID, phone, allergies..." style="padding-left: 2.25rem;">
+        <i class="fa-solid fa-magnifying-glass text-muted" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%);"></i>
+      </div>
+      <div>
+        <select id="doc-filter-gender" class="form-select">
+          <option value="all">All Genders</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <select id="doc-filter-blood" class="form-select">
+          <option value="all">All Blood Groups</option>
+          <option value="A+">A+</option><option value="A-">A-</option>
+          <option value="B+">B+</option><option value="B-">B-</option>
+          <option value="AB+">AB+</option><option value="AB-">AB-</option>
+          <option value="O+">O+</option><option value="O-">O-</option>
+        </select>
+      </div>
+      <div>
+        <select id="doc-filter-sort" class="form-select">
+          <option value="created_at-DESC">Latest Patients</option>
+          <option value="first_name-ASC">Name (A-Z)</option>
+          <option value="patient_code-ASC">Patient Code</option>
+        </select>
+      </div>
+      <div>
+        <button id="doc-btn-reset" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;">Patient Electronic Health Charts (MySQL Live)</h4>
+    <span class="text-xs text-muted" id="doc-count">Loading patients...</span>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Patient Details</th>
+            <th>Age & Sex</th>
+            <th>Blood Group</th>
+            <th>Known Allergies</th>
+            <th>Medical History</th>
+            <th>Contact</th>
+            <th style="text-align: right;">EMR Actions</th>
+          </tr>
+        </thead>
+        <tbody id="doc-patients-tbody">
+          <tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);">Loading clinical directory...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  let docPage = 1;
+  let docLimit = 10;
+  let docDebounce = null;
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await Auth.guardPage(["doctor","super_admin","hospital_admin"]);
+
+    document.getElementById('doc-filter-search').addEventListener('input', () => {
+      clearTimeout(docDebounce);
+      docDebounce = setTimeout(() => { docPage = 1; loadDoctorPatients(); }, 300);
+    });
+    document.getElementById('doc-filter-gender').addEventListener('change', () => { docPage = 1; loadDoctorPatients(); });
+    document.getElementById('doc-filter-blood').addEventListener('change', () => { docPage = 1; loadDoctorPatients(); });
+    document.getElementById('doc-filter-sort').addEventListener('change', () => { docPage = 1; loadDoctorPatients(); });
+    document.getElementById('doc-btn-reset').addEventListener('click', () => {
+      document.getElementById('doc-filter-search').value = '';
+      document.getElementById('doc-filter-gender').value = 'all';
+      document.getElementById('doc-filter-blood').value = 'all';
+      docPage = 1;
+      loadDoctorPatients();
+    });
+
+    loadDoctorPatients();
+  });
+
+  async function loadDoctorPatients() {
+    const search = document.getElementById('doc-filter-search').value.trim();
+    const gender = document.getElementById('doc-filter-gender').value;
+    const blood_group = document.getElementById('doc-filter-blood').value;
+    const sortVal = document.getElementById('doc-filter-sort').value.split('-');
+
+    const tbody = document.getElementById('doc-patients-tbody');
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Fetching patients...</td></tr>';
+
+    try {
+      const res = await API.get('/patients', {
+        search,
+        gender,
+        blood_group,
+        sortBy: sortVal[0],
+        sortOrder: sortVal[1],
+        page: docPage,
+        limit: docLimit
+      });
+
+      if (res.success && res.data) {
+        tbody.innerHTML = '';
+        if (res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);">No matching patient records.</td></tr>';
+          return;
+        }
+
+        document.getElementById('doc-count').textContent = 'Total: ' + res.pagination.total + ' patients';
+
+        res.data.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <a href="/admin/patient-profile?id=${p.id}" class="font-bold text-navy" style="text-decoration: none;">${p.full_name}</a><br>
+              <code style="font-size: 0.725rem;">${p.patient_code}</code>
+            </td>
+            <td>${p.age !== null ? p.age + ' yrs' : 'N/A'} • <span style="text-transform: capitalize;">${p.gender}</span></td>
+            <td><span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">${p.blood_group || 'Unknown'}</span></td>
+            <td>
+              <span class="text-xs" style="color: ${p.allergies ? '#dc2626' : '#64748b'}; font-weight: ${p.allergies ? '600' : 'normal'};">
+                ${p.allergies || 'NKDA'}
+              </span>
+            </td>
+            <td class="text-xs text-muted" style="max-width: 250px;">
+              ${p.medical_history ? p.medical_history.substring(0, 80) + '...' : 'No chronic conditions recorded.'}
+            </td>
+            <td class="text-xs">${p.phone}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <a href="/admin/patient-profile?id=${p.id}" class="btn btn-primary btn-sm"><i class="fa-solid fa-notes-medical"></i> Open EMR Chart</a>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (err) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center text-danger" style="padding: var(--space-6);">Error: ' + err.message + '</td></tr>';
+    }
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

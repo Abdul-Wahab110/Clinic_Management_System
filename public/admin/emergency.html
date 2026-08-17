@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency & Trauma Department | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .er-patient-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: var(--space-4);
+    }
+    .er-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--color-slate-200);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .er-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .er-card.priority-critical {
+      border-color: #ef4444;
+      background: linear-gradient(180deg, #fff1f2 0%, #ffffff 100%);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.25);
+    }
+    .er-card.priority-high {
+      border-color: #f97316;
+      background: linear-gradient(180deg, #fffaf0 0%, #ffffff 100%);
+    }
+    .er-card.priority-medium {
+      border-color: #f59e0b;
+    }
+    .er-card.priority-low {
+      border-color: #22c55e;
+    }
+
+    .pulsing-beacon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(239, 68, 68, 0.4);
+      animation: pulse-red 1.5s infinite;
+      margin-right: 4px;
+    }
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .priority-badge-critical { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; font-weight: 800; }
+    .priority-badge-high { background: #ffedd5; color: #ea580c; border: 1px solid #fdba74; font-weight: 800; }
+    .priority-badge-medium { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
+    .priority-badge-low { background: #dcfce7; color: #16a34a; border: 1px solid #86efac; }
+  </style>
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
+        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
+        <li><a href="/admin/emergency" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-truck-medical"></i> Emergency & Trauma</a></li>
+        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
+        <li><a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
+        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
+        <li><a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+        <li><a href="/admin/opd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-stethoscope"></i> OPD Queue</a></li>
+        <li><a href="/admin/ipd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-bed-pulse"></i> Inpatient & Wards</a></li>
+        <li><a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-vial-virus"></i> Lab & Pathology</a></li>
+        <li><a href="/admin/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-x-ray"></i> Radiology Imaging</a></li>
+        <li><a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-pills"></i> Pharmacy & Stock</a></li>
+        <li><a href="/admin/inventory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-boxes-stacked"></i> Supply Inventory</a></li>
+        <li><a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Trauma Director</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;"><i class="fa-solid fa-truck-medical text-danger"></i> Emergency Department (ED) & Level 1 Trauma Center</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <button class="btn btn-danger btn-sm" onclick="openRegisterEmergencyModal()"><i class="fa-solid fa-plus"></i> + Rapid Emergency Intake</button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+      <!-- 4 TOP STAT CARDS (CSS GRID) -->
+      <div class="grid-4-col" style="margin-bottom: var(--space-4);">
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #ef4444; background: linear-gradient(180deg, #fff5f5 0%, #ffffff 100%);">
+          <div class="text-xs text-muted font-bold text-uppercase"><span class="pulsing-beacon"></span>Critical / Code Red Patients</div>
+          <div class="text-2xl font-extrabold text-danger" id="er-stat-critical">0</div>
+          <div class="text-xs text-danger font-bold">Immediate resuscitation required</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #f97316;">
+          <div class="text-xs text-muted font-bold text-uppercase">High Priority (Emergent)</div>
+          <div class="text-2xl font-extrabold text-warning" id="er-stat-high">0</div>
+          <div class="text-xs text-muted">ESI Level 2 urgent triage</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid var(--color-primary);">
+          <div class="text-xs text-muted font-bold text-uppercase">Active ER Encounters</div>
+          <div class="text-2xl font-extrabold text-navy" id="er-stat-active">0</div>
+          <div class="text-xs text-muted" id="er-stat-trauma">0 trauma activations</div>
+        </div>
+        <div class="card" style="padding: var(--space-4); border-left: 4px solid #22c55e;">
+          <div class="text-xs text-muted font-bold text-uppercase">Available ER Bays & Beds</div>
+          <div class="text-2xl font-extrabold text-success" id="er-stat-beds">0 / 0</div>
+          <div class="text-xs text-success font-bold" id="er-stat-admitted-today">0 admitted to IPD today</div>
+        </div>
+      </div>
+
+      <!-- FILTER CONTROLS -->
+      <div class="card" style="margin-bottom: var(--space-4);">
+        <div class="card-body" style="padding: var(--space-3) var(--space-4);">
+          <div style="display: grid; grid-template-columns: 2fr 1.3fr 1.3fr auto auto; gap: var(--space-3); align-items: center;">
+            <div style="position: relative;">
+              <input type="text" id="er-search" class="form-input" placeholder="Search ER #, Patient Name, MRN, Bed..." oninput="loadEmergencyQueue()" style="padding-left: 2rem;">
+              <i class="fa-solid fa-magnifying-glass text-muted" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);"></i>
+            </div>
+            <div>
+              <select id="er-priority-filter" class="form-select" onchange="loadEmergencyQueue()">
+                <option value="all">All Triage Priorities</option>
+                <option value="critical">Critical (Level 1)</option>
+                <option value="high">High (Level 2)</option>
+                <option value="medium">Medium (Level 3)</option>
+                <option value="low">Low (Level 4/5)</option>
+              </select>
+            </div>
+            <div>
+              <select id="er-status-filter" class="form-select" onchange="loadEmergencyQueue()">
+                <option value="all">All Statuses</option>
+                <option value="under_treatment" selected>Active Under Treatment / Observation</option>
+                <option value="triage_pending">Triage Pending</option>
+                <option value="admitted_ipd">Admitted to IPD</option>
+                <option value="transferred">Transferred</option>
+                <option value="discharged">Discharged</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn btn-outline btn-sm" onclick="loadEmergencyQueue()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+            </div>
+            <div>
+              <button class="btn btn-danger btn-sm" onclick="openRegisterEmergencyModal()"><i class="fa-solid fa-plus"></i> + Rapid Intake</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISUAL EMERGENCY QUEUE & PATIENT CARDS (CSS GRID) -->
+      <div>
+        <h4 style="font-size: 1rem; margin-bottom: var(--space-3);"><i class="fa-solid fa-heart-circle-bolt text-danger"></i> Real-time Emergency Triage & Treatment Board</h4>
+        <div class="er-patient-grid" id="er-patients-container">
+          <div class="card p-6 text-center text-muted" style="grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin"></i> Loading Emergency Department queue...</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- RAPID EMERGENCY INTAKE MODAL -->
+  <div id="modal-register-er" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 720px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="background: #991b1b; color: white; display: flex; justify-content: space-between;">
+        <h4 style="margin: 0; color: white;"><i class="fa-solid fa-truck-medical"></i> Rapid Emergency Intake & Triage</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeRegisterEmergencyModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="padding: var(--space-4);">
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Existing Registered Patient (or leave empty for new walk-in / unknown trauma)</label>
+          <select id="er-patient-id" class="form-select" onchange="onPatientSelectChange()">
+            <option value="">-- New Walk-in / Unknown Trauma Patient --</option>
+          </select>
+        </div>
+
+        <div id="new-patient-fields" class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3); background: var(--color-slate-50); padding: var(--space-3); border-radius: var(--radius-md);">
+          <div class="form-group">
+            <label class="form-label font-bold">First Name</label>
+            <input type="text" id="er-first-name" class="form-input" placeholder="e.g. John or Unknown">
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Last Name</label>
+            <input type="text" id="er-last-name" class="form-input" placeholder="e.g. Doe or Trauma 01">
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Gender</label>
+            <select id="er-gender" class="form-select">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other / Unknown</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+          <div class="form-group">
+            <label class="form-label font-bold">Mode of Arrival *</label>
+            <select id="er-arrival-mode" class="form-select">
+              <option value="ambulance">Ambulance (EMS 911)</option>
+              <option value="walk_in" selected>Walk-in Emergency</option>
+              <option value="wheelchair">Wheelchair Assist</option>
+              <option value="helicopter">Helicopter / Medevac</option>
+              <option value="police_referral">Police Referral</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Triage Acuity (ESI Score) *</label>
+            <select id="er-acuity" class="form-select" onchange="onAcuityChange()">
+              <option value="1">Level 1 - Resuscitation (Immediate)</option>
+              <option value="2">Level 2 - Emergent (High Risk)</option>
+              <option value="3" selected>Level 3 - Urgent</option>
+              <option value="4">Level 4 - Semi-urgent</option>
+              <option value="5">Level 5 - Non-urgent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Emergency Priority *</label>
+            <select id="er-priority" class="form-select">
+              <option value="critical">Critical (Code Red)</option>
+              <option value="high">High Priority</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Chief Complaint & Acute Symptoms *</label>
+          <textarea id="er-complaint" class="form-textarea" rows="2" placeholder="e.g. Acute severe substernal chest pain, diaphoresis, shortness of breath" required></textarea>
+        </div>
+
+        <div class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+          <div class="form-group">
+            <label class="form-label font-bold">Assign ER Bed / Bay</label>
+            <select id="er-bed-id" class="form-select"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Attending ER Physician</label>
+            <select id="er-doctor-id" class="form-select"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold">Trauma Flag</label>
+            <select id="er-is-trauma" class="form-select">
+              <option value="0">Medical Emergency</option>
+              <option value="1">Major Trauma Activation</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- INITIAL TRIAGE VITALS -->
+        <div style="background: var(--color-slate-50); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-slate-200);">
+          <strong class="text-xs font-bold text-navy" style="display: block; margin-bottom: 6px;">Initial Triage Vital Signs:</strong>
+          <div class="grid-4-col" style="gap: var(--space-2);">
+            <div class="form-group">
+              <label class="form-label text-xs">BP (mmHg)</label>
+              <input type="text" id="er-bp" class="form-input text-xs" placeholder="120/80">
+            </div>
+            <div class="form-group">
+              <label class="form-label text-xs">Heart Rate (bpm)</label>
+              <input type="number" id="er-hr" class="form-input text-xs" placeholder="72">
+            </div>
+            <div class="form-group">
+              <label class="form-label text-xs">SpO2 (%)</label>
+              <input type="number" step="0.1" id="er-spo2" class="form-input text-xs" placeholder="98">
+            </div>
+            <div class="form-group">
+              <label class="form-label text-xs">Temp (&deg;C)</label>
+              <input type="number" step="0.1" id="er-temp" class="form-input text-xs" placeholder="36.8">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" style="background: var(--color-slate-50); display: flex; justify-content: space-between;">
+        <button type="button" class="btn btn-outline" onclick="closeRegisterEmergencyModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="submitRegisterEmergency()"><i class="fa-solid fa-check"></i> Register Emergency Encounter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLINICAL TRAUMA NOTE MODAL -->
+  <div id="modal-clinical-note" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="background: var(--color-navy-900); color: white; display: flex; justify-content: space-between;">
+        <h4 style="margin: 0; color: white;"><i class="fa-solid fa-stethoscope text-primary"></i> Primary & Secondary Survey Clinical Note</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeNoteModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="padding: var(--space-4);">
+        <input type="hidden" id="note-er-id">
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Patient Encounter</label>
+          <input type="text" id="note-er-info" class="form-input" readonly style="background: var(--color-slate-100);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Note Type</label>
+          <select id="note-type" class="form-select">
+            <option value="primary_survey">Primary Trauma Survey (ABCDE)</option>
+            <option value="secondary_survey">Secondary Detailed Survey</option>
+            <option value="physician_assessment">Emergency Physician Assessment</option>
+            <option value="resuscitation_note">Resuscitation & Critical Care Note</option>
+            <option value="procedure_note">Emergency Procedure Note</option>
+          </select>
+        </div>
+
+        <!-- ABCDE SURVEY -->
+        <div style="background: #eff6ff; padding: var(--space-3); border-radius: var(--radius-md); border-left: 4px solid #3b82f6; margin-bottom: var(--space-3);">
+          <strong class="text-xs font-bold text-navy" style="display: block; margin-bottom: 6px;">Primary Trauma Survey (ABCDE Protocol):</strong>
+          <div class="grid-2-col" style="gap: var(--space-2); margin-bottom: 6px;">
+            <div>
+              <label class="text-xs font-bold">A - Airway & C-Spine</label>
+              <input type="text" id="note-airway" class="form-input text-xs" placeholder="e.g. Patent, C-collar in place">
+            </div>
+            <div>
+              <label class="text-xs font-bold">B - Breathing & Ventilation</label>
+              <input type="text" id="note-breathing" class="form-input text-xs" placeholder="e.g. Equal breath sounds bilaterally">
+            </div>
+          </div>
+          <div class="grid-3-col" style="gap: var(--space-2);">
+            <div>
+              <label class="text-xs font-bold">C - Circulation</label>
+              <input type="text" id="note-circ" class="form-input text-xs" placeholder="e.g. Pulse 98, BP 130/80">
+            </div>
+            <div>
+              <label class="text-xs font-bold">D - Disability (GCS)</label>
+              <input type="text" id="note-disab" class="form-input text-xs" placeholder="e.g. GCS 15, Pupils PERRL">
+            </div>
+            <div>
+              <label class="text-xs font-bold">E - Exposure</label>
+              <input type="text" id="note-expo" class="form-input text-xs" placeholder="e.g. Normothermic">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Clinical Findings & Assessment *</label>
+          <textarea id="note-findings" class="form-textarea" rows="3" placeholder="Detailed physical examination findings and clinical assessment" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label font-bold">Physician Orders & Treatment Plan</label>
+          <textarea id="note-orders" class="form-textarea" rows="2" placeholder="e.g. STAT portable chest X-ray, IV Morphine 4mg, type and screen 2 units PRBC"></textarea>
+        </div>
+      </div>
+      <div class="card-footer" style="background: var(--color-slate-50); display: flex; justify-content: space-between;">
+        <button type="button" class="btn btn-outline" onclick="closeNoteModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitClinicalNote()"><i class="fa-solid fa-check"></i> Save Clinical Note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMERGENCY TREATMENT MODAL -->
+  <div id="modal-treatment" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 540px; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="background: var(--color-navy-900); color: white; display: flex; justify-content: space-between;">
+        <h4 style="margin: 0; color: white;"><i class="fa-solid fa-syringe text-primary"></i> Administer Emergency Treatment</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeTreatmentModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="padding: var(--space-4);">
+        <input type="hidden" id="treat-er-id">
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Treatment Modality *</label>
+          <select id="treat-type" class="form-select">
+            <option value="medication">STAT Medication / Analgesic</option>
+            <option value="iv_fluid">Intravenous Fluid Infusion</option>
+            <option value="oxygen_therapy">High-Flow Oxygen Therapy</option>
+            <option value="wound_care_suture">Wound Care & Sterile Suture</option>
+            <option value="cardiac_defibrillation">Defibrillation / Cardioversion</option>
+            <option value="cpr_resuscitation">CPR / Resuscitation</option>
+            <option value="splinting">Splinting & Immobilization</option>
+            <option value="intubation">Endotracheal Intubation</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Description *</label>
+          <input type="text" id="treat-desc" class="form-input" placeholder="e.g. Morphine Sulfate 4mg IV Push" required>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Dosage / Specification</label>
+          <input type="text" id="treat-dosage" class="form-input" placeholder="e.g. 4mg IV over 2 minutes">
+        </div>
+        <div class="form-group">
+          <label class="form-label font-bold">Patient Response / Post-treatment Observation</label>
+          <textarea id="treat-response" class="form-textarea" rows="2" placeholder="e.g. Pain decreased from 8/10 to 3/10, vitals stable"></textarea>
+        </div>
+      </div>
+      <div class="card-footer" style="background: var(--color-slate-50); display: flex; justify-content: space-between;">
+        <button type="button" class="btn btn-outline" onclick="closeTreatmentModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitTreatment()"><i class="fa-solid fa-check"></i> Document Treatment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONE-CLICK IPD ADMISSION MODAL -->
+  <div id="modal-admit-ipd" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 560px; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="background: #1e3a8a; color: white; display: flex; justify-content: space-between;">
+        <h4 style="margin: 0; color: white;"><i class="fa-solid fa-bed-pulse"></i> Admit Emergency Patient to Inpatient (IPD)</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeAdmitModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="padding: var(--space-4);">
+        <input type="hidden" id="admit-er-id">
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Target Inpatient Ward *</label>
+          <select id="admit-ward-id" class="form-select" onchange="onAdmitWardChange()" required></select>
+        </div>
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Available Inpatient Bed *</label>
+          <select id="admit-bed-id" class="form-select" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label font-bold">Admitting Diagnosis *</label>
+          <textarea id="admit-diagnosis" class="form-textarea" rows="2" placeholder="Admitting clinical diagnosis" required></textarea>
+        </div>
+      </div>
+      <div class="card-footer" style="background: var(--color-slate-50); display: flex; justify-content: space-between;">
+        <button type="button" class="btn btn-outline" onclick="closeAdmitModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitAdmitIpd()"><i class="fa-solid fa-check"></i> Transfer to Inpatient Stay</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let emergencyQueueList = [];
+    let erBedsList = [];
+    let ipdWardsList = [];
+    let ipdBedsList = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin', 'doctor', 'nurse', 'receptionist']);
+      loadEmergencyStats();
+      loadEmergencyQueue();
+      loadErBedsDropdown();
+      loadPatientsDropdown();
+      loadDoctorsDropdown();
+      loadIpdWardsAndBeds();
+    });
+
+    async function loadEmergencyStats() {
+      try {
+        const res = await API.get('/emergency/stats');
+        if (res.success && res.data) {
+          const d = res.data;
+          document.getElementById('er-stat-critical').textContent = d.critical_patients_count || 0;
+          document.getElementById('er-stat-high').textContent = d.high_priority_count || 0;
+          document.getElementById('er-stat-active').textContent = d.total_active_er || 0;
+          document.getElementById('er-stat-trauma').textContent = `${d.active_trauma_count || 0} trauma activations`;
+          document.getElementById('er-stat-beds').textContent = `${d.available_er_beds || 0} / ${d.total_er_beds || 0}`;
+          document.getElementById('er-stat-admitted-today').textContent = `${d.admitted_to_ipd_today || 0} admitted to IPD today`;
+        }
+      } catch (_) {}
+    }
+
+    async function loadEmergencyQueue() {
+      const container = document.getElementById('er-patients-container');
+      try {
+        const priority = document.getElementById('er-priority-filter').value;
+        const status = document.getElementById('er-status-filter').value;
+        const search = document.getElementById('er-search').value.trim();
+
+        const res = await API.get('/emergency', {
+          priority: priority !== 'all' ? priority : undefined,
+          status: status !== 'all' ? status : undefined,
+          search: search || undefined
+        });
+
+        if (res.success && res.data) {
+          emergencyQueueList = res.data;
+
+          if (emergencyQueueList.length === 0) {
+            container.innerHTML = '<div class="card p-6 text-center text-muted" style="grid-column: 1 / -1;">No emergency encounters matching criteria.</div>';
+            return;
+          }
+
+          container.innerHTML = '';
+          emergencyQueueList.forEach(ev => {
+            const prio = ev.priority || 'medium';
+            const vit = ev.latest_vitals;
+
+            let prioBadgeClass = 'priority-badge-medium';
+            if (prio === 'critical') prioBadgeClass = 'priority-badge-critical';
+            else if (prio === 'high') prioBadgeClass = 'priority-badge-high';
+            else if (prio === 'low') prioBadgeClass = 'priority-badge-low';
+
+            const card = document.createElement('div');
+            card.className = `er-card priority-${prio}`;
+
+            card.innerHTML = `
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-2);">
+                  <div>
+                    ${prio === 'critical' ? '<span class="pulsing-beacon"></span>' : ''}
+                    <strong style="font-size: 1.1rem;" class="text-navy">${ev.patient_first_name} ${ev.patient_last_name}</strong>
+                    <div class="text-xs text-muted"><code>${ev.patient_code}</code> &bull; ${ev.patient_gender} &bull; Blood: <strong>${ev.blood_group || 'N/A'}</strong></div>
+                  </div>
+                  <span class="badge ${prioBadgeClass}" style="font-size: 0.75rem; text-transform: uppercase;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> ${prio} (ESI ${ev.triage_acuity_score || '3'})
+                  </span>
+                </div>
+
+                <div style="background: var(--color-slate-50); padding: 8px; border-radius: var(--radius-md); border: 1px solid var(--color-slate-200); margin-bottom: var(--space-3);">
+                  <div class="text-xs">ER Number: <code>${ev.emergency_number}</code> &bull; Bed: <strong>${ev.bed_number || 'Triage Holding'}</strong></div>
+                  <div class="text-xs">Arrival: <strong>${ev.arrival_mode.toUpperCase()}</strong> &bull; Attending: <strong>Dr. ${ev.attending_doctor_name || 'Emergency Team'}</strong></div>
+                  <div class="text-xs text-navy" style="margin-top: 4px; font-weight: 600;">Complaint: ${ev.chief_complaint}</div>
+                  ${ev.allergies ? `<div class="badge badge-danger text-xs" style="margin-top: 4px;"><i class="fa-solid fa-triangle-exclamation"></i> Allergy: ${ev.allergies}</div>` : ''}
+                  ${ev.is_trauma ? `<div class="badge badge-danger text-xs" style="margin-top: 4px; margin-left: 4px;"><i class="fa-solid fa-truck-medical"></i> TRAUMA ACTIVATION</div>` : ''}
+                </div>
+
+                <!-- VITALS SNAPSHOT -->
+                <div style="margin-bottom: var(--space-3);">
+                  <div class="text-xs font-bold text-muted" style="margin-bottom: 4px;">EMERGENCY VITALS TELEMETRY:</div>
+                  ${vit ? `
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; text-align: center;">
+                      <div style="background: white; padding: 4px; border-radius: 4px; border: 1px solid var(--color-slate-200);">
+                        <div class="text-xs text-muted">BP</div>
+                        <strong class="text-xs">${vit.systolic || 120}/${vit.diastolic || 80}</strong>
+                      </div>
+                      <div style="background: white; padding: 4px; border-radius: 4px; border: 1px solid var(--color-slate-200);">
+                        <div class="text-xs text-muted">HR</div>
+                        <strong class="text-xs ${vit.heart_rate > 110 ? 'text-danger' : ''}">${vit.heart_rate || 72} bpm</strong>
+                      </div>
+                      <div style="background: white; padding: 4px; border-radius: 4px; border: 1px solid var(--color-slate-200);">
+                        <div class="text-xs text-muted">SpO2</div>
+                        <strong class="text-xs ${parseFloat(vit.oxygen_saturation) < 95 ? 'text-danger' : 'text-success'}">${vit.oxygen_saturation || 98}%</strong>
+                      </div>
+                      <div style="background: white; padding: 4px; border-radius: 4px; border: 1px solid var(--color-slate-200);">
+                        <div class="text-xs text-muted">Temp</div>
+                        <strong class="text-xs">${vit.temperature || 36.8}&deg;C</strong>
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="text-xs text-warning" style="font-style: italic;">No emergency vitals charted yet.</div>
+                  `}
+                </div>
+              </div>
+
+              <!-- ACTION BUTTONS -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; border-top: 1px solid var(--color-slate-100); padding-top: 8px;">
+                <button class="btn btn-outline btn-sm" style="font-size: 0.7rem; padding: 4px;" onclick="openNoteModalForVisit(${ev.id}, '${ev.patient_first_name} ${ev.patient_last_name}', '${ev.emergency_number}')"><i class="fa-solid fa-pen-to-square text-primary"></i> Note</button>
+                <button class="btn btn-outline btn-sm" style="font-size: 0.7rem; padding: 4px;" onclick="openTreatmentModalForVisit(${ev.id})"><i class="fa-solid fa-syringe text-danger"></i> Treat</button>
+                <button class="btn btn-outline-primary btn-sm" style="font-size: 0.7rem; padding: 4px;" onclick="openAdmitModalForVisit(${ev.id}, '${ev.chief_complaint}')"><i class="fa-solid fa-bed-pulse"></i> Admit</button>
+                <button class="btn btn-outline-success btn-sm" style="font-size: 0.7rem; padding: 4px;" onclick="dischargeVisit(${ev.id})"><i class="fa-solid fa-house-chimney-medical"></i> Done</button>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        container.innerHTML = `<div class="card p-6 text-center text-danger" style="grid-column: 1 / -1;">Error: ${err.message}</div>`;
+      }
+    }
+
+    async function loadErBedsDropdown() {
+      try {
+        const res = await API.get('/ipd/beds');
+        if (res.success && res.data) {
+          erBedsList = res.data.filter(b => b.bed_number.startsWith('BED-ER') && b.status === 'available');
+          const select = document.getElementById('er-bed-id');
+          select.innerHTML = '<option value="">-- No Bed / Triage Holding --</option>';
+          erBedsList.forEach(b => {
+            select.innerHTML += `<option value="${b.id}">${b.bed_number} (${b.room_number || 'ER Bay'})</option>`;
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadPatientsDropdown() {
+      try {
+        const res = await API.get('/patients', { limit: 100 });
+        if (res.success && res.data) {
+          const select = document.getElementById('er-patient-id');
+          select.innerHTML = '<option value="">-- New Walk-in / Unknown Trauma Patient --</option>';
+          res.data.forEach(p => {
+            select.innerHTML += `<option value="${p.id}">${p.first_name} ${p.last_name} (${p.patient_code})</option>`;
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadDoctorsDropdown() {
+      try {
+        const res = await API.get('/doctors');
+        if (res.success && res.data) {
+          const select = document.getElementById('er-doctor-id');
+          select.innerHTML = '<option value="">-- On-Duty Emergency Physician --</option>';
+          res.data.forEach(d => {
+            select.innerHTML += `<option value="${d.id}">Dr. ${d.full_name} (${d.department_name})</option>`;
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadIpdWardsAndBeds() {
+      try {
+        const wRes = await API.get('/ipd/wards');
+        if (wRes.success && wRes.data) {
+          ipdWardsList = wRes.data.filter(w => w.code !== 'EM-TRAUMA');
+          const wSelect = document.getElementById('admit-ward-id');
+          wSelect.innerHTML = '<option value="">-- Select Inpatient Ward --</option>';
+          ipdWardsList.forEach(w => {
+            wSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.code})</option>`;
+          });
+        }
+
+        const bRes = await API.get('/ipd/beds');
+        if (bRes.success && bRes.data) {
+          ipdBedsList = bRes.data.filter(b => !b.bed_number.startsWith('BED-ER') && b.status === 'available');
+        }
+      } catch (_) {}
+    }
+
+    function onAdmitWardChange() {
+      const wardId = parseInt(document.getElementById('admit-ward-id').value, 10);
+      const bSelect = document.getElementById('admit-bed-id');
+      bSelect.innerHTML = '<option value="">-- Select Available Bed --</option>';
+      const filtered = ipdBedsList.filter(b => b.ward_id === wardId);
+      filtered.forEach(b => {
+        bSelect.innerHTML += `<option value="${b.id}">${b.bed_number} (Room ${b.room_number})</option>`;
+      });
+    }
+
+    function onPatientSelectChange() {
+      const val = document.getElementById('er-patient-id').value;
+      document.getElementById('new-patient-fields').style.display = val ? 'none' : 'grid';
+    }
+
+    function onAcuityChange() {
+      const acuity = document.getElementById('er-acuity').value;
+      const prioSelect = document.getElementById('er-priority');
+      if (acuity === '1') prioSelect.value = 'critical';
+      else if (acuity === '2') prioSelect.value = 'high';
+      else if (acuity === '3') prioSelect.value = 'medium';
+      else prioSelect.value = 'low';
+    }
+
+    function openRegisterEmergencyModal() {
+      document.getElementById('er-patient-id').value = '';
+      document.getElementById('er-first-name').value = '';
+      document.getElementById('er-last-name').value = '';
+      document.getElementById('er-complaint').value = '';
+      document.getElementById('er-bp').value = '';
+      document.getElementById('er-hr').value = '';
+      document.getElementById('er-spo2').value = '';
+      document.getElementById('er-temp').value = '';
+      onPatientSelectChange();
+      document.getElementById('modal-register-er').style.display = 'flex';
+    }
+
+    function closeRegisterEmergencyModal() {
+      document.getElementById('modal-register-er').style.display = 'none';
+    }
+
+    async function submitRegisterEmergency() {
+      const patId = document.getElementById('er-patient-id').value;
+      const complaint = document.getElementById('er-complaint').value.trim();
+
+      if (!patId && !document.getElementById('er-first-name').value.trim()) {
+        Toast.warning('Patient name or selection is required.');
+        return;
+      }
+      if (!complaint) {
+        Toast.warning('Chief complaint is required.');
+        return;
+      }
+
+      try {
+        const res = await API.post('/emergency', {
+          patient_id: patId ? parseInt(patId, 10) : undefined,
+          first_name: document.getElementById('er-first-name').value.trim() || undefined,
+          last_name: document.getElementById('er-last-name').value.trim() || undefined,
+          gender: document.getElementById('er-gender').value,
+          arrival_mode: document.getElementById('er-arrival-mode').value,
+          triage_acuity_score: document.getElementById('er-acuity').value,
+          priority: document.getElementById('er-priority').value,
+          chief_complaint: complaint,
+          bed_id: document.getElementById('er-bed-id').value ? parseInt(document.getElementById('er-bed-id').value, 10) : undefined,
+          attending_doctor_id: document.getElementById('er-doctor-id').value ? parseInt(document.getElementById('er-doctor-id').value, 10) : undefined,
+          is_trauma: parseInt(document.getElementById('er-is-trauma').value, 10),
+          blood_pressure: document.getElementById('er-bp').value.trim() || undefined,
+          heart_rate: document.getElementById('er-hr').value ? parseInt(document.getElementById('er-hr').value, 10) : undefined,
+          oxygen_saturation: document.getElementById('er-spo2').value ? parseFloat(document.getElementById('er-spo2').value) : undefined,
+          temperature: document.getElementById('er-temp').value ? parseFloat(document.getElementById('er-temp').value) : undefined
+        });
+
+        if (res.success) {
+          Toast.success(res.message);
+          closeRegisterEmergencyModal();
+          loadEmergencyStats();
+          loadEmergencyQueue();
+          loadErBedsDropdown();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Emergency registration failed.');
+      }
+    }
+
+    function openNoteModalForVisit(visitId, patName, erNum) {
+      document.getElementById('note-er-id').value = visitId;
+      document.getElementById('note-er-info').value = `${erNum} - ${patName}`;
+      document.getElementById('note-airway').value = 'Patent, non-obstructed';
+      document.getElementById('note-breathing').value = 'Equal breath sounds bilaterally';
+      document.getElementById('note-circ').value = 'Warm extremities, pulses palpable';
+      document.getElementById('note-disab').value = 'GCS 15, pupils equal & reactive';
+      document.getElementById('note-expo').value = 'Normothermic';
+      document.getElementById('note-findings').value = '';
+      document.getElementById('note-orders').value = '';
+      document.getElementById('modal-clinical-note').style.display = 'flex';
+    }
+
+    function closeNoteModal() {
+      document.getElementById('modal-clinical-note').style.display = 'none';
+    }
+
+    async function submitClinicalNote() {
+      const visitId = document.getElementById('note-er-id').value;
+      const findings = document.getElementById('note-findings').value.trim();
+
+      if (!findings) {
+        Toast.warning('Clinical findings are required.');
+        return;
+      }
+
+      try {
+        const res = await API.post('/emergency/notes', {
+          emergency_visit_id: parseInt(visitId, 10),
+          note_type: document.getElementById('note-type').value,
+          primary_survey_airway: document.getElementById('note-airway').value.trim() || undefined,
+          primary_survey_breathing: document.getElementById('note-breathing').value.trim() || undefined,
+          primary_survey_circulation: document.getElementById('note-circ').value.trim() || undefined,
+          primary_survey_disability: document.getElementById('note-disab').value.trim() || undefined,
+          primary_survey_exposure: document.getElementById('note-expo').value.trim() || undefined,
+          clinical_findings: findings,
+          treatment_orders: document.getElementById('note-orders').value.trim() || undefined
+        });
+
+        if (res.success) {
+          Toast.success(res.message);
+          closeNoteModal();
+          loadEmergencyQueue();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to save note.');
+      }
+    }
+
+    function openTreatmentModalForVisit(visitId) {
+      document.getElementById('treat-er-id').value = visitId;
+      document.getElementById('treat-desc').value = '';
+      document.getElementById('treat-dosage').value = '';
+      document.getElementById('treat-response').value = '';
+      document.getElementById('modal-treatment').style.display = 'flex';
+    }
+
+    function closeTreatmentModal() {
+      document.getElementById('modal-treatment').style.display = 'none';
+    }
+
+    async function submitTreatment() {
+      const visitId = document.getElementById('treat-er-id').value;
+      const desc = document.getElementById('treat-desc').value.trim();
+
+      if (!desc) {
+        Toast.warning('Treatment description is required.');
+        return;
+      }
+
+      try {
+        const res = await API.post('/emergency/treatments', {
+          emergency_visit_id: parseInt(visitId, 10),
+          treatment_type: document.getElementById('treat-type').value,
+          description: desc,
+          dosage_spec: document.getElementById('treat-dosage').value.trim() || undefined,
+          patient_response: document.getElementById('treat-response').value.trim() || undefined
+        });
+
+        if (res.success) {
+          Toast.success(res.message);
+          closeTreatmentModal();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to record treatment.');
+      }
+    }
+
+    function openAdmitModalForVisit(visitId, complaint) {
+      document.getElementById('admit-er-id').value = visitId;
+      document.getElementById('admit-diagnosis').value = complaint;
+      document.getElementById('admit-ward-id').value = '';
+      document.getElementById('admit-bed-id').innerHTML = '<option value="">-- Select Available Bed --</option>';
+      document.getElementById('modal-admit-ipd').style.display = 'flex';
+    }
+
+    function closeAdmitModal() {
+      document.getElementById('modal-admit-ipd').style.display = 'none';
+    }
+
+    async function submitAdmitIpd() {
+      const visitId = document.getElementById('admit-er-id').value;
+      const wardId = document.getElementById('admit-ward-id').value;
+      const bedId = document.getElementById('admit-bed-id').value;
+
+      if (!wardId || !bedId) {
+        Toast.warning('Target ward and bed are required.');
+        return;
+      }
+
+      try {
+        const res = await API.post(`/emergency/${visitId}/admit-ipd`, {
+          ward_id: parseInt(wardId, 10),
+          bed_id: parseInt(bedId, 10),
+          admitting_diagnosis: document.getElementById('admit-diagnosis').value.trim()
+        });
+
+        if (res.success) {
+          Toast.success(res.message);
+          closeAdmitModal();
+          loadEmergencyStats();
+          loadEmergencyQueue();
+          loadErBedsDropdown();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'IPD admission failed.');
+      }
+    }
+
+    async function dischargeVisit(visitId) {
+      if (!confirm('Discharge emergency patient after stabilization?')) return;
+      try {
+        const res = await API.post(`/emergency/${visitId}/discharge`, {
+          discharge_summary: 'Stabilized and discharged home with outpatient follow-up.'
+        });
+        if (res.success) {
+          Toast.success(res.message);
+          loadEmergencyStats();
+          loadEmergencyQueue();
+          loadErBedsDropdown();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Discharge failed.');
+      }
+    }
+  </script>
+</body>
+</html>

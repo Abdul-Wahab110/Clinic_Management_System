@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Electronic Health Record & Profile | AuraCare Patient Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <!-- PATIENT SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital-user"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PATIENT PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li><a href="/patient/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> My Health Home</a></li>
+        <li><a href="/patient/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+        <li><a href="/patient/medical-history" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-waveform"></i> Medical History</a></li>
+        <li><a href="/patient/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-prescription-bottle-medical"></i> My Prescriptions</a></li>
+        <li><a href="/patient/lab-reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-vials"></i> Lab Reports</a></li>
+        <li><a href="/patient/invoices" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-receipt"></i> Billing Invoices</a></li>
+        <li><a href="/patient/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-credit-card"></i> Payment Receipts</a></li>
+        <li><a href="/patient/documents" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-folder-open"></i> My Documents</a></li>
+        <li><a href="/patient/profile" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-user-pen"></i> Personal Profile</a></li>
+      </ul>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.06); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1);">
+      <div style="font-size: var(--font-size-sm); font-weight: bold; color: white;" data-user-name>Patient</div>
+      <div style="font-size: var(--font-size-xs); color: #2dd4bf; margin-bottom: var(--space-2);" data-user-role>Patient</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+        <a href="/patient/profile" class="btn btn-outline btn-sm" style="color: white; border-color: rgba(255,255,255,0.2); text-align: center;"><i class="fa-solid fa-user"></i></a>
+        <button class="btn btn-danger btn-sm" data-action-logout><i class="fa-solid fa-power-off"></i> Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-base); margin: 0;">Personal Health Profile & Electronic Medical Record</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <a href="/appointments" class="btn btn-primary btn-sm"><i class="fa-regular fa-calendar-plus"></i> Request Appointment</a>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid" style="gap: var(--space-5);">
+
+      <!-- HERO PROFILE BANNER (CSS GRID) -->
+      <div class="patient-hero-card">
+        <div class="patient-hero-inner">
+          <div style="position: relative;">
+            <div class="patient-avatar-fallback" id="pat-portal-avatar-fallback">P</div>
+            <img id="pat-portal-avatar-img" src="" alt="Avatar" class="patient-avatar-large" style="display: none;">
+            <span style="position: absolute; bottom: 4px; right: 4px; width: 16px; height: 16px; border-radius: 50%; background: #10b981; border: 2px solid white;"></span>
+          </div>
+
+          <div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-1);">
+              <h2 style="color: white; margin: 0; font-size: var(--font-size-2xl);" id="pat-portal-name">Loading Your File...</h2>
+              <span class="badge" style="background: #0d9488; color: white; font-weight: 700;" id="pat-portal-code">PAT-RECORD</span>
+              <span class="badge badge-success">Active Patient</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: var(--space-4); color: var(--color-slate-300); font-size: var(--font-size-sm); flex-wrap: wrap; margin-bottom: var(--space-3);">
+              <span><i class="fa-solid fa-cake-candles text-primary"></i> <strong id="pat-portal-age">--</strong> yrs (<span id="pat-portal-dob">--</span>)</span>
+              <span><i class="fa-solid fa-venus-mars text-primary"></i> <span id="pat-portal-gender">--</span></span>
+              <span><i class="fa-solid fa-droplet text-primary"></i> Blood Group: <strong id="pat-portal-blood" style="color: #2dd4bf;">--</strong></span>
+              <span><i class="fa-solid fa-fingerprint text-primary"></i> CNIC: <strong id="pat-portal-cnic">--</strong></span>
+            </div>
+
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; font-size: var(--font-size-xs);">
+              <span style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px;"><i class="fa-solid fa-phone text-primary"></i> <span id="pat-portal-phone">--</span></span>
+              <span style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px;"><i class="fa-solid fa-envelope text-primary"></i> <span id="pat-portal-email">--</span></span>
+              <span style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px;"><i class="fa-solid fa-location-dot text-primary"></i> <span id="pat-portal-address">--</span></span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <button class="btn btn-primary btn-sm" onclick="openPatientEditModal()"><i class="fa-solid fa-user-pen"></i> Edit Personal Profile</button>
+            <button class="btn btn-outline btn-sm" onclick="openPatientPwdModal()" style="color: white; border-color: rgba(255,255,255,0.3);"><i class="fa-solid fa-key"></i> Change Password</button>
+            <a href="/appointments" class="btn btn-outline btn-sm" style="color: white; border-color: rgba(255,255,255,0.3);"><i class="fa-regular fa-calendar-plus"></i> Book Consultation</a>
+            <button class="btn btn-outline btn-sm" onclick="window.print()" style="color: white; border-color: rgba(255,255,255,0.3);"><i class="fa-solid fa-print"></i> Download Summary</button>
+          </div>
+        </div>
+
+        <!-- 6 Metrics Bar -->
+        <div class="patient-stats-bar">
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-appts">0</div>
+            <div class="lbl">Appointments</div>
+          </div>
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-visits">0</div>
+            <div class="lbl">Completed Visits</div>
+          </div>
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-records">0</div>
+            <div class="lbl">EMR Notes</div>
+          </div>
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-rx">0</div>
+            <div class="lbl">Prescriptions</div>
+          </div>
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-labs">0</div>
+            <div class="lbl">Lab Reports</div>
+          </div>
+          <div class="patient-stat-card">
+            <div class="val" id="portal-cnt-balance" style="color: #f87171;">$0.00</div>
+            <div class="lbl">Balance Due</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 SECTIONS TAB NAVIGATION (CSS GRID) -->
+      <div class="patient-tabs-nav" id="patient-portal-tabs">
+        <button class="patient-tab-btn active" data-tab="tab-all"><i class="fa-solid fa-table-cells-large"></i> Full View</button>
+        <button class="patient-tab-btn" data-tab="tab-personal"><i class="fa-solid fa-id-card"></i> Personal Info</button>
+        <button class="patient-tab-btn" data-tab="tab-medical"><i class="fa-solid fa-heart-pulse"></i> Medical & Vitals</button>
+        <button class="patient-tab-btn" data-tab="tab-appointments"><i class="fa-solid fa-calendar-check"></i> Appointments</button>
+        <button class="patient-tab-btn" data-tab="tab-visits"><i class="fa-solid fa-stethoscope"></i> Visits</button>
+        <button class="patient-tab-btn" data-tab="tab-records"><i class="fa-solid fa-file-waveform"></i> Medical Records</button>
+        <button class="patient-tab-btn" data-tab="tab-prescriptions"><i class="fa-solid fa-prescription-bottle-medical"></i> Prescriptions</button>
+        <button class="patient-tab-btn" data-tab="tab-lab"><i class="fa-solid fa-vials"></i> Lab Reports</button>
+        <button class="patient-tab-btn" data-tab="tab-invoices"><i class="fa-solid fa-receipt"></i> Invoices</button>
+        <button class="patient-tab-btn" data-tab="tab-payments"><i class="fa-solid fa-credit-card"></i> Payments</button>
+        <button class="patient-tab-btn" data-tab="tab-documents"><i class="fa-solid fa-folder-open"></i> Documents</button>
+      </div>
+
+      <!-- 10 SECTIONS / CARDS CONTAINER -->
+      <div class="patient-profile-grid" id="portal-cards-grid">
+
+        <!-- 1. Personal Information -->
+        <section id="tab-personal" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-id-card text-primary"></i> 1. Personal & Contact Information</h4></div>
+          <div class="card-body">
+            <div class="info-field-grid">
+              <div class="info-field-item"><div class="field-label">Full Name</div><div class="field-value font-bold" id="pi-name">--</div></div>
+              <div class="info-field-item"><div class="field-label">Medical Record #</div><div class="field-value font-mono font-bold text-primary" id="pi-code">--</div></div>
+              <div class="info-field-item"><div class="field-label">Gender</div><div class="field-value" id="pi-gender">--</div></div>
+              <div class="info-field-item"><div class="field-label">Date of Birth & Age</div><div class="field-value" id="pi-dob">--</div></div>
+              <div class="info-field-item"><div class="field-label">National ID / CNIC</div><div class="field-value font-mono font-bold" id="pi-cnic">--</div></div>
+              <div class="info-field-item"><div class="field-label">Phone Number</div><div class="field-value" id="pi-phone">--</div></div>
+              <div class="info-field-item"><div class="field-label">Email Address</div><div class="field-value" id="pi-email">--</div></div>
+              <div class="info-field-item"><div class="field-label">Marital Status</div><div class="field-value" id="pi-marital" style="text-transform: capitalize;">--</div></div>
+              <div class="info-field-item"><div class="field-label">Occupation</div><div class="field-value" id="pi-occupation">--</div></div>
+              <div class="info-field-item"><div class="field-label">Registration Date</div><div class="field-value" id="pi-regdate">--</div></div>
+            </div>
+            <div class="grid-2-col" style="gap: var(--space-4); margin-top: var(--space-4);">
+              <div class="info-field-item"><div class="field-label">Home Address</div><div class="field-value" id="pi-address">--</div></div>
+              <div class="info-field-item" style="border-left: 4px solid var(--color-danger);">
+                <div class="field-label">Emergency Contact</div>
+                <div class="field-value font-bold" id="pi-em-name">--</div>
+                <div class="text-xs text-muted" id="pi-em-phone">--</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Medical Information & Vitals -->
+        <section id="tab-medical" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-heart-pulse text-danger"></i> 2. Medical History, Allergies & Vital Signs</h4></div>
+          <div class="card-body">
+            <div class="allergies-alert-box">
+              <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem;"></i>
+              <div>
+                <strong>Allergies & Adverse Drug Reactions:</strong>
+                <div id="mi-allergies">No known drug allergies reported.</div>
+              </div>
+            </div>
+            <div class="grid-2-col" style="gap: var(--space-4); margin-bottom: var(--space-6);">
+              <div class="info-field-item"><div class="field-label">Chronic Conditions & Medical History</div><div class="field-value" id="mi-history">--</div></div>
+              <div class="info-field-item"><div class="field-label">Health Insurance Policy</div><div class="field-value" id="mi-insurance">--</div></div>
+            </div>
+            <h5 class="text-sm font-bold text-uppercase text-muted" style="margin-bottom: var(--space-3);">Latest Vital Signs</h5>
+            <div class="vitals-grid">
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #fee2e2; color: #dc2626;"><i class="fa-solid fa-heart-pulse"></i></div><div><div class="text-xs text-muted font-bold">BP</div><div class="text-lg font-bold" id="pv-bp">-- / --</div><div class="text-xs text-muted">mmHg</div></div></div>
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #ecfdf5; color: #059669;"><i class="fa-solid fa-wave-square"></i></div><div><div class="text-xs text-muted font-bold">Pulse</div><div class="text-lg font-bold" id="pv-hr">--</div><div class="text-xs text-muted">BPM</div></div></div>
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #eff6ff; color: #2563eb;"><i class="fa-solid fa-lungs"></i></div><div><div class="text-xs text-muted font-bold">SpO2</div><div class="text-lg font-bold" id="pv-spo2">--%</div><div class="text-xs text-muted">Oxygen</div></div></div>
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-temperature-half"></i></div><div><div class="text-xs text-muted font-bold">Temp</div><div class="text-lg font-bold" id="pv-temp">--</div><div class="text-xs text-muted">°F</div></div></div>
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #f3e8ff; color: #9333ea;"><i class="fa-solid fa-weight-scale"></i></div><div><div class="text-xs text-muted font-bold">Weight</div><div class="text-lg font-bold" id="pv-weight">-- kg</div><div class="text-xs text-muted" id="pv-bmi">BMI: --</div></div></div>
+              <div class="vital-card-box"><div class="vital-icon-circle" style="background: #ccfbf1; color: #0d9488;"><i class="fa-solid fa-droplet"></i></div><div><div class="text-xs text-muted font-bold">Blood Sugar</div><div class="text-lg font-bold" id="pv-sugar">--</div><div class="text-xs text-muted">mg/dL</div></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Appointments -->
+        <section id="tab-appointments" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-calendar-check text-primary"></i> 3. My Appointments</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Appt #</th><th>Date & Time</th><th>Department & Doctor</th><th>Type</th><th>Status</th><th>Reason</th></tr></thead>
+                <tbody id="p-appts-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading appointments...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Visits -->
+        <section id="tab-visits" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-stethoscope text-primary"></i> 4. Clinical Visits History</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Visit Date</th><th>Department</th><th>Doctor</th><th>Reason</th><th>Diagnosis / Outcome</th><th>Status</th></tr></thead>
+                <tbody id="p-visits-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading visits...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Medical Records -->
+        <section id="tab-records" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-file-waveform text-primary"></i> 5. Electronic Medical Records (EMR)</h4></div>
+          <div class="card-body" id="p-records-container"><div class="text-center text-muted" style="padding: var(--space-6);">Loading records...</div></div>
+        </section>
+
+        <!-- 6. Prescriptions -->
+        <section id="tab-prescriptions" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-prescription-bottle-medical text-primary"></i> 6. My Active Prescriptions</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Medication</th><th>Dosage</th><th>Frequency</th><th>Duration</th><th>Doctor</th><th>Instructions</th></tr></thead>
+                <tbody id="p-rx-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading prescriptions...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. Lab Reports -->
+        <section id="tab-lab" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-vials text-primary"></i> 7. Diagnostic Laboratory Reports</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Order #</th><th>Test</th><th>Date</th><th>Result</th><th>Normal Range</th><th>Status</th></tr></thead>
+                <tbody id="p-lab-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading lab reports...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. Invoices -->
+        <section id="tab-invoices" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-receipt text-primary"></i> 8. Billing Invoices & Statements</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Invoice #</th><th>Date</th><th>Total</th><th>Net Due</th><th>Paid</th><th>Balance</th><th>Status</th><th>Due Date</th></tr></thead>
+                <tbody id="p-inv-tbody"><tr><td colspan="8" class="text-center text-muted" style="padding: var(--space-6);">Loading invoices...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. Payments -->
+        <section id="tab-payments" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-credit-card text-primary"></i> 9. Payment Receipts</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Receipt Ref</th><th>Invoice #</th><th>Payment Date</th><th>Method</th><th>Amount</th><th>Notes</th></tr></thead>
+                <tbody id="p-pay-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading receipts...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10. Documents -->
+        <section id="tab-documents" class="card tab-section">
+          <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-folder-open text-primary"></i> 10. Medical Documents & Scans</h4></div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead><tr><th>Document Name</th><th>Type</th><th>File Link</th><th>Size</th><th>Date</th></tr></thead>
+                <tbody id="p-docs-tbody"><tr><td colspan="5" class="text-center text-muted" style="padding: var(--space-6);">Loading documents...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+
+  <script>
+    let myPatientId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['patient', 'super_admin']);
+      const prof = await Auth.fetchProfile();
+      
+      if (prof && prof.patient) {
+        myPatientId = prof.patient.id;
+      } else {
+        myPatientId = 1;
+      }
+
+      setupTabs();
+      await loadPortalData();
+    });
+
+    function setupTabs() {
+      const tabButtons = document.querySelectorAll('.patient-tab-btn');
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetTab = btn.getAttribute('data-tab');
+          const sections = document.querySelectorAll('.tab-section');
+
+          if (targetTab === 'tab-all') {
+            sections.forEach(sec => sec.style.display = 'block');
+          } else {
+            sections.forEach(sec => {
+              sec.style.display = sec.id === targetTab ? 'block' : 'none';
+            });
+          }
+        });
+      });
+    }
+
+    async function loadPortalData() {
+      try {
+        const res = await API.get(`/patients/${myPatientId}`);
+        if (res.success && res.data) {
+          const p = res.data;
+          document.getElementById('pat-portal-name').textContent = p.full_name;
+          document.getElementById('pat-portal-code').textContent = p.patient_code;
+          document.getElementById('pat-portal-age').textContent = p.age || '--';
+          document.getElementById('pat-portal-dob').textContent = p.date_of_birth;
+          document.getElementById('pat-portal-gender').textContent = p.gender;
+          document.getElementById('pat-portal-blood').textContent = p.blood_group || 'Unknown';
+          document.getElementById('pat-portal-cnic').textContent = p.identification_number || 'Not Recorded';
+          document.getElementById('pat-portal-phone').textContent = p.phone;
+          document.getElementById('pat-portal-email').textContent = p.email || 'None';
+          document.getElementById('pat-portal-address').textContent = p.address || 'None';
+
+          if (p.profile_image) {
+            const img = document.getElementById('pat-portal-avatar-img');
+            img.src = p.profile_image;
+            img.style.display = 'block';
+            document.getElementById('pat-portal-avatar-fallback').style.display = 'none';
+          }
+
+          if (p.metrics) {
+            document.getElementById('portal-cnt-appts').textContent = p.metrics.total_appointments || 0;
+            document.getElementById('portal-cnt-visits').textContent = p.metrics.completed_visits || 0;
+            document.getElementById('portal-cnt-records').textContent = p.metrics.total_medical_records || 0;
+            document.getElementById('portal-cnt-rx').textContent = p.metrics.total_prescriptions || 0;
+            document.getElementById('portal-cnt-labs').textContent = p.metrics.total_lab_orders || 0;
+            document.getElementById('portal-cnt-balance').textContent = `$${parseFloat(p.metrics.outstanding_balance || 0).toFixed(2)}`;
+          }
+
+          // Personal Info Fields
+          document.getElementById('pi-name').textContent = p.full_name;
+          document.getElementById('pi-code').textContent = p.patient_code;
+          document.getElementById('pi-gender').textContent = p.gender;
+          document.getElementById('pi-dob').textContent = `${p.date_of_birth} (${p.age || '--'} yrs)`;
+          document.getElementById('pi-cnic').textContent = p.identification_number || 'None';
+          document.getElementById('pi-phone').textContent = p.phone;
+          document.getElementById('pi-email').textContent = p.email || 'None';
+          document.getElementById('pi-marital').textContent = p.marital_status || 'Single';
+          document.getElementById('pi-occupation').textContent = p.occupation || 'N/A';
+          document.getElementById('pi-regdate').textContent = p.registration_date || p.created_at?.split('T')[0];
+          document.getElementById('pi-address').textContent = p.address || 'None';
+          document.getElementById('pi-em-name').textContent = p.emergency_contact_name || 'None';
+          document.getElementById('pi-em-phone').textContent = `Phone: ${p.emergency_contact_phone || 'N/A'} • Relation: ${p.emergency_contact_relation || 'N/A'}`;
+
+          // Medical Info
+          document.getElementById('mi-allergies').textContent = p.allergies || 'No known drug allergies reported.';
+          document.getElementById('mi-history').textContent = p.medical_history || 'No chronic conditions reported.';
+          document.getElementById('mi-insurance').textContent = p.insurance_provider ? `${p.insurance_provider} (${p.insurance_policy_number || ''})` : 'Self-Pay';
+
+          // Vitals
+          if (p.latestVitals) {
+            const v = p.latestVitals;
+            document.getElementById('pv-bp').textContent = `${v.systolic || '--'}/${v.diastolic || '--'}`;
+            document.getElementById('pv-hr').textContent = v.heart_rate || '--';
+            document.getElementById('pv-spo2').textContent = v.oxygen_saturation ? `${v.oxygen_saturation}%` : '--%';
+            document.getElementById('pv-temp').textContent = v.temperature ? `${v.temperature}°F` : '--';
+            document.getElementById('pv-weight').textContent = v.weight_kg ? `${v.weight_kg} kg` : '--';
+            document.getElementById('pv-bmi').textContent = v.bmi ? `BMI: ${v.bmi}` : '--';
+            document.getElementById('pv-sugar').textContent = v.blood_sugar ? `${v.blood_sugar} mg/dL` : '--';
+          }
+        }
+
+        // Sub resources
+        const [apptsRes, visitsRes, recordsRes, rxRes, labsRes, invRes, payRes, docsRes] = await Promise.all([
+          API.get(`/patients/${myPatientId}/appointments`),
+          API.get(`/patients/${myPatientId}/visits`),
+          API.get(`/patients/${myPatientId}/records`),
+          API.get(`/patients/${myPatientId}/prescriptions`),
+          API.get(`/patients/${myPatientId}/lab-reports`),
+          API.get(`/patients/${myPatientId}/invoices`),
+          API.get(`/patients/${myPatientId}/payments`),
+          API.get(`/patients/${myPatientId}/documents`)
+        ]);
+
+        // Render Appointments
+        const apTbody = document.getElementById('p-appts-tbody');
+        if (apptsRes.success && apptsRes.data?.length > 0) {
+          apTbody.innerHTML = '';
+          apptsRes.data.forEach(a => {
+            apTbody.innerHTML += `
+              <tr>
+                <td><code>${a.appointment_number}</code></td>
+                <td><strong>${a.appointment_date}</strong><br><span class="text-xs text-muted">${a.appointment_time}</span></td>
+                <td><strong>${a.doctor_name || 'Specialist'}</strong><br><span class="text-xs text-muted">${a.department_name}</span></td>
+                <td><span class="text-xs text-uppercase font-bold">${a.type}</span></td>
+                <td><span class="badge badge-info">${a.status}</span></td>
+                <td>${a.reason}</td>
+              </tr>
+            `;
+          });
+        } else {
+          apTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No appointments booked.</td></tr>`;
+        }
+
+        // Render Visits
+        const vTbody = document.getElementById('p-visits-tbody');
+        if (visitsRes.success && visitsRes.data?.length > 0) {
+          vTbody.innerHTML = '';
+          visitsRes.data.forEach(v => {
+            vTbody.innerHTML += `
+              <tr>
+                <td><strong>${v.visit_date}</strong></td>
+                <td>${v.department_name}</td>
+                <td>${v.doctor_name || 'Physician'}</td>
+                <td>${v.chief_complaint || 'Encounter'}</td>
+                <td><strong>${v.diagnosis || 'Completed'}</strong></td>
+                <td><span class="badge badge-success">${v.status}</span></td>
+              </tr>
+            `;
+          });
+        } else {
+          vTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No visit records.</td></tr>`;
+        }
+
+        // Render Records (EMR)
+        const recContainer = document.getElementById('p-records-container');
+        if (recordsRes.success && recordsRes.data?.length > 0) {
+          recContainer.innerHTML = '';
+          recordsRes.data.forEach(r => {
+            recContainer.innerHTML += `
+              <div class="record-card-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                  <h5 style="margin: 0; color: var(--color-navy-900);">Diagnosis: <span class="text-primary">${r.diagnosis}</span></h5>
+                  <span class="badge badge-info">${r.record_date}</span>
+                </div>
+                <div style="font-size: var(--font-size-sm); margin-bottom: var(--space-2);"><strong>Chief Complaint:</strong> ${r.chief_complaint}</div>
+                <div style="font-size: var(--font-size-xs); color: var(--color-slate-600);">${r.clinical_notes || ''}</div>
+                ${r.follow_up_date ? `<div class="text-xs text-muted font-bold" style="margin-top: var(--space-2);">Follow-up: ${r.follow_up_date}</div>` : ''}
+              </div>
+            `;
+          });
+        } else {
+          recContainer.innerHTML = `<div class="text-center text-muted" style="padding: var(--space-6);">No medical records.</div>`;
+        }
+
+        // Render Prescriptions
+        const rxTbody = document.getElementById('p-rx-tbody');
+        if (rxRes.success && rxRes.data?.length > 0) {
+          rxTbody.innerHTML = '';
+          rxRes.data.forEach(rx => {
+            rxTbody.innerHTML += `
+              <tr>
+                <td><strong>${rx.medicine_name}</strong></td>
+                <td><span class="badge badge-info">${rx.dosage}</span></td>
+                <td>${rx.frequency}</td>
+                <td><strong>${rx.duration}</strong></td>
+                <td>${rx.doctor_name || 'Physician'}</td>
+                <td class="text-xs">${rx.instructions || 'Follow instructions.'}</td>
+              </tr>
+            `;
+          });
+        } else {
+          rxTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No prescriptions.</td></tr>`;
+        }
+
+        // Render Lab Reports
+        const labTbody = document.getElementById('p-lab-tbody');
+        if (labsRes.success && labsRes.data?.length > 0) {
+          labTbody.innerHTML = '';
+          labsRes.data.forEach(l => {
+            labTbody.innerHTML += `
+              <tr>
+                <td><code>${l.order_number}</code></td>
+                <td><strong>${l.test_name}</strong></td>
+                <td>${l.order_date}</td>
+                <td><strong class="text-primary">${l.result_value || 'Pending'}</strong></td>
+                <td class="text-xs font-mono">${l.normal_range || ''}</td>
+                <td><span class="badge badge-success">${l.status}</span></td>
+              </tr>
+            `;
+          });
+        } else {
+          labTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No lab reports.</td></tr>`;
+        }
+
+        // Render Invoices
+        const invTbody = document.getElementById('p-inv-tbody');
+        if (invRes.success && invRes.data?.length > 0) {
+          invTbody.innerHTML = '';
+          invRes.data.forEach(i => {
+            invTbody.innerHTML += `
+              <tr>
+                <td><code>${i.invoice_number}</code></td>
+                <td>${i.created_at ? i.created_at.split('T')[0] : ''}</td>
+                <td>$${parseFloat(i.total_amount).toFixed(2)}</td>
+                <td><strong>$${parseFloat(i.net_amount).toFixed(2)}</strong></td>
+                <td class="text-success">$${parseFloat(i.total_paid || 0).toFixed(2)}</td>
+                <td class="text-danger font-bold">$${parseFloat(i.balance_due || 0).toFixed(2)}</td>
+                <td><span class="badge ${i.status === 'paid' ? 'badge-success' : 'badge-danger'}">${i.status}</span></td>
+                <td>${i.due_date}</td>
+              </tr>
+            `;
+          });
+        } else {
+          invTbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted" style="padding: var(--space-6);">No invoices.</td></tr>`;
+        }
+
+        // Render Payments
+        const payTbody = document.getElementById('p-pay-tbody');
+        if (payRes.success && payRes.data?.length > 0) {
+          payTbody.innerHTML = '';
+          payRes.data.forEach(p => {
+            payTbody.innerHTML += `
+              <tr>
+                <td><code class="text-primary">${p.transaction_ref || 'TXN'}</code></td>
+                <td><code>${p.invoice_number}</code></td>
+                <td>${p.payment_date ? p.payment_date.split('T')[0] : ''}</td>
+                <td><span class="badge" style="background: var(--color-slate-100);">${p.payment_method}</span></td>
+                <td><strong class="text-success">$${parseFloat(p.amount_paid).toFixed(2)}</strong></td>
+                <td class="text-xs text-muted">${p.notes || ''}</td>
+              </tr>
+            `;
+          });
+        } else {
+          payTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No payments recorded.</td></tr>`;
+        }
+
+        // Render Documents
+        const docTbody = document.getElementById('p-docs-tbody');
+        if (docsRes.success && docsRes.data?.length > 0) {
+          docTbody.innerHTML = '';
+          docsRes.data.forEach(d => {
+            docTbody.innerHTML += `
+              <tr>
+                <td><i class="fa-regular fa-file-pdf text-danger"></i> <strong>${d.document_name}</strong></td>
+                <td><span class="badge badge-info">${d.document_type}</span></td>
+                <td><code class="text-xs">${d.file_path}</code></td>
+                <td class="text-xs">${d.file_size_kb || 150} KB</td>
+                <td class="text-xs">${d.uploaded_at ? d.uploaded_at.split('T')[0] : ''}</td>
+              </tr>
+            `;
+          });
+        } else {
+          docTbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding: var(--space-6);">No documents uploaded.</td></tr>`;
+        }
+
+      } catch (err) {
+        Toast.error('Error loading patient records: ' + err.message);
+      }
+    }
+
+    let currentPatientProfile = null;
+
+    function openPatientEditModal() {
+      if (!currentPatientProfile) return;
+      const pat = currentPatientProfile.patient || {};
+      document.getElementById('edit-pat-name').value = currentPatientProfile.fullName || '';
+      document.getElementById('edit-pat-phone').value = currentPatientProfile.phone || '';
+      document.getElementById('edit-pat-gender').value = pat.gender ? pat.gender.toLowerCase() : 'male';
+      document.getElementById('edit-pat-dob').value = pat.date_of_birth ? pat.date_of_birth.split('T')[0] : '';
+      document.getElementById('edit-pat-blood').value = pat.blood_group || 'O+';
+      document.getElementById('edit-pat-address').value = pat.address || '';
+      document.getElementById('modal-patient-edit').style.display = 'flex';
+    }
+
+    function openPatientPwdModal() {
+      document.getElementById('form-patient-pwd').reset();
+      document.getElementById('modal-patient-pwd').style.display = 'flex';
+    }
+
+    // Bind forms once profile loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intercept profile fetch to cache current profile
+      const origFetch = Auth.fetchProfile;
+      Auth.fetchProfile = async function() {
+        const p = await origFetch.apply(this, arguments);
+        currentPatientProfile = p;
+        return p;
+      };
+
+      // Edit Patient Form
+      const editForm = document.getElementById('form-patient-edit');
+      if (editForm) {
+        editForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const submitBtn = document.getElementById('btn-save-pat-profile');
+          const orig = submitBtn.innerHTML;
+          try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            const payload = {
+              full_name: editForm.full_name.value.trim(),
+              phone: editForm.phone.value.trim() || undefined,
+              gender: editForm.gender.value,
+              date_of_birth: editForm.date_of_birth.value || undefined,
+              blood_group: editForm.blood_group.value || undefined,
+              address: editForm.address.value.trim() || undefined
+            };
+            const res = await API.put('/auth/me', payload);
+            if (res.success) {
+              Toast.success('Patient profile updated successfully!');
+              document.getElementById('modal-patient-edit').style.display = 'none';
+              await loadPatientData();
+            }
+          } catch (err) {
+            Toast.error(err.message || 'Failed to update profile.');
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = orig;
+          }
+        });
+      }
+
+      // Change Password Form
+      const pwdForm = document.getElementById('form-patient-pwd');
+      if (pwdForm) {
+        pwdForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const newPwd = pwdForm.new_password.value;
+          const confirmPwd = pwdForm.confirm_password.value;
+          if (newPwd !== confirmPwd) {
+            return Toast.error('New passwords do not match.');
+          }
+          const submitBtn = document.getElementById('btn-submit-pat-pwd');
+          const orig = submitBtn.innerHTML;
+          try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating...';
+            const res = await API.post('/auth/change-password', {
+              current_password: pwdForm.current_password.value,
+              new_password: newPwd
+            });
+            if (res.success) {
+              Toast.success('Password updated successfully.');
+              document.getElementById('modal-patient-pwd').style.display = 'none';
+              pwdForm.reset();
+            }
+          } catch (err) {
+            Toast.error(err.message || 'Failed to update password.');
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = orig;
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- Edit Patient Modal -->
+  <div class="modal-backdrop" id="modal-patient-edit" style="display: none;">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-user-pen"></i></div>
+          <div>
+            <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Update Personal Information</h4>
+            <span class="text-xs text-muted">Modify contact information and demographic details</span>
+          </div>
+        </div>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body" style="padding: var(--space-6);">
+        <form id="form-patient-edit">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name <span class="required">*</span></label>
+              <input type="text" id="edit-pat-name" name="full_name" class="form-input" required minlength="2">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Phone</label>
+              <input type="text" id="edit-pat-phone" name="phone" class="form-input" placeholder="+92 300 1234567">
+            </div>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label class="form-label">Gender</label>
+                <select id="edit-pat-gender" name="gender" class="form-select">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" id="edit-pat-dob" name="date_of_birth" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Blood Group</label>
+                <select id="edit-pat-blood" name="blood_group" class="form-select">
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Residential Address</label>
+              <textarea id="edit-pat-address" name="address" rows="2" class="form-textarea" placeholder="Street address, city, province..."></textarea>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
+              <button type="submit" id="btn-save-pat-profile" class="btn btn-primary btn-block"><i class="fa-solid fa-floppy-disk"></i> Save Profile Changes</button>
+              <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-backdrop" id="modal-patient-pwd" style="display: none;">
+    <div class="modal-dialog" style="max-width: 460px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-lock"></i></div>
+          <div>
+            <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Change Account Password</h4>
+            <span class="text-xs text-muted">Update your secure patient portal credentials</span>
+          </div>
+        </div>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body" style="padding: var(--space-6);">
+        <form id="form-patient-pwd">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Current Password <span class="required">*</span></label>
+              <input type="password" id="pat-pwd-current" name="current_password" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">New Password <span class="required">*</span></label>
+              <input type="password" id="pat-pwd-new" name="new_password" class="form-input" required minlength="8">
+              <span class="form-help">Minimum 8 characters with upper, lower, digit, and special char.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirm New Password <span class="required">*</span></label>
+              <input type="password" id="pat-pwd-confirm" name="confirm_password" class="form-input" required minlength="8">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
+              <button type="submit" id="btn-submit-pat-pwd" class="btn btn-primary btn-block"><i class="fa-solid fa-key"></i> Update Password</button>
+              <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Health Portal | AuraCare Medical Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-hospital-user"></i>
+        </div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em;">PATIENT PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li>
+          <a href="/pages/patient-portal.html" class="btn btn-primary btn-block" style="justify-content: start;">
+            <i class="fa-solid fa-file-medical"></i> Health Records & Visits
+          </a>
+        </li>
+        <li>
+          <a href="/" class="btn btn-outline btn-block" style="justify-content: start; color: var(--color-slate-300); border-color: rgba(255,255,255,0.1);">
+            <i class="fa-solid fa-house-medical"></i> Clinic Homepage
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-hospital-user"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Patient</div>
+          <div class="sidebar-user-role" data-user-role>Patient</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div>
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Personal Health & Appointment Records</h3>
+      </div>
+      <div style="display: flex; gap: var(--space-3); align-items: center;">
+        <span class="badge badge-success" id="pat-code-badge">PAT-RECORD</span>
+        <button class="btn btn-primary btn-sm" onclick="Modal.open('modal-patient-appointment')">
+          <i class="fa-solid fa-calendar-plus"></i> Request Visit
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      <!-- Patient Demographic Card (CSS Grid) -->
+      <div class="card" style="background: var(--gradient-card);">
+        <div class="card-body">
+          <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-6); align-items: center;">
+            <div class="doctor-avatar-placeholder" style="width: 72px; height: 72px; font-size: 1.75rem;">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div>
+              <h3 id="pat-full-name" style="margin-bottom: var(--space-1);">Loading Patient...</h3>
+              <p id="pat-demographics" class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">
+                Demographics & Clinical Profile
+              </p>
+              <p class="text-muted" id="pat-contact-info" style="margin: 0; font-size: var(--font-size-xs);">
+                Contact Information
+              </p>
+            </div>
+            <div>
+              <span class="badge badge-primary">Confidential E-Records</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid 2-col: Upcoming Appointments + Invoices -->
+      <div class="grid-2-col">
+        <!-- Upcoming Visits -->
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="font-size: var(--font-size-base); margin: 0;">My Appointments (MySQL Live)</h4>
+            <button class="btn btn-outline btn-sm" onclick="loadPatientRecords()"><i class="fa-solid fa-arrows-rotate"></i></button>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Department & Doctor</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="patient-appts-tbody">
+                  <tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">Loading appointments...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invoices & Billing -->
+        <div class="card">
+          <div class="card-header">
+            <h4 style="font-size: var(--font-size-base); margin: 0;">Invoices & Billing History</h4>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive" style="border: none;">
+              <table class="table-modern">
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Due Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="patient-invoices-tbody">
+                  <tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-6);">Loading billing records...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Reusable Appointment Modal -->
+  <div class="modal-backdrop" id="modal-patient-appointment" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Request Specialist Consultation</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-pat-booking">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="pat-book-dept">Medical Department <span class="required">*</span></label>
+              <select id="pat-book-dept" name="department_id" class="form-select" required>
+                <option value="1">Cardiology</option>
+                <option value="2">Neurology</option>
+                <option value="3">Pediatrics</option>
+                <option value="5" selected>General Medicine</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pat-book-date">Preferred Date <span class="required">*</span></label>
+              <input type="date" id="pat-book-date" name="appointment_date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pat-book-reason">Reason for Appointment <span class="required">*</span></label>
+              <textarea id="pat-book-reason" name="reason" rows="3" class="form-textarea" placeholder="Describe symptoms or reasons for follow-up..." required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-backdrop" id="modal-change-password" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Password</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <form id="form-pat-cp">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="pat-cp-current">Current Password <span class="required">*</span></label>
+              <input type="password" id="pat-cp-current" name="current_password" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pat-cp-new">New Password <span class="required">*</span></label>
+              <input type="password" id="pat-cp-new" name="new_password" class="form-input" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const isAuth = await Auth.guardPage(['patient', 'super_admin']);
+      if (!isAuth) return;
+
+      loadPatientRecords();
+
+      // Set min date to today
+      const dateInput = document.getElementById('pat-book-date');
+      if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+        dateInput.value = today;
+      }
+
+      const form = document.getElementById('form-pat-booking');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = Auth.getUser();
+        const nameParts = (user.fullName || 'Patient User').split(' ');
+
+        const payload = {
+          first_name: nameParts[0] || 'Patient',
+          last_name: nameParts.slice(1).join(' ') || 'Member',
+          phone: user.phone || '+1 (555) 742-9912',
+          email: user.email,
+          department_id: parseInt(form.department_id.value, 10),
+          appointment_date: form.appointment_date.value,
+          reason: form.reason.value.trim()
+        };
+
+        try {
+          const res = await API.post('/appointments', payload);
+          if (res.success) {
+            Toast.success(`Appointment submitted! Reference: ${res.data.appointmentNumber}`);
+            form.reset();
+            Modal.close('modal-patient-appointment');
+            loadPatientRecords();
+          }
+        } catch (err) {
+          Toast.error(err.message || 'Failed to submit booking.');
+        }
+      });
+
+      const formCP = document.getElementById('form-pat-cp');
+      formCP.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const res = await API.post('/auth/change-password', {
+            current_password: formCP.current_password.value,
+            new_password: formCP.new_password.value
+          });
+          Toast.success(res.message || 'Password updated.');
+          formCP.reset();
+          Modal.close('modal-change-password');
+        } catch (err) {
+          Toast.error(err.message || 'Password update failed.');
+        }
+      });
+    });
+
+    async function loadPatientRecords() {
+      const profile = await Auth.fetchProfile();
+      if (!profile) return;
+
+      document.getElementById('pat-full-name').textContent = profile.fullName;
+      if (profile.patient) {
+        document.getElementById('pat-code-badge').textContent = profile.patient.patientCode || 'PAT-RECORD';
+        document.getElementById('pat-demographics').innerHTML = `
+          ${profile.patient.gender || 'Patient'} • Blood Group: <strong>${profile.patient.bloodGroup || 'Unknown'}</strong> • DOB: ${profile.patient.dateOfBirth || 'N/A'}
+        `;
+        document.getElementById('pat-contact-info').innerHTML = `
+          <i class="fa-solid fa-phone"></i> ${escapeHtml(profile.phone || 'No phone')} | <i class="fa-solid fa-location-dot"></i> ${escapeHtml(profile.patient.address || 'Address on file')}
+        `;
+      }
+
+      // Fetch dynamic patient isolated records
+      try {
+        const res = await API.get('/patient/my-records');
+        if (res.success && res.data) {
+          // Render Appointments
+          const apptsTbody = document.getElementById('patient-appts-tbody');
+          if (res.data.appointments && res.data.appointments.length > 0) {
+            apptsTbody.innerHTML = '';
+            res.data.appointments.forEach((a) => {
+              let statusBadge = `<span class="badge badge-warning">${a.status}</span>`;
+              if (a.status === 'confirmed') statusBadge = `<span class="badge badge-success">Confirmed</span>`;
+              if (a.status === 'completed') statusBadge = `<span class="badge badge-info">Completed</span>`;
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td><strong>${a.appointment_date}</strong><br><span style="font-size: var(--font-size-xs); color: var(--color-slate-400);">${a.appointment_time}</span></td>
+                <td>${escapeHtml(a.department_name)}<br><span style="font-size: var(--font-size-xs); color: var(--color-slate-400);">${escapeHtml(a.doctor_name || 'Assigned Specialist')}</span></td>
+                <td>${escapeHtml(a.reason)}</td>
+                <td>${statusBadge}</td>
+              `;
+              apptsTbody.appendChild(tr);
+            });
+          } else {
+            apptsTbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-4);">No appointment history.</td></tr>`;
+          }
+
+          // Render Invoices
+          const invTbody = document.getElementById('patient-invoices-tbody');
+          if (res.data.invoices && res.data.invoices.length > 0) {
+            invTbody.innerHTML = '';
+            res.data.invoices.forEach((inv) => {
+              let statusBadge = `<span class="badge badge-success">Paid</span>`;
+              if (inv.status === 'unpaid') statusBadge = `<span class="badge badge-danger">Unpaid</span>`;
+              if (inv.status === 'partially_paid') statusBadge = `<span class="badge badge-warning">Partial</span>`;
+
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td><code>${inv.invoice_number}</code></td>
+                <td>${inv.due_date}</td>
+                <td><strong>$${parseFloat(inv.net_amount).toFixed(2)}</strong></td>
+                <td>${statusBadge}</td>
+              `;
+              invTbody.appendChild(tr);
+            });
+          } else {
+            invTbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted" style="padding: var(--space-4);">No invoices found.</td></tr>`;
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch patient records:', err.message);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

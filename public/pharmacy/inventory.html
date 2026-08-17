@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Reordering | AuraCare Hospital Pharmacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">HOSPITAL PHARMACY</span>
+        </div>
+      </a>
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/pharmacy/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription-bottle"></i> Pharmacy Console
+            </a>
+          </li>
+        
+          <li>
+            <a href="/pharmacy/medicines" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-pills"></i> Medicines Inventory
+            </a>
+          </li>
+        
+          <li>
+            <a href="/pharmacy/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-receipt"></i> Dispense Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/pharmacy/sales" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-chart-pie"></i> Dispensary Sales
+            </a>
+          </li>
+        
+          <li>
+            <a href="/pharmacy/inventory" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-boxes-stacked"></i> Stock Reordering
+            </a>
+          </li>
+        
+          <li>
+            <a href="/pharmacy/suppliers" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-truck-fast"></i> Pharma Suppliers
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Pharmacist</div>
+          <div class="sidebar-user-role" data-user-role>Hospital Pharmacy</div>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger btn-sm btn-block" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Stock Reordering</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Hospital Pharmacy Station</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+    <main class="dashboard-content-grid">
+      
+    <div class="card">
+      <div class="card-header"><h4 style="font-size: var(--font-size-base); margin: 0;">Stock Reordering</h4></div>
+      <div class="card-body"><p class="text-muted">Medication stock inventory, batch tracking, expiry date monitoring, and digital prescription fulfillment.</p></div>
+    </div>
+  
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(["pharmacist","super_admin","hospital_admin"]);
+    });
+  </script>
+</body>
+</html>

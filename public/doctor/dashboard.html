@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physician Clinical Workspace | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Physician Clinical Workspace</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="background: var(--gradient-card); margin-bottom: var(--space-4);">
+  <div class="card-body">
+    <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-6); align-items: center;">
+      <div class="doctor-avatar-placeholder" style="width: 68px; height: 68px; font-size: 1.5rem;"><i class="fa-solid fa-user-doctor"></i></div>
+      <div>
+        <h3 id="doc-name" style="margin-bottom: 2px;">Loading Physician...</h3>
+        <p id="doc-spec" class="text-muted text-sm" style="margin: 0;">Specialization & Credentials</p>
+      </div>
+      <div><a href="/doctor/schedule" class="btn btn-outline btn-sm"><i class="fa-regular fa-clock"></i> Weekly Timetable</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-4-col" style="margin-bottom: var(--space-4);">
+  <div class="card" style="padding: var(--space-3); border-left: 3px solid #f59e0b;">
+    <div class="text-xs text-muted font-bold text-uppercase">Waiting for Me</div>
+    <div class="text-xl font-extrabold text-warning" id="doc-stat-waiting">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-3); border-left: 3px solid #7c3aed;">
+    <div class="text-xs text-muted font-bold text-uppercase">In Consultation</div>
+    <div class="text-xl font-extrabold" style="color: #7c3aed;" id="doc-stat-in-con">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-3); border-left: 3px solid #16a34a;">
+    <div class="text-xs text-muted font-bold text-uppercase">Completed Today</div>
+    <div class="text-xl font-extrabold text-success" id="doc-stat-completed">0</div>
+  </div>
+  <div class="card" style="padding: var(--space-3); border-left: 3px solid var(--color-primary);">
+    <div class="text-xs text-muted font-bold text-uppercase">My Total Queue</div>
+    <div class="text-xl font-extrabold text-navy" id="doc-stat-total">0</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-people-roof text-primary"></i> Today's Live OPD Patient Queue</h4>
+    <button class="btn btn-outline btn-sm" onclick="loadMyDoctorOpdQueue()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Token #</th>
+            <th>Patient Details</th>
+            <th>Priority</th>
+            <th>Chief Complaint</th>
+            <th>Status</th>
+            <th style="text-align: right;">Clinical Action</th>
+          </tr>
+        </thead>
+        <tbody id="doc-opd-queue-tbody">
+          <tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Loading OPD queue...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const prof = await Auth.fetchProfile();
+    if (prof) {
+      document.getElementById('doc-name').textContent = prof.fullName;
+      if (prof.doctor) document.getElementById('doc-spec').textContent = (prof.doctor.specialization || 'Specialist') + ' • ' + (prof.doctor.department || 'Clinical Medicine');
+    }
+    loadMyDoctorOpdQueue();
+    setInterval(loadMyDoctorOpdQueue, 5000);
+  });
+
+  async function loadMyDoctorOpdQueue() {
+    try {
+      const res = await API.get('/opd/dashboard');
+      if (res.success && res.data) {
+        const d = res.data;
+        document.getElementById('doc-stat-waiting').textContent = d.stats.waiting;
+        document.getElementById('doc-stat-in-con').textContent = d.stats.in_consultation;
+        document.getElementById('doc-stat-completed').textContent = d.stats.completed;
+        document.getElementById('doc-stat-total').textContent = d.stats.total;
+
+        const tbody = document.getElementById('doc-opd-queue-tbody');
+        if (d.all_queue.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">No patients currently in your queue.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        d.all_queue.forEach(q => {
+          const tr = document.createElement('tr');
+          let actionBtn = '';
+          if (q.status === 'waiting') {
+            actionBtn = `<button class="btn btn-primary btn-sm" onclick="callPatient(${q.id})"><i class="fa-solid fa-stethoscope"></i> Call In</button>`;
+          } else if (q.status === 'in_consultation') {
+            actionBtn = `<button class="btn btn-success btn-sm" onclick="completeVisit(${q.id})"><i class="fa-solid fa-circle-check"></i> Complete</button>`;
+          } else {
+            actionBtn = '<span class="text-xs text-muted">Completed</span>';
+          }
+
+          tr.innerHTML = `
+            <td><span class="badge" style="background: var(--color-navy-900); color: #2dd4bf; font-weight: 800;">${q.token_number}</span></td>
+            <td>
+              <strong>${q.patient_name}</strong><br>
+              <span class="text-xs text-muted"><code>${q.patient_code}</code></span>
+            </td>
+            <td><span class="badge ${q.priority === 'emergency' ? 'badge-danger' : (q.priority === 'urgent' ? 'badge-warning' : 'badge-light')}">${q.priority}</span></td>
+            <td class="text-xs text-muted" style="max-width: 220px;">${q.chief_complaint || 'Consultation'}</td>
+            <td><span class="badge status-badge-${q.status}">${q.status.replace('_', ' ')}</span></td>
+            <td style="text-align: right; white-space: nowrap;">
+              ${actionBtn}
+              <a href="/admin/patient-profile?id=${q.patient_id}" class="btn btn-outline btn-sm" title="View EMR"><i class="fa-solid fa-file-medical text-primary"></i></a>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (_) {}
+  }
+
+  async function callPatient(id) {
+    try {
+      const res = await API.patch('/opd/queues/' + id + '/call');
+      if (res.success) {
+        Toast.success(res.message);
+        loadMyDoctorOpdQueue();
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Call failed.');
+    }
+  }
+
+  async function completeVisit(id) {
+    const diag = prompt('Please enter primary diagnosis to conclude consultation:');
+    if (!diag) return;
+
+    try {
+      const res = await API.post('/opd/queues/' + id + '/complete', { diagnosis: diag });
+      if (res.success) {
+        Toast.success(res.message);
+        loadMyDoctorOpdQueue();
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Completion failed.');
+    }
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

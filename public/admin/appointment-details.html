@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment File & Clinical Triage | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .status-badge-pending { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .status-badge-confirmed { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .status-badge-checked_in { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .status-badge-in_progress { background: #fae8ff; color: #86198f; border: 1px solid #f5d0fe; }
+    .status-badge-completed { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-badge-cancelled { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .status-badge-no_show { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .timeline-step {
+      text-align: center;
+      padding: var(--space-3) var(--space-2);
+      border-radius: var(--radius-lg);
+      background: var(--color-slate-100);
+      color: var(--color-slate-500);
+      font-size: 0.75rem;
+      border: 1px solid var(--color-slate-200);
+      position: relative;
+    }
+    .timeline-step.completed {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #166534;
+      font-weight: 700;
+    }
+    .timeline-step.current {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.25);
+    }
+  </style>
+</head>
+<body class="dashboard-layout">
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
+        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
+        <li><a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
+        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
+        <li><a href="/admin/schedules" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-days"></i> Shifts & Availability</a></li>
+        <li><a href="/admin/appointments" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-calendar-check"></i> Master Bookings</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Hospital Admin</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/admin/settings" class="btn btn-outline btn-sm" title="Settings" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <a href="/admin/appointments" class="btn btn-outline btn-sm">&larr; Back to Master Bookings</a>
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Appointment Record & Triage</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);" id="top-action-bar">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+
+      <!-- HERO HEADER CARD (CSS GRID) -->
+      <div class="card" style="background: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-900) 60%, var(--color-primary-dark) 100%); color: white; border-radius: var(--radius-2xl); padding: var(--space-6); margin-bottom: var(--space-6); box-shadow: var(--shadow-xl);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-4);">
+          <div>
+            <div style="display: flex; gap: var(--space-2); align-items: center; margin-bottom: var(--space-2);">
+              <span class="badge" style="background: rgba(45,212,191,0.25); color: #2dd4bf; font-weight: bold;" id="appt-ref-badge">APT-2026</span>
+              <span class="badge" id="appt-status-badge">Status</span>
+              <span class="badge badge-light" id="appt-type-badge">Consultation</span>
+            </div>
+            <h2 style="color: white; margin: 0 0 4px 0;" id="appt-patient-name">Loading Appointment Record...</h2>
+            <div style="color: #93c5fd; font-size: var(--font-size-sm);" id="appt-datetime-title">Date & Time</div>
+          </div>
+
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;" id="workflow-quick-buttons">
+            <!-- Dynamic Workflow Buttons -->
+          </div>
+        </div>
+
+        <!-- 5-Stage Lifecycle Timeline -->
+        <div class="timeline-steps" id="lifecycle-timeline">
+          <div class="timeline-step" id="step-booked">1. Booked</div>
+          <div class="timeline-step" id="step-confirmed">2. Confirmed</div>
+          <div class="timeline-step" id="step-checked_in">3. Checked-In</div>
+          <div class="timeline-step" id="step-in_progress">4. In Consultation</div>
+          <div class="timeline-step" id="step-completed">5. Completed</div>
+        </div>
+      </div>
+
+      <!-- 4 CSS GRID CARDS -->
+      <div class="grid-split-60-40" style="gap: var(--space-5); align-items: start;">
+        
+        <!-- Left Column: Patient & Encounter Details -->
+        <div style="display: grid; gap: var(--space-5);">
+          
+          <!-- Patient Card -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-hospital-user text-primary"></i> Patient Demographics</h4>
+              <a href="#" id="link-patient-chart" class="btn btn-outline btn-sm">View Full EMR Chart &rarr;</a>
+            </div>
+            <div class="card-body">
+              <div class="grid-3-col" style="gap: var(--space-4);">
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Patient Code</div>
+                  <div class="font-bold text-navy" id="pat-code">PAT-0000</div>
+                </div>
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Gender / DOB</div>
+                  <div class="font-bold text-navy" id="pat-gender-dob">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Blood Group</div>
+                  <div><span class="badge badge-danger" id="pat-blood">O+</span></div>
+                </div>
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Phone</div>
+                  <div class="font-bold text-navy" id="pat-phone">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Email</div>
+                  <div id="pat-email">—</div>
+                </div>
+                <div>
+                  <div class="text-xs text-muted font-bold text-uppercase">Emergency Contact</div>
+                  <div id="pat-emerg">—</div>
+                </div>
+              </div>
+
+              <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-slate-200);">
+                <div class="text-xs text-muted font-bold text-uppercase">Known Allergies</div>
+                <div id="pat-allergies" class="text-xs text-danger font-semibold">None recorded</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chief Complaint & Notes -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-notes-medical text-primary"></i> Chief Complaint & Clinical Triage Notes</h4>
+            </div>
+            <div class="card-body">
+              <div style="margin-bottom: var(--space-4);">
+                <label class="text-xs text-muted font-bold text-uppercase">Chief Medical Complaint</label>
+                <p style="font-size: var(--font-size-base); color: var(--color-navy-900); font-weight: 600; margin: 4px 0 0 0;" id="appt-reason">
+                  Loading complaint...
+                </p>
+              </div>
+
+              <div>
+                <label class="text-xs text-muted font-bold text-uppercase">Clinical Encounter Notes & Audit Log</label>
+                <div id="appt-notes-box" style="background: var(--color-slate-50); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-slate-200); font-family: monospace; font-size: 0.75rem; white-space: pre-wrap; margin-top: 4px;">
+                  No extra notes recorded.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Attending Doctor & Timeline Details -->
+        <div style="display: grid; gap: var(--space-5);">
+          
+          <!-- Doctor Card -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-user-doctor text-primary"></i> Attending Specialist</h4>
+              <a href="#" id="link-doctor-chart" class="btn btn-outline btn-sm">View Doctor File &rarr;</a>
+            </div>
+            <div class="card-body">
+              <div style="display: flex; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4);">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: white; display: grid; place-items: center; font-weight: bold; font-size: 1.1rem;" id="doc-avatar">DR</div>
+                <div>
+                  <h4 style="margin: 0; color: var(--color-navy-900);" id="doc-name">Doctor Name</h4>
+                  <div class="text-xs text-primary font-semibold" id="doc-spec">Specialization</div>
+                  <div class="text-xs text-muted" id="doc-code">DOC-0000</div>
+                </div>
+              </div>
+
+              <div style="display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Clinical Division:</span>
+                  <strong id="doc-dept">Cardiology</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Clinic Location / Room:</span>
+                  <span id="doc-room">Suite 301-A</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-muted">Base Consultation Fee:</span>
+                  <strong style="color: #059669;" id="doc-fee">$150.00</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timestamp Milestones Card -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-clock-rotate-left text-primary"></i> Timestamp Milestones</h4>
+            </div>
+            <div class="card-body" style="font-size: var(--font-size-xs); display: grid; gap: var(--space-3);">
+              <div style="display: flex; justify-content: space-between;">
+                <span class="text-muted">Booking Created:</span>
+                <span id="time-created">—</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span class="text-muted">Patient Check-In:</span>
+                <span id="time-checked-in">—</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span class="text-muted">Consultation Started:</span>
+                <span id="time-started">—</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span class="text-muted">Consultation Completed:</span>
+                <span id="time-completed">—</span>
+              </div>
+              <div id="cancellation-meta" style="display: none; padding-top: var(--space-2); border-top: 1px solid var(--color-slate-200); color: var(--color-danger);">
+                <div><strong>Cancelled At:</strong> <span id="time-cancelled">—</span></div>
+                <div><strong>Reason:</strong> <span id="val-cancelled-reason">—</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let apptId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin', 'doctor', 'receptionist']);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      apptId = urlParams.get('id');
+
+      if (!apptId) {
+        window.location.href = '/admin/appointments';
+        return;
+      }
+
+      loadAppointmentDetails();
+    });
+
+    async function loadAppointmentDetails() {
+      try {
+        const res = await API.get('/appointments/' + apptId);
+        if (res.success && res.data) {
+          const a = res.data;
+
+          document.getElementById('appt-ref-badge').textContent = a.appointment_number;
+          document.getElementById('appt-status-badge').textContent = a.status.replace('_', ' ').toUpperCase();
+          document.getElementById('appt-status-badge').className = `badge status-badge-${a.status}`;
+          document.getElementById('appt-type-badge').textContent = a.type.replace('_', ' ').toUpperCase();
+
+          document.getElementById('appt-patient-name').textContent = a.patient_name;
+          document.getElementById('appt-datetime-title').innerHTML = `<i class="fa-regular fa-calendar"></i> ${a.appointment_date} at <strong>${a.appointment_time.substring(0, 5)}</strong> • ${a.department_name}`;
+
+          // Timeline highlights
+          highlightTimeline(a.status);
+
+          // Patient Demographics
+          document.getElementById('pat-code').textContent = a.patient_code;
+          document.getElementById('pat-gender-dob').textContent = `${a.patient_gender || 'N/A'} • DOB: ${a.patient_dob || 'N/A'}`;
+          document.getElementById('pat-blood').textContent = a.patient_blood_group || 'Unknown';
+          document.getElementById('pat-phone').textContent = a.patient_phone || 'None';
+          document.getElementById('pat-email').textContent = a.patient_email || 'None';
+          document.getElementById('pat-emerg').textContent = a.emergency_contact_name ? `${a.emergency_contact_name} (${a.emergency_contact_phone || ''})` : 'None recorded';
+          document.getElementById('pat-allergies').textContent = a.patient_allergies || 'No known allergies recorded.';
+          document.getElementById('link-patient-chart').href = `/admin/patients?search=${a.patient_code}`;
+
+          // Doctor Information
+          document.getElementById('doc-name').textContent = a.doctor_name;
+          document.getElementById('doc-avatar').textContent = a.doctor_name.split(' ').map(n=>n[0]).join('').substring(0,2);
+          document.getElementById('doc-spec').textContent = a.doctor_specialization;
+          document.getElementById('doc-code').textContent = a.doctor_code;
+          document.getElementById('doc-dept').textContent = a.department_name;
+          document.getElementById('doc-room').textContent = a.doctor_room || 'Room TBD';
+          document.getElementById('doc-fee').textContent = '$' + parseFloat(a.consultation_fee || 50).toFixed(2);
+          document.getElementById('link-doctor-chart').href = `/admin/doctor-profile?id=${a.doctor_id}`;
+
+          // Chief Complaint & Notes
+          document.getElementById('appt-reason').textContent = a.reason;
+          document.getElementById('appt-notes-box').textContent = a.notes || 'No triage or clinical notes recorded.';
+
+          // Timestamps
+          document.getElementById('time-created').textContent = a.created_at || '—';
+          document.getElementById('time-checked-in').textContent = a.check_in_time || 'Pending Check-In';
+          document.getElementById('time-started').textContent = a.consultation_start_time || 'Not started';
+          document.getElementById('time-completed').textContent = a.consultation_end_time || 'Not completed';
+
+          if (a.status === 'cancelled') {
+            document.getElementById('cancellation-meta').style.display = 'block';
+            document.getElementById('time-cancelled').textContent = a.cancelled_at || '—';
+            document.getElementById('val-cancelled-reason').textContent = a.cancellation_reason || 'Not specified';
+          }
+
+          // Render Workflow Buttons
+          renderWorkflowButtons(a);
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to load appointment.');
+      }
+    }
+
+    function highlightTimeline(status) {
+      const order = ['booked', 'confirmed', 'checked_in', 'in_progress', 'completed'];
+      let targetIndex = 0;
+      if (status === 'pending') targetIndex = 0;
+      else if (status === 'confirmed') targetIndex = 1;
+      else if (status === 'checked_in') targetIndex = 2;
+      else if (status === 'in_progress') targetIndex = 3;
+      else if (status === 'completed') targetIndex = 4;
+
+      order.forEach((step, idx) => {
+        const el = document.getElementById('step-' + step);
+        el.className = 'timeline-step';
+        if (idx < targetIndex) {
+          el.className = 'timeline-step completed';
+        } else if (idx === targetIndex) {
+          el.className = 'timeline-step current';
+        }
+      });
+    }
+
+    function renderWorkflowButtons(a) {
+      const container = document.getElementById('workflow-quick-buttons');
+      container.innerHTML = '';
+
+      if (a.status === 'pending') {
+        container.innerHTML = `
+          <button class="btn btn-success btn-sm" onclick="performStatusUpdate('confirmed')"><i class="fa-solid fa-check"></i> Confirm</button>
+          <button class="btn btn-danger btn-sm" onclick="performCancel()"><i class="fa-solid fa-ban"></i> Cancel</button>
+        `;
+      } else if (a.status === 'confirmed') {
+        container.innerHTML = `
+          <button class="btn btn-primary btn-sm" onclick="performStatusUpdate('checked_in')"><i class="fa-solid fa-user-check"></i> Check-In Patient</button>
+          <button class="btn btn-outline btn-sm" onclick="performStatusUpdate('no_show')"><i class="fa-solid fa-user-slash"></i> Mark No-Show</button>
+          <button class="btn btn-danger btn-sm" onclick="performCancel()"><i class="fa-solid fa-ban"></i> Cancel</button>
+        `;
+      } else if (a.status === 'checked_in') {
+        container.innerHTML = `
+          <button class="btn btn-primary btn-sm" style="background: #7c3aed; border-color: #7c3aed;" onclick="performStatusUpdate('in_progress')"><i class="fa-solid fa-stethoscope"></i> Start Consultation</button>
+          <button class="btn btn-success btn-sm" onclick="performStatusUpdate('completed')"><i class="fa-solid fa-circle-check"></i> Complete Visit</button>
+        `;
+      } else if (a.status === 'in_progress') {
+        container.innerHTML = `
+          <button class="btn btn-success btn-sm" onclick="performStatusUpdate('completed')"><i class="fa-solid fa-circle-check"></i> Complete Consultation</button>
+        `;
+      }
+    }
+
+    async function performStatusUpdate(status) {
+      try {
+        const res = await API.patch(`/appointments/${apptId}/status`, { status });
+        if (res.success) {
+          Toast.success(`Status updated to ${status.replace('_', ' ')}`);
+          loadAppointmentDetails();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Update failed.');
+      }
+    }
+
+    async function performCancel() {
+      const reason = prompt('Please enter cancellation reason:');
+      if (reason === null) return;
+
+      try {
+        const res = await API.patch(`/appointments/${apptId}/status`, {
+          status: 'cancelled',
+          cancellation_reason: reason || 'Cancelled by staff'
+        });
+        if (res.success) {
+          Toast.success('Appointment cancelled.');
+          loadAppointmentDetails();
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Cancellation failed.');
+      }
+    }
+  </script>
+</body>
+</html>

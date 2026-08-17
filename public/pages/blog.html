@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Articles & Health Insights | AuraCare Medical Center</title>
+  <meta name="description" content="Evidence-based clinical health articles on cardiology, neurology, pediatrics, and preventive wellness written by board-certified physicians.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .cat-pill-btn {
+      border: 1px solid var(--color-slate-200);
+      background: white;
+      color: var(--color-slate-600);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cat-pill-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .cat-pill-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .blog-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-top-left-radius: var(--radius-md);
+      border-top-right-radius: var(--radius-md);
+    }
+    .tag-cloud-item {
+      font-size: 0.72rem;
+      background: var(--color-slate-100);
+      color: var(--color-slate-600);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .tag-cloud-item:hover {
+      background: #e0f2fe;
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body class="page-shell">
+
+        <!-- Top Bar -->
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-phone" style="color: #2dd4bf;"></i> 24/7 Trauma: <strong>+1 (800) 555-AURA</strong></span>
+        <span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-clock"></i> Open 24/7</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fa-solid fa-location-dot" style="color: #2dd4bf;"></i> 100 Medical Plaza, Metro Health District</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo-grid">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <div>
+          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span class="brand-sub">MEDICAL CENTER</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/about" class="nav-link ">About</a></li>
+          <li><a href="/departments" class="nav-link ">Departments</a></li>
+          <li><a href="/doctors" class="nav-link ">Doctors</a></li>
+          <li><a href="/services" class="nav-link ">Services</a></li>
+          <li><a href="/appointments" class="nav-link ">Appointments</a></li>
+          <li><a href="/emergency" class="nav-link nav-link-emergency "><i class="fa-solid fa-truck-medical"></i> Emergency</a></li>
+          <li><a href="/contact" class="nav-link ">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Live System Health Badge (Pill) -->
+        <div class="health-badge" id="system-health-badge" title="Connecting to backend...">
+          <span class="health-dot" id="health-dot"></span>
+          <span class="health-text" id="health-text">Online • MySQL</span>
+        </div>
+
+        <!-- Auth Action Buttons (Desktop & Tablet) -->
+        <div id="header-auth-actions" class="header-auth-actions">
+          <button class="btn btn-outline-primary btn-sm" data-modal-target="modal-login">
+            <i class="fa-solid fa-user-lock"></i> <span>Sign In</span>
+          </button>
+          <a href="/appointments" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-calendar-check"></i> <span>Book Visit</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars" id="mobile-nav-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer / Dropdown -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="/" class="mobile-nav-link "><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/about" class="mobile-nav-link "><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+        <li><a href="/departments" class="mobile-nav-link "><i class="fa-solid fa-hospital"></i> Medical Departments</a></li>
+        <li><a href="/doctors" class="mobile-nav-link "><i class="fa-solid fa-user-doctor"></i> Our Physicians</a></li>
+        <li><a href="/services" class="mobile-nav-link "><i class="fa-solid fa-stethoscope"></i> Clinical Services</a></li>
+        <li><a href="/appointments" class="mobile-nav-link "><i class="fa-regular fa-calendar-check"></i> Book Appointment</a></li>
+        <li><a href="/emergency" class="mobile-nav-link text-danger font-bold "><i class="fa-solid fa-truck-medical"></i> Emergency 24/7</a></li>
+        <li><a href="/contact" class="mobile-nav-link "><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+      </ul>
+      <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <button class="btn btn-outline-primary btn-block" data-modal-target="modal-login">
+          <i class="fa-solid fa-user-lock"></i> Staff / Patient Sign In
+        </button>
+        <a href="/appointments" class="btn btn-primary btn-block">
+          <i class="fa-regular fa-calendar-check"></i> Request Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero Header -->
+  <section style="background: var(--gradient-primary); color: white; padding: var(--space-10) var(--space-6);">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-6);">
+      <div style="max-width: 720px;">
+        <span class="badge badge-primary" style="background: rgba(255,255,255,0.15); color: #2dd4bf; margin-bottom: var(--space-2);"><i class="fa-solid fa-book-medical"></i> MEDICAL KNOWLEDGE BASE</span>
+        <h1 style="color: white; font-size: var(--font-size-3xl); margin-bottom: var(--space-2);">Healthcare Articles & Clinical Insights</h1>
+        <p style="color: var(--color-slate-200); font-size: var(--font-size-base); margin: 0;">Evidence-based health education, preventive protocols, and breakthrough therapies from AuraCare physicians.</p>
+      </div>
+
+      <!-- Live Search Box in Hero -->
+      <div style="background: white; padding: 6px; border-radius: var(--radius-md); display: flex; gap: 8px; width: 100%; max-width: 380px; box-shadow: var(--shadow-lg);">
+        <input type="text" id="blog-search-input" class="form-input text-xs" placeholder="Search cardiovascular, stroke, vaccines..." style="border: none; box-shadow: none;" oninput="debounceBlogSearch()">
+        <button class="btn btn-primary btn-sm" onclick="loadBlogArticles()"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main style="max-width: 1280px; margin: var(--space-8) auto; padding: 0 var(--space-6); min-height: 60vh;">
+    
+    <!-- CATEGORY PILL FILTERS (CSS GRID / FLEX) -->
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-6);" id="category-pills-container">
+      <button class="cat-pill-btn active" onclick="setCategoryFilter('all', this)"><i class="fa-solid fa-layer-group"></i> All Specialties</button>
+    </div>
+
+    <!-- FEATURED ARTICLE HERO CARD (CSS GRID) -->
+    <div id="featured-article-hero" style="margin-bottom: var(--space-8); display: none;"></div>
+
+    <!-- ARTICLES LISTING & SIDEBAR (CSS GRID) -->
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: var(--space-8); align-items: start;">
+      
+      <!-- MAIN ARTICLES GRID (CSS GRID) -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <h2 style="font-size: var(--font-size-xl); margin: 0;" id="section-title">Latest Medical Articles</h2>
+          <span class="text-xs text-muted" id="articles-count-label">Loading articles...</span>
+        </div>
+
+        <div class="grid-cards-auto" id="public-blog-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: var(--space-2);"></i>
+            <div>Loading verified articles from MySQL...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR: POPULAR TAGS & CLINICAL CATEGORIES (CSS GRID) -->
+      <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+        
+        <!-- POPULAR TAGS -->
+        <div class="card" style="padding: var(--space-5);">
+          <h4 style="font-size: 0.9rem; margin-bottom: var(--space-3); color: var(--color-navy);"><i class="fa-solid fa-tags text-primary"></i> Popular Topics</h4>
+          <div id="tags-cloud-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span class="text-xs text-muted">Loading topics...</span>
+          </div>
+        </div>
+
+        <!-- DOCTOR CONSULTATION PROMO -->
+        <div class="card" style="padding: var(--space-5); background: var(--gradient-primary); color: white;">
+          <h4 style="color: white; font-size: 1rem; margin-bottom: var(--space-2);"><i class="fa-solid fa-stethoscope text-primary-light"></i> Need Medical Advice?</h4>
+          <p style="font-size: 0.8rem; color: var(--color-slate-200); margin-bottom: var(--space-4);">Consult with our board-certified clinical specialists in cardiology, neurology, and pediatrics.</p>
+          <a href="/appointments" class="btn btn-primary btn-sm btn-block" style="background: white; color: var(--color-primary); font-weight: 700;">Book Consultation &rarr;</a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Public Footer -->
+  <footer style="background: var(--color-navy-950); color: var(--color-slate-400); padding: var(--space-12) var(--space-6) var(--space-6); margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: var(--space-8); margin-bottom: var(--space-8);">
+      <div>
+        <div class="brand-logo-grid" style="color: white; margin-bottom: var(--space-3);">
+          <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+          <span>AuraCare Medical</span>
+        </div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-slate-400); margin-bottom: var(--space-4);">
+          International healthcare excellence delivering specialized cardiology, neurology, pediatrics, and diagnostic pathology with board-certified physicians.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Quick Links</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/about" style="color: inherit; text-decoration: none;">About Hospital</a></li>
+          <li><a href="/departments" style="color: inherit; text-decoration: none;">Clinical Departments</a></li>
+          <li><a href="/doctors" style="color: inherit; text-decoration: none;">Find a Doctor</a></li>
+          <li><a href="/appointments" style="color: inherit; text-decoration: none;">Book Consultation</a></li>
+          <li><a href="/emergency" style="color: inherit; text-decoration: none;">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Patient Care</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/pages/login.html" data-modal-target="modal-login" style="color: inherit; text-decoration: none;">Patient Portal</a></li>
+          <li><a href="/register" style="color: inherit; text-decoration: none;">Register Online</a></li>
+          <li><a href="/blog" style="color: inherit; text-decoration: none;">Health Articles</a></li>
+          <li><a href="/faq" style="color: inherit; text-decoration: none;">Patient FAQs</a></li>
+          <li><a href="/contact" style="color: inherit; text-decoration: none;">Contact & Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Emergency & Support</h4>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-300); margin-bottom: var(--space-2);">
+          <strong>24/7 Trauma Hotline:</strong><br>
+          <span style="font-size: var(--font-size-base); color: #2dd4bf; font-weight: bold;">+1 (800) 555-AURA</span>
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          100 Medical Plaza, Metro Health District<br>
+          Email: concierge@auracare.com
+        </p>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: var(--font-size-xs); color: var(--color-slate-500);">
+      &copy; 2026 AuraCare Medical Center. True Multi-Page Application (MPA) Architecture.
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    let currentCategory = 'all';
+    let currentTag = null;
+    let searchTimer = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadCategories();
+      loadPopularTags();
+      loadFeaturedArticle();
+      loadBlogArticles();
+    });
+
+    function debounceBlogSearch() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadBlogArticles(), 300);
+    }
+
+    function setCategoryFilter(cat, btn) {
+      document.querySelectorAll('.cat-pill-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      currentCategory = cat;
+      currentTag = null;
+      loadBlogArticles();
+    }
+
+    function setTagFilter(tag) {
+      currentTag = tag;
+      document.getElementById('section-title').textContent = `Articles Tagged with "${tag}"`;
+      loadBlogArticles();
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await API.get('/blog/categories');
+        if (res.success && res.data) {
+          const container = document.getElementById('category-pills-container');
+          res.data.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = 'cat-pill-btn';
+            btn.innerHTML = `<i class="fa-solid ${c.icon || 'fa-notes-medical'}"></i> ${c.name} <span style="font-size: 0.7rem; opacity: 0.8;">(${c.articles_count || 0})</span>`;
+            btn.onclick = () => setCategoryFilter(c.name, btn);
+            container.appendChild(btn);
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadPopularTags() {
+      try {
+        const res = await API.get('/blog/tags');
+        if (res.success && res.data) {
+          const container = document.getElementById('tags-cloud-container');
+          if (res.data.length === 0) {
+            container.innerHTML = '<span class="text-xs text-muted">No tags found.</span>';
+            return;
+          }
+          container.innerHTML = '';
+          res.data.forEach(t => {
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'tag-cloud-item';
+            tagSpan.textContent = `#${t.tag} (${t.count})`;
+            tagSpan.onclick = () => setTagFilter(t.tag);
+            container.appendChild(tagSpan);
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadFeaturedArticle() {
+      try {
+        const res = await API.get('/blog/featured', { limit: 1 });
+        if (res.success && res.data && res.data.length > 0) {
+          const feat = res.data[0];
+          const hero = document.getElementById('featured-article-hero');
+          hero.style.display = 'block';
+          hero.innerHTML = `
+            <div class="card" style="overflow: hidden; border-left: 4px solid var(--color-primary);">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+                <img src="${feat.featured_image || 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80'}" alt="${feat.title}" style="width: 100%; height: 260px; object-fit: cover;">
+                <div style="padding: var(--space-6); display: flex; flex-direction: column; justify-content: center;">
+                  <div style="display: flex; gap: 8px; margin-bottom: var(--space-2);">
+                    <span class="badge badge-primary"><i class="fa-solid fa-star"></i> FEATURED CLINICAL ARTICLE</span>
+                    <span class="badge badge-light">${feat.category_name}</span>
+                  </div>
+                  <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-2);">
+                    <a href="/blog/${feat.slug}" style="color: inherit; text-decoration: none;">${feat.title}</a>
+                  </h3>
+                  <p class="text-muted" style="font-size: var(--font-size-sm); margin-bottom: var(--space-4); line-height: 1.5;">${feat.summary}</p>
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--color-slate-400);">
+                    <span><i class="fa-solid fa-user-doctor"></i> ${feat.author_name}</span>
+                    <span><i class="fa-regular fa-clock"></i> ${feat.reading_time_minutes} min read &bull; ${new Date(feat.published_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (_) {}
+    }
+
+    async function loadBlogArticles() {
+      const grid = document.getElementById('public-blog-grid');
+      const search = document.getElementById('blog-search-input').value;
+      const countLabel = document.getElementById('articles-count-label');
+
+      try {
+        const params = {
+          category: currentCategory !== 'all' ? currentCategory : undefined,
+          tag: currentTag || undefined,
+          search: search || undefined,
+          limit: 12
+        };
+
+        const res = await API.get('/blog/articles', params);
+        if (res.success && res.data) {
+          const articles = res.data;
+          countLabel.textContent = `Showing ${articles.length} of ${res.pagination ? res.pagination.total : articles.length} articles`;
+
+          if (articles.length === 0) {
+            grid.innerHTML = `
+              <div class="card" style="grid-column: 1 / -1; padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+                <i class="fa-regular fa-folder-open" style="font-size: 2.5rem; margin-bottom: var(--space-2); color: var(--color-slate-300);"></i>
+                <h4 style="color: var(--color-slate-600); margin-bottom: 4px;">No Articles Found</h4>
+                <p class="text-xs text-muted">Try selecting a different specialty category or search term.</p>
+              </div>
+            `;
+            return;
+          }
+
+          grid.innerHTML = '';
+          articles.forEach(a => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.overflow = 'hidden';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.transition = 'transform 0.2s, box-shadow 0.2s';
+
+            card.innerHTML = `
+              <a href="/blog/${a.slug}" style="text-decoration: none;">
+                <img src="${a.featured_image || 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80'}" alt="${a.title}" class="blog-card-img">
+              </a>
+              <div class="card-body" style="padding: var(--space-5); display: flex; flex-direction: column; flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                  <span class="badge badge-info" style="font-size: 0.65rem;">${a.category_name}</span>
+                  <span class="text-xs text-muted"><i class="fa-regular fa-clock"></i> ${a.reading_time_minutes} min read</span>
+                </div>
+                <h3 style="font-size: 1.05rem; margin-bottom: var(--space-2); line-height: 1.4;">
+                  <a href="/blog/${a.slug}" style="color: var(--color-navy-900); text-decoration: none;">${a.title}</a>
+                </h3>
+                <p class="text-muted" style="font-size: 0.8rem; margin-bottom: var(--space-4); line-height: 1.5; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                  ${a.summary}
+                </p>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-slate-400); border-top: 1px solid var(--color-slate-100); padding-top: var(--space-3); margin-top: auto;">
+                  <span><i class="fa-solid fa-user-doctor text-primary"></i> ${a.author_name}</span>
+                  <span><i class="fa-regular fa-eye"></i> ${a.views_count || 0}</span>
+                </div>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      } catch (err) {
+        grid.innerHTML = `<div class="card" style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-danger);">Failed to load articles: ${err.message}</div>`;
+      }
+    }
+  </script>
+  <script src="/js/responsive.js"></script>
+</body>
+</html>

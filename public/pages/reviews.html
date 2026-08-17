@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Reviews & Verified Testimonials | AuraCare Medical Center</title>
+  <meta name="description" content="Read real, verified patient reviews and clinical care testimonials for AuraCare physicians and surgical departments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .star-rating-display {
+      color: #f59e0b;
+      display: inline-flex;
+      gap: 3px;
+      font-size: 0.95rem;
+    }
+    .star-picker {
+      display: inline-flex;
+      gap: 6px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--color-slate-300);
+    }
+    .star-picker i:hover,
+    .star-picker i.selected,
+    .star-picker i.hover {
+      color: #f59e0b;
+    }
+    .rating-progress-bar {
+      height: 8px;
+      background: var(--color-slate-100);
+      border-radius: 4px;
+      overflow: hidden;
+      flex: 1;
+    }
+    .rating-progress-fill {
+      height: 100%;
+      background: #f59e0b;
+      border-radius: 4px;
+    }
+    .review-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .review-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+  </style>
+</head>
+<body class="page-shell">
+
+  <!-- Top Bar -->
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-phone" style="color: #2dd4bf;"></i> 24/7 Trauma: <strong>+1 (800) 555-AURA</strong></span>
+        <span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-clock"></i> Open 24/7</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fa-solid fa-location-dot" style="color: #2dd4bf;"></i> 100 Medical Plaza, Metro Health District</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="brand-logo-grid">
+        <div class="brand-icon-box"><i class="fa-solid fa-staff-snake"></i></div>
+        <div>
+          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span class="brand-sub">MEDICAL CENTER</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/about" class="nav-link">About</a></li>
+          <li><a href="/departments" class="nav-link">Departments</a></li>
+          <li><a href="/doctors" class="nav-link">Doctors</a></li>
+          <li><a href="/services" class="nav-link">Services</a></li>
+          <li><a href="/appointments" class="nav-link">Appointments</a></li>
+          <li><a href="/blog" class="nav-link">Health Articles</a></li>
+          <li><a href="/emergency" class="nav-link nav-link-emergency"><i class="fa-solid fa-truck-medical"></i> Emergency</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <div class="health-badge" id="system-health-badge">
+          <span class="health-dot"></span>
+          <span class="health-text">Online • MySQL</span>
+        </div>
+        <div id="header-auth-actions" class="header-auth-actions">
+          <button class="btn btn-outline-primary btn-sm" data-modal-target="modal-login">
+            <i class="fa-solid fa-user-lock"></i> <span>Sign In</span>
+          </button>
+          <a href="/appointments" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-calendar-check"></i> <span>Book Visit</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero Header -->
+  <section style="background: var(--gradient-primary); color: white; padding: var(--space-10) var(--space-6);">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-6);">
+      <div style="max-width: 720px;">
+        <span class="badge badge-primary" style="background: rgba(255,255,255,0.15); color: #2dd4bf; margin-bottom: var(--space-2);"><i class="fa-solid fa-star"></i> PATIENT FEEDBACK</span>
+        <h1 style="color: white; font-size: var(--font-size-3xl); margin-bottom: var(--space-2);">Patient Reviews & Testimonials</h1>
+        <p style="color: var(--color-slate-200); font-size: var(--font-size-base); margin: 0;">Verified clinical care experiences from patients treated across our specialized inpatient and outpatient departments.</p>
+      </div>
+
+      <div>
+        <button class="btn btn-primary" style="background: white; color: var(--color-primary); font-weight: 700; box-shadow: var(--shadow-md);" onclick="openSubmitReviewModal()">
+          <i class="fa-solid fa-pen-to-square"></i> Submit Your Review
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main style="max-width: 1280px; margin: var(--space-8) auto; padding: 0 var(--space-6); min-height: 60vh;">
+    
+    <!-- TOP RATING ANALYTICS SUMMARY (CSS GRID) -->
+    <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-6);">
+      <div style="display: grid; grid-template-columns: 240px 1fr; gap: var(--space-8); align-items: center;">
+        
+        <!-- OVERALL RATING SCORE -->
+        <div style="text-align: center; border-right: 1px solid var(--color-slate-100); padding-right: var(--space-6);">
+          <div style="font-size: 3.5rem; font-weight: 800; color: var(--color-navy); line-height: 1;" id="summary-avg-rating">4.9</div>
+          <div class="star-rating-display" style="font-size: 1.2rem; margin: 8px 0;" id="summary-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <div class="text-xs text-muted" id="summary-total-label">Based on verified reviews</div>
+        </div>
+
+        <!-- STAR DISTRIBUTION BARS -->
+        <div style="display: flex; flex-direction: column; gap: 6px;" id="rating-bars-container">
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
+            <span style="width: 50px;">5 Stars</span>
+            <div class="rating-progress-bar"><div class="rating-progress-fill" style="width: 85%;"></div></div>
+            <span class="text-muted" style="width: 30px;" id="bar-count-5">0</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
+            <span style="width: 50px;">4 Stars</span>
+            <div class="rating-progress-bar"><div class="rating-progress-fill" style="width: 12%;"></div></div>
+            <span class="text-muted" style="width: 30px;" id="bar-count-4">0</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
+            <span style="width: 50px;">3 Stars</span>
+            <div class="rating-progress-bar"><div class="rating-progress-fill" style="width: 3%;"></div></div>
+            <span class="text-muted" style="width: 30px;" id="bar-count-3">0</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
+            <span style="width: 50px;">2 Stars</span>
+            <div class="rating-progress-bar"><div class="rating-progress-fill" style="width: 0%;"></div></div>
+            <span class="text-muted" style="width: 30px;" id="bar-count-2">0</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem;">
+            <span style="width: 50px;">1 Star</span>
+            <div class="rating-progress-bar"><div class="rating-progress-fill" style="width: 0%;"></div></div>
+            <span class="text-muted" style="width: 30px;" id="bar-count-1">0</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FILTER & SEARCH BAR (CSS GRID) -->
+    <div class="card" style="margin-bottom: var(--space-6);">
+      <div class="card-body" style="padding: var(--space-3) var(--space-4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
+        <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+          <input type="text" id="review-search" class="form-input text-xs" placeholder="Search reviews, doctors, treatments..." style="width: 260px;" oninput="debounceReviewSearch()">
+          
+          <select id="review-rating-filter" class="form-select text-xs" style="width: 140px;" onchange="loadReviews()">
+            <option value="all">All Star Ratings</option>
+            <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+            <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+            <option value="3">⭐⭐⭐ (3 Stars)</option>
+            <option value="2">⭐⭐ (2 Stars)</option>
+            <option value="1">⭐ (1 Star)</option>
+          </select>
+
+          <select id="review-dept-filter" class="form-select text-xs" style="width: 190px;" onchange="loadReviews()">
+            <option value="all">All Medical Divisions</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="btn btn-outline-primary btn-sm" onclick="openSubmitReviewModal()"><i class="fa-solid fa-plus"></i> Write a Review</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS TESTIMONIALS GRID (CSS GRID) -->
+    <div id="reviews-grid" class="grid-cards-auto" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--space-6);">
+      <div class="card" style="padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: var(--space-2);"></i>
+        <div>Loading verified patient testimonials from MySQL...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SUBMIT REVIEW MODAL -->
+  <div id="modal-submit-review" class="modal-backdrop" style="display: none;">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <h4><i class="fa-solid fa-star text-warning"></i> Share Your Patient Experience</h4>
+        <button class="btn btn-link" onclick="closeSubmitReviewModal()">&times;</button>
+      </div>
+      <form id="form-submit-review" onsubmit="handleReviewSubmit(event)">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-3);">
+          
+          <div>
+            <label class="form-label text-xs font-bold">Overall Rating *</label>
+            <div class="star-picker" id="star-input-container">
+              <i class="fa-solid fa-star selected" data-value="1" onclick="setRating(1)"></i>
+              <i class="fa-solid fa-star selected" data-value="2" onclick="setRating(2)"></i>
+              <i class="fa-solid fa-star selected" data-value="3" onclick="setRating(3)"></i>
+              <i class="fa-solid fa-star selected" data-value="4" onclick="setRating(4)"></i>
+              <i class="fa-solid fa-star selected" data-value="5" onclick="setRating(5)"></i>
+            </div>
+            <input type="hidden" id="rev-rating" value="5">
+          </div>
+
+          <div>
+            <label class="form-label text-xs font-bold">Your Full Name *</label>
+            <input type="text" id="rev-name" class="form-input" placeholder="e.g. Arthur Pendleton" required>
+          </div>
+
+          <div>
+            <label class="form-label text-xs font-bold">Your Email Address (For Verification)</label>
+            <input type="email" id="rev-email" class="form-input" placeholder="e.g. arthur@example.com">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div>
+              <label class="form-label text-xs font-bold">Attending Doctor (Optional)</label>
+              <select id="rev-doctor" class="form-select">
+                <option value="">Select Doctor (Optional)</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label text-xs font-bold">Appointment Ref ID (Optional)</label>
+              <input type="number" id="rev-appointment" class="form-input" placeholder="e.g. 1">
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label text-xs font-bold">Review Headline *</label>
+            <input type="text" id="rev-title" class="form-input" placeholder="e.g. Exceptional cardiology care and gentle nursing" required>
+          </div>
+
+          <div>
+            <label class="form-label text-xs font-bold">Detailed Feedback & Comments *</label>
+            <textarea id="rev-comment" class="form-input" rows="4" placeholder="Tell us about your medical visit, the doctors, cleanliness, and clinical staff..." required></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeSubmitReviewModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Testimonial</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Public Footer -->
+  <footer style="background: var(--color-navy-950); color: var(--color-slate-400); padding: var(--space-12) var(--space-6) var(--space-6); margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: var(--space-8); margin-bottom: var(--space-8);">
+      <div>
+        <div class="brand-logo-grid" style="color: white; margin-bottom: var(--space-3);">
+          <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+          <span>AuraCare Medical</span>
+        </div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-slate-400); margin-bottom: var(--space-4);">
+          International healthcare excellence delivering specialized cardiology, neurology, pediatrics, and diagnostic pathology with board-certified physicians.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Quick Links</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/about" style="color: inherit; text-decoration: none;">About Hospital</a></li>
+          <li><a href="/departments" style="color: inherit; text-decoration: none;">Clinical Departments</a></li>
+          <li><a href="/doctors" style="color: inherit; text-decoration: none;">Find a Doctor</a></li>
+          <li><a href="/appointments" style="color: inherit; text-decoration: none;">Book Consultation</a></li>
+          <li><a href="/emergency" style="color: inherit; text-decoration: none;">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Patient Care</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/pages/login.html" data-modal-target="modal-login" style="color: inherit; text-decoration: none;">Patient Portal</a></li>
+          <li><a href="/register" style="color: inherit; text-decoration: none;">Register Online</a></li>
+          <li><a href="/blog" style="color: inherit; text-decoration: none;">Health Articles</a></li>
+          <li><a href="/faq" style="color: inherit; text-decoration: none;">Patient FAQs</a></li>
+          <li><a href="/contact" style="color: inherit; text-decoration: none;">Contact & Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Emergency & Support</h4>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-300); margin-bottom: var(--space-2);">
+          <strong>24/7 Trauma Hotline:</strong><br>
+          <span style="font-size: var(--font-size-base); color: #2dd4bf; font-weight: bold;">+1 (800) 555-AURA</span>
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          100 Medical Plaza, Metro Health District<br>
+          Email: concierge@auracare.com
+        </p>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: var(--font-size-xs); color: var(--color-slate-500);">
+      &copy; 2026 AuraCare Medical Center. True Multi-Page Application (MPA) Architecture.
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let searchTimer = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadDropdownOptions();
+      loadReviews();
+    });
+
+    function debounceReviewSearch() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadReviews(), 300);
+    }
+
+    function setRating(val) {
+      document.getElementById('rev-rating').value = val;
+      const stars = document.querySelectorAll('#star-input-container i');
+      stars.forEach((s, idx) => {
+        if (idx < val) s.classList.add('selected');
+        else s.classList.remove('selected');
+      });
+    }
+
+    async function loadDropdownOptions() {
+      try {
+        const deptRes = await API.get('/departments');
+        if (deptRes.success && deptRes.data) {
+          const deptSelect = document.getElementById('review-dept-filter');
+          deptRes.data.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.id;
+            opt.textContent = d.name;
+            deptSelect.appendChild(opt);
+          });
+        }
+
+        const docRes = await API.get('/doctors');
+        if (docRes.success && docRes.data) {
+          const docSelect = document.getElementById('rev-doctor');
+          docRes.data.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.id;
+            opt.textContent = `${d.full_name || d.user_name} (${d.specialization || 'Specialist'})`;
+            docSelect.appendChild(opt);
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadReviews() {
+      const grid = document.getElementById('reviews-grid');
+      const search = document.getElementById('review-search').value;
+      const rating = document.getElementById('review-rating-filter').value;
+      const dept = document.getElementById('review-dept-filter').value;
+
+      try {
+        const params = {
+          search: search || undefined,
+          rating: rating !== 'all' ? rating : undefined,
+          department_id: dept !== 'all' ? dept : undefined,
+          limit: 20
+        };
+
+        const res = await API.get('/reviews', params);
+        if (res.success && res.data) {
+          const reviews = res.data;
+          const metrics = res.pagination ? res.pagination.metrics : null;
+
+          if (metrics) {
+            document.getElementById('summary-avg-rating').textContent = metrics.average_rating || '5.0';
+            document.getElementById('summary-total-label').textContent = `Based on ${metrics.total_reviews} verified patient reviews`;
+            
+            const dist = metrics.rating_distribution;
+            const total = Math.max(1, metrics.total_reviews);
+            document.getElementById('bar-count-5').textContent = dist.five_star;
+            document.getElementById('bar-count-4').textContent = dist.four_star;
+            document.getElementById('bar-count-3').textContent = dist.three_star;
+            document.getElementById('bar-count-2').textContent = dist.two_star;
+            document.getElementById('bar-count-1').textContent = dist.one_star;
+          }
+
+          if (reviews.length === 0) {
+            grid.innerHTML = `
+              <div class="card" style="grid-column: 1 / -1; padding: var(--space-8); text-align: center; color: var(--color-slate-400);">
+                <i class="fa-regular fa-star" style="font-size: 2.5rem; margin-bottom: var(--space-2); color: var(--color-slate-300);"></i>
+                <h4>No Reviews Found</h4>
+                <p class="text-xs text-muted">Try selecting a different filter or submit your own review.</p>
+              </div>
+            `;
+            return;
+          }
+
+          grid.innerHTML = '';
+          reviews.forEach(r => {
+            const card = document.createElement('div');
+            card.className = 'card review-card';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.padding = 'var(--space-6)';
+
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+              starsHtml += `<i class="fa-solid fa-star" style="color: ${i <= r.rating ? '#f59e0b' : '#cbd5e1'};"></i>`;
+            }
+
+            card.innerHTML = `
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-3);">
+                <div class="star-rating-display">${starsHtml}</div>
+                ${r.is_featured ? '<span class="badge badge-primary" style="font-size: 0.65rem;"><i class="fa-solid fa-award"></i> Featured</span>' : ''}
+              </div>
+
+              ${r.title ? `<h4 style="font-size: 1rem; color: var(--color-navy-900); margin-bottom: var(--space-2); line-height: 1.3;">${r.title}</h4>` : ''}
+              <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: var(--space-4); flex: 1;">"${r.comment}"</p>
+
+              <div style="border-top: 1px solid var(--color-slate-100); padding-top: var(--space-3); margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.85rem; color: var(--color-slate-800); display: flex; align-items: center; gap: 6px;">
+                    ${r.patient_name} <i class="fa-solid fa-circle-check text-success" title="Verified Patient" style="font-size: 0.75rem;"></i>
+                  </div>
+                  <div style="font-size: 0.7rem; color: var(--color-slate-400);">
+                    ${r.doctor_name ? `Treated by <strong>${r.doctor_name}</strong>` : (r.department_name || 'AuraCare Medical')}
+                  </div>
+                </div>
+                <div style="font-size: 0.7rem; color: var(--color-slate-400);">
+                  ${new Date(r.created_at).toLocaleDateString()}
+                </div>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      } catch (err) {
+        grid.innerHTML = `<div class="card" style="grid-column: 1 / -1; padding: var(--space-4); text-align: center; color: var(--color-danger);">Failed to load reviews: ${err.message}</div>`;
+      }
+    }
+
+    function openSubmitReviewModal() {
+      document.getElementById('modal-submit-review').style.display = 'flex';
+    }
+
+    function closeSubmitReviewModal() {
+      document.getElementById('modal-submit-review').style.display = 'none';
+      document.getElementById('form-submit-review').reset();
+      setRating(5);
+    }
+
+    async function handleReviewSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        rating: parseInt(document.getElementById('rev-rating').value, 10),
+        patient_name: document.getElementById('rev-name').value,
+        patient_email: document.getElementById('rev-email').value || undefined,
+        doctor_id: document.getElementById('rev-doctor').value ? parseInt(document.getElementById('rev-doctor').value, 10) : undefined,
+        appointment_id: document.getElementById('rev-appointment').value ? parseInt(document.getElementById('rev-appointment').value, 10) : undefined,
+        title: document.getElementById('rev-title').value,
+        comment: document.getElementById('rev-comment').value
+      };
+
+      try {
+        const res = await API.post('/reviews', payload);
+        Toast.success(res.message || 'Review submitted successfully!');
+        closeSubmitReviewModal();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to submit review.');
+      }
+    }
+  </script>
+</body>
+</html>

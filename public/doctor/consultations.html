@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Clinical Consultation & EMR Workspace | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Doctor Clinical Consultation & EMR Workspace</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="margin-bottom: var(--space-4);">
+  <div class="card-body" style="padding: var(--space-3) var(--space-4);">
+    <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: var(--space-3); align-items: center;">
+      <div>
+        <label class="form-label font-bold" style="margin-bottom: 2px; font-size: var(--font-size-xs);">Select Patient for Clinical Consultation *</label>
+        <select id="consult-pat-select" class="form-select" onchange="onConsultPatientChange(this.value)">
+          <option value="">-- Choose Patient from Health Registry --</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label font-bold" style="margin-bottom: 2px; font-size: var(--font-size-xs);">Active Queue / Appointment</label>
+        <span class="badge badge-light" id="consult-encounter-type-badge" style="display: block; padding: 8px; text-align: center;">Direct EMR Encounter</span>
+      </div>
+      <div style="padding-top: 14px;">
+        <button class="btn btn-outline btn-sm" onclick="reloadActivePatient()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PATIENT CLINICAL HEADER & CRITICAL ALERTS BANNER -->
+<div id="consult-patient-header" class="card" style="display: none; background: var(--gradient-card); margin-bottom: var(--space-4);">
+  <div class="card-body" style="padding: var(--space-4);">
+    <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-5); align-items: center;">
+      <div class="doctor-avatar-placeholder" style="width: 72px; height: 72px; font-size: 1.75rem;"><i class="fa-solid fa-user-injured"></i></div>
+      <div>
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: 2px;">
+          <h3 id="cpat-name" style="margin: 0;">Patient Name</h3>
+          <span class="badge badge-success" id="cpat-code">PAT-CODE</span>
+          <span class="badge badge-info" id="cpat-demog">Age • Gender</span>
+          <span class="badge" style="background: #e0e7ff; color: #3730a3;" id="cpat-blood">Blood Group</span>
+        </div>
+        <p id="cpat-contact" class="text-xs text-muted" style="margin: 0;">Phone • Emergency Contact</p>
+      </div>
+      <div style="text-align: right;">
+        <div class="text-xs text-muted">Total Past Visits: <strong id="cpat-visit-count" class="text-navy">0</strong></div>
+        <div class="text-xs text-muted">Latest Record: <strong id="cpat-latest-date">—</strong></div>
+      </div>
+    </div>
+
+    <!-- CRITICAL ALLERGIES & CHRONIC HISTORY ALERT (CSS GRID) -->
+    <div style="margin-top: var(--space-3); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+      <div id="cpat-allergy-alert" style="background: #fee2e2; border: 1px solid #f87171; border-radius: var(--radius-md); padding: 8px 12px; font-size: 0.8rem; color: #991b1b; display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem;"></i>
+        <div>
+          <strong>ALLERGIES:</strong> <span id="cpat-allergies-text">Loading...</span>
+        </div>
+      </div>
+      <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: var(--radius-md); padding: 8px 12px; font-size: 0.8rem; color: var(--color-slate-700); display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-book-medical text-primary" style="font-size: 1.1rem;"></i>
+        <div>
+          <strong>CHRONIC HISTORY:</strong> <span id="cpat-history-text">None</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2-COLUMN SPLIT CLINICAL WORKSPACE (CSS GRID) -->
+<div id="consult-workspace-grid" style="display: none; grid-template-columns: 1fr 1.6fr; gap: var(--space-4); align-items: start;">
+  
+  <!-- LEFT COLUMN: LONGITUDINAL MEDICAL HISTORY & PREVIOUS ENCOUNTERS -->
+  <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+    
+    <div class="card">
+      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-clock-rotate-left text-primary"></i> Chronological Visits (Never Overwritten)</h4>
+      </div>
+      <div class="card-body" id="cpat-encounters-timeline" style="max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3);">
+        <div class="text-center text-muted text-xs" style="padding: 2rem;">No previous medical records recorded for this patient.</div>
+      </div>
+    </div>
+
+    <!-- PREVIOUS PRESCRIPTIONS ARCHIVE -->
+    <div class="card">
+      <div class="card-header"><h4 style="font-size: var(--font-size-sm); margin: 0;"><i class="fa-solid fa-prescription text-primary"></i> Previous Prescriptions Archive</h4></div>
+      <div class="card-body" style="padding: 0; max-height: 220px; overflow-y: auto;">
+        <table class="table-modern" style="font-size: 0.75rem;">
+          <thead><tr><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Date</th></tr></thead>
+          <tbody id="cpat-rx-tbody"><tr><td colspan="4" class="text-center text-muted">No historical medications</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PREVIOUS LAB REPORTS -->
+    <div class="card">
+      <div class="card-header"><h4 style="font-size: var(--font-size-sm); margin: 0;"><i class="fa-solid fa-flask-vial text-primary"></i> Diagnostic Lab Reports</h4></div>
+      <div class="card-body" style="padding: 0; max-height: 200px; overflow-y: auto;">
+        <table class="table-modern" style="font-size: 0.75rem;">
+          <thead><tr><th>Test Name</th><th>Results</th><th>Status</th></tr></thead>
+          <tbody id="cpat-lab-tbody"><tr><td colspan="3" class="text-center text-muted">No lab orders</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN: ACTIVE CLINICAL ENCOUNTER WORKSPACE -->
+  <div class="card">
+    <div class="card-header" style="background: var(--color-navy-900); color: white; display: flex; justify-content: space-between; align-items: center;">
+      <h4 style="margin: 0; color: white;"><i class="fa-solid fa-stethoscope text-primary"></i> Active Clinical Encounter Documentation</h4>
+      <span class="badge badge-primary">SOAP Clinical Charting</span>
+    </div>
+    <div class="card-body" style="padding: var(--space-4);">
+      <form id="form-consultation" onsubmit="event.preventDefault(); submitConsultation();">
+        <input type="hidden" id="enc-patient-id">
+        <input type="hidden" id="enc-appt-id">
+        <input type="hidden" id="enc-opd-id">
+
+        <!-- 1. VITALS CAPTURE (CSS GRID) -->
+        <div style="background: var(--color-slate-50); border: 1px solid var(--color-slate-200); border-radius: var(--radius-lg); padding: var(--space-3); margin-bottom: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+            <h5 class="text-xs text-muted font-bold text-uppercase" style="margin: 0;"><i class="fa-solid fa-heart-pulse text-danger"></i> Triage Vitals</h5>
+            <span class="badge badge-success" id="enc-bmi-badge">BMI: — kg/m²</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin-bottom: var(--space-2);">
+            <div>
+              <label class="form-label text-xs">Systolic BP</label>
+              <input type="number" id="enc-sys" class="form-input text-xs" placeholder="120 mmHg">
+            </div>
+            <div>
+              <label class="form-label text-xs">Diastolic BP</label>
+              <input type="number" id="enc-dia" class="form-input text-xs" placeholder="80 mmHg">
+            </div>
+            <div>
+              <label class="form-label text-xs">Pulse (bpm)</label>
+              <input type="number" id="enc-hr" class="form-input text-xs" placeholder="72 bpm">
+            </div>
+            <div>
+              <label class="form-label text-xs">Temp (°F)</label>
+              <input type="number" step="0.1" id="enc-temp" class="form-input text-xs" placeholder="98.6 °F">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2);">
+            <div>
+              <label class="form-label text-xs">Resp Rate</label>
+              <input type="number" id="enc-resp" class="form-input text-xs" placeholder="16 /min">
+            </div>
+            <div>
+              <label class="form-label text-xs">SPO2 (%)</label>
+              <input type="number" id="enc-spo2" class="form-input text-xs" placeholder="99 %">
+            </div>
+            <div>
+              <label class="form-label text-xs">Weight (kg)</label>
+              <input type="number" step="0.5" id="enc-wt" class="form-input text-xs" placeholder="70 kg" oninput="calcEncBmi()">
+            </div>
+            <div>
+              <label class="form-label text-xs">Height (cm)</label>
+              <input type="number" id="enc-ht" class="form-input text-xs" placeholder="175 cm" oninput="calcEncBmi()">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. SOAP SUBJECTIVE: CHIEF COMPLAINT & SYMPTOMS -->
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Chief Medical Complaint *</label>
+          <input type="text" id="enc-complaint" class="form-input" placeholder="e.g. Recurrent episodes of exertional chest pressure and shortness of breath" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">History of Present Illness (HPI) & Symptoms</label>
+          <textarea id="enc-symptoms" class="form-textarea" rows="2" placeholder="Onset, duration, severity, aggravating/relieving factors, associated symptoms..."></textarea>
+        </div>
+
+        <!-- 3. SOAP OBJECTIVE: PHYSICAL EXAMINATION -->
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Physical Examination & Clinical Findings</label>
+          <textarea id="enc-exam" class="form-textarea" rows="2" placeholder="General appearance, Cardiovascular, Respiratory, Abdominal, Neurological findings..."></textarea>
+        </div>
+
+        <!-- 4. SOAP ASSESSMENT: CLINICAL DIAGNOSIS -->
+        <div class="form-group" style="margin-bottom: var(--space-3);">
+          <label class="form-label font-bold">Clinical Diagnosis / ICD Assessment *</label>
+          <input type="text" id="enc-diagnosis" class="form-input" placeholder="e.g. Stage 1 Essential Hypertension (ICD-10 I10), Post-CABG Status" required>
+        </div>
+
+        <!-- 5. SOAP PLAN: TREATMENT PLAN -->
+        <div class="form-group" style="margin-bottom: var(--space-4);">
+          <label class="form-label font-bold">Treatment Plan & Medical Advice</label>
+          <textarea id="enc-treatment" class="form-textarea" rows="2" placeholder="Therapeutic goals, lifestyle recommendations, dietary modifications..."></textarea>
+        </div>
+
+        <!-- 6. E-PRESCRIPTIONS DYNAMIC BUILDER -->
+        <div style="border-top: 1px solid var(--color-slate-200); padding-top: var(--space-3); margin-bottom: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+            <h5 class="text-xs font-bold text-uppercase" style="margin: 0;"><i class="fa-solid fa-prescription-bottle-medical text-primary"></i> Electronic Prescriptions (Rx)</h5>
+            <button type="button" class="btn btn-outline btn-sm" onclick="addRxRow()"><i class="fa-solid fa-plus"></i> Add Medication</button>
+          </div>
+          <div id="rx-rows-container" style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <!-- Dynamic prescription rows -->
+          </div>
+        </div>
+
+        <!-- 7. DIAGNOSTIC LAB ORDERS -->
+        <div style="border-top: 1px solid var(--color-slate-200); padding-top: var(--space-3); margin-bottom: var(--space-4);">
+          <h5 class="text-xs font-bold text-uppercase" style="margin-bottom: var(--space-2);"><i class="fa-solid fa-vials text-primary"></i> Order Diagnostic Laboratory Tests</h5>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); font-size: var(--font-size-xs);">
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="1"> Complete Blood Count (CBC)</label>
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="2"> Comprehensive Lipid Panel</label>
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="3"> Basic Metabolic Panel (BMP)</label>
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="4"> HbA1c Glycated Hemoglobin</label>
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="5"> Cardiac Troponin-I</label>
+            <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="lab_order" value="6"> Chest X-Ray Radiograph</label>
+          </div>
+        </div>
+
+        <!-- 8. DOCTOR PRIVATE NOTES & FOLLOW-UP -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label font-bold text-xs">Confidential Doctor Notes (Internal EMR)</label>
+            <input type="text" id="enc-doc-notes" class="form-input text-xs" placeholder="Internal clinical impression...">
+          </div>
+          <div class="form-group">
+            <label class="form-label font-bold text-xs">Recommended Follow-Up Date</label>
+            <input type="date" id="enc-followup" class="form-input text-xs">
+          </div>
+        </div>
+
+        <!-- ACTION FOOTER -->
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-3); border-top: 1px solid var(--color-slate-200); padding-top: var(--space-4);">
+          <button type="button" class="btn btn-outline" onclick="resetConsultationForm()">Clear Form</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-consultation" style="background: #16a34a; border-color: #16a34a; font-weight: 700; padding: 10px 24px;">
+            <i class="fa-solid fa-floppy-disk"></i> Conclude Consultation & Save EMR
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let activePatientSummary = null;
+  let allPatientsList = [];
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await Auth.guardPage(["doctor","super_admin","hospital_admin"]);
+    await loadConsultationPatients();
+
+    // Check URL parameters for fast patient routing (e.g. ?patient_id=1&queue_id=2)
+    const urlParams = new URLSearchParams(window.location.search);
+    const patParam = urlParams.get('patient_id');
+    const queueParam = urlParams.get('queue_id');
+    const apptParam = urlParams.get('appointment_id');
+
+    if (queueParam) document.getElementById('enc-opd-id').value = queueParam;
+    if (apptParam) document.getElementById('enc-appt-id').value = apptParam;
+
+    if (patParam) {
+      document.getElementById('consult-pat-select').value = patParam;
+      onConsultPatientChange(patParam);
+    }
+  });
+
+  async function loadConsultationPatients() {
+    try {
+      const res = await API.get('/patients', { limit: 100 });
+      if (res.success && res.data) {
+        allPatientsList = res.data;
+        const select = document.getElementById('consult-pat-select');
+        allPatientsList.forEach(p => {
+          select.innerHTML += `<option value="${p.id}">${p.first_name} ${p.last_name} (${p.patient_code}) - ${p.phone}</option>`;
+        });
+      }
+    } catch (_) {}
+  }
+
+  async function onConsultPatientChange(patId) {
+    if (!patId) {
+      document.getElementById('consult-patient-header').style.display = 'none';
+      document.getElementById('consult-workspace-grid').style.display = 'none';
+      return;
+    }
+
+    try {
+      const res = await API.get(`/consultations/patients/${patId}/clinical-summary`);
+      if (res.success && res.data) {
+        activePatientSummary = res.data;
+        renderPatientHeader(activePatientSummary);
+        renderHistoricalTimeline(activePatientSummary.previous_visits);
+        renderRxArchive(activePatientSummary.previous_prescriptions);
+        renderLabReports(activePatientSummary.previous_lab_reports);
+
+        document.getElementById('enc-patient-id').value = patId;
+        document.getElementById('consult-patient-header').style.display = 'block';
+        document.getElementById('consult-workspace-grid').style.display = 'grid';
+
+        // Pre-fill latest vitals if available
+        if (activePatientSummary.latest_vitals) {
+          const lv = activePatientSummary.latest_vitals;
+          document.getElementById('enc-sys').value = lv.systolic || '';
+          document.getElementById('enc-dia').value = lv.diastolic || '';
+          document.getElementById('enc-hr').value = lv.heart_rate || '';
+          document.getElementById('enc-temp').value = lv.temperature || '';
+          document.getElementById('enc-resp').value = lv.respiratory_rate || '';
+          document.getElementById('enc-spo2').value = lv.oxygen_saturation || '';
+          document.getElementById('enc-wt').value = lv.weight_kg || '';
+          document.getElementById('enc-ht').value = lv.height_cm || '';
+          calcEncBmi();
+        }
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Failed to load patient clinical record.');
+    }
+  }
+
+  function reloadActivePatient() {
+    const patId = document.getElementById('consult-pat-select').value;
+    if (patId) onConsultPatientChange(patId);
+  }
+
+  function renderPatientHeader(summary) {
+    const p = summary.patient;
+    document.getElementById('cpat-name').textContent = p.full_name;
+    document.getElementById('cpat-code').textContent = p.patient_code;
+    document.getElementById('cpat-demog').textContent = (p.age ? p.age + ' yrs' : 'Age unknown') + ' • ' + (p.gender || 'Unknown');
+    document.getElementById('cpat-blood').textContent = p.blood_group ? 'Blood: ' + p.blood_group : 'Blood: Unknown';
+    document.getElementById('cpat-contact').textContent = 'Phone: ' + (p.phone || 'None') + ' • Emergency: ' + (p.emergency_contact_name || 'N/A') + ' (' + (p.emergency_contact_phone || '') + ')';
+    document.getElementById('cpat-visit-count').textContent = summary.previous_visits_count;
+
+    const alertBox = document.getElementById('cpat-allergy-alert');
+    if (summary.has_allergies) {
+      alertBox.style.background = '#fee2e2';
+      alertBox.style.borderColor = '#f87171';
+      alertBox.style.color = '#991b1b';
+      document.getElementById('cpat-allergies-text').innerHTML = `<strong>⚠️ CRITICAL ALLERGY ALERT:</strong> ${summary.allergies_raw}`;
+    } else {
+      alertBox.style.background = '#f0fdf4';
+      alertBox.style.borderColor = '#86efac';
+      alertBox.style.color = '#166534';
+      document.getElementById('cpat-allergies-text').textContent = 'No Known Drug Allergies (NKDA)';
+    }
+
+    document.getElementById('cpat-history-text').textContent = summary.medical_history;
+
+    if (summary.previous_visits.length > 0) {
+      document.getElementById('cpat-latest-date').textContent = summary.previous_visits[0].record_date;
+    } else {
+      document.getElementById('cpat-latest-date').textContent = 'First Encounter';
+    }
+  }
+
+  function renderHistoricalTimeline(visits) {
+    const container = document.getElementById('cpat-encounters-timeline');
+    if (visits.length === 0) {
+      container.innerHTML = '<div class="text-center text-muted text-xs" style="padding: 2rem;">No previous medical encounters on file.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    visits.forEach(v => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background: white; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md); padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);';
+
+      let vitalsPill = '';
+      if (v.vitals) {
+        vitalsPill = `<span style="font-size: 0.7rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: var(--color-slate-700);"><i class="fa-solid fa-heart-pulse text-danger"></i> ${v.vitals.systolic || '--'}/${v.vitals.diastolic || '--'} • ${v.vitals.heart_rate || '--'}bpm • BMI: ${v.vitals.bmi || '--'}</span>`;
+      }
+
+      let rxList = '';
+      if (v.prescriptions && v.prescriptions.length > 0) {
+        rxList = `
+          <div style="margin-top: 6px; font-size: 0.725rem; background: #f8fafc; padding: 6px; border-radius: 4px;">
+            <strong>Prescribed:</strong> ${v.prescriptions.map(r => r.medicine_name + ' (' + r.dosage + ')').join(', ')}
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+          <div>
+            <strong style="color: var(--color-navy-900); font-size: 0.85rem;">${v.record_date}</strong>
+            <span class="text-xs text-muted"> • Dr. ${v.doctor_name}</span>
+          </div>
+          ${vitalsPill}
+        </div>
+        <div style="font-size: 0.8rem; font-weight: 700; color: #1e3a8a; margin-bottom: 2px;">
+          ${v.diagnosis}
+        </div>
+        <div class="text-xs text-muted" style="margin-bottom: 4px;">
+          <strong>Complaint:</strong> ${v.chief_complaint}
+        </div>
+        ${v.treatment_plan ? `<div class="text-xs" style="color: var(--color-slate-600);"><strong>Plan:</strong> ${v.treatment_plan}</div>` : ''}
+        ${rxList}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function renderRxArchive(rxList) {
+    const tbody = document.getElementById('cpat-rx-tbody');
+    if (rxList.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No historical medications</td></tr>';
+      return;
+    }
+    tbody.innerHTML = '';
+    rxList.slice(0, 8).forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${r.medicine_name}</strong></td>
+        <td>${r.dosage}</td>
+        <td>${r.frequency}</td>
+        <td>${r.record_date || r.created_at.substring(0, 10)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderLabReports(labList) {
+    const tbody = document.getElementById('cpat-lab-tbody');
+    if (labList.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No lab orders</td></tr>';
+      return;
+    }
+    tbody.innerHTML = '';
+    labList.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${l.test_name}</strong><br><span class="text-xs text-muted">${l.order_date}</span></td>
+        <td class="text-xs">${l.result_value || 'Pending analysis'}</td>
+        <td><span class="badge ${l.status === 'completed' ? 'badge-success' : 'badge-warning'}">${l.status}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function calcEncBmi() {
+    const wt = parseFloat(document.getElementById('enc-wt').value);
+    const ht = parseFloat(document.getElementById('enc-ht').value);
+    const badge = document.getElementById('enc-bmi-badge');
+    if (wt > 0 && ht > 0) {
+      const hm = ht / 100;
+      const bmi = (wt / (hm * hm)).toFixed(1);
+      badge.textContent = `BMI: ${bmi} kg/m²`;
+      badge.className = (bmi >= 18.5 && bmi <= 24.9) ? 'badge badge-success' : 'badge badge-warning';
+    } else {
+      badge.textContent = 'BMI: — kg/m²';
+      badge.className = 'badge badge-light';
+    }
+  }
+
+  function addRxRow() {
+    const container = document.getElementById('rx-rows-container');
+    const row = document.createElement('div');
+    row.className = 'rx-row';
+    row.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr auto; gap: 6px; align-items: center; background: white; padding: 6px; border: 1px solid var(--color-slate-200); border-radius: var(--radius-md);';
+    row.innerHTML = `
+      <input type="text" class="form-input text-xs rx-name" placeholder="Medicine Name (e.g. Amoxicillin)" required>
+      <input type="text" class="form-input text-xs rx-dosage" placeholder="Dosage (500mg)" required>
+      <input type="text" class="form-input text-xs rx-freq" placeholder="Freq (TDS / 8hr)">
+      <input type="text" class="form-input text-xs rx-dur" placeholder="Duration (7 days)">
+      <input type="text" class="form-input text-xs rx-inst" placeholder="Instructions (after meals)">
+      <button type="button" class="btn btn-outline-danger btn-sm" onclick="this.parentElement.remove()" style="padding: 4px 8px;">&times;</button>
+    `;
+    container.appendChild(row);
+  }
+
+  async function submitConsultation() {
+    const patId = document.getElementById('enc-patient-id').value;
+    const complaint = document.getElementById('enc-complaint').value.trim();
+    const diagnosis = document.getElementById('enc-diagnosis').value.trim();
+
+    if (!patId || !complaint || !diagnosis) {
+      Toast.warning('Please complete Chief Complaint and Diagnosis fields.');
+      return;
+    }
+
+    // Collect Prescriptions
+    const rxRows = document.querySelectorAll('.rx-row');
+    const prescriptions = [];
+    rxRows.forEach(r => {
+      const name = r.querySelector('.rx-name').value.trim();
+      const dosage = r.querySelector('.rx-dosage').value.trim();
+      if (name && dosage) {
+        prescriptions.push({
+          medicine_name: name,
+          dosage,
+          frequency: r.querySelector('.rx-freq').value.trim() || 'Once daily',
+          duration: r.querySelector('.rx-dur').value.trim() || '7 days',
+          instructions: r.querySelector('.rx-inst').value.trim() || undefined
+        });
+      }
+    });
+
+    // Collect Lab Orders
+    const labChecks = document.querySelectorAll('input[name="lab_order"]:checked');
+    const lab_tests = Array.from(labChecks).map(c => parseInt(c.value, 10));
+
+    const payload = {
+      patient_id: parseInt(patId, 10),
+      appointment_id: document.getElementById('enc-appt-id').value ? parseInt(document.getElementById('enc-appt-id').value, 10) : undefined,
+      opd_queue_id: document.getElementById('enc-opd-id').value ? parseInt(document.getElementById('enc-opd-id').value, 10) : undefined,
+      chief_complaint: complaint,
+      symptoms: document.getElementById('enc-symptoms').value.trim() || undefined,
+      physical_examination: document.getElementById('enc-exam').value.trim() || undefined,
+      diagnosis,
+      treatment_plan: document.getElementById('enc-treatment').value.trim() || undefined,
+      doctor_notes: document.getElementById('enc-doc-notes').value.trim() || undefined,
+      follow_up_date: document.getElementById('enc-followup').value || undefined,
+      vitals: {
+        systolic: document.getElementById('enc-sys').value ? parseInt(document.getElementById('enc-sys').value, 10) : undefined,
+        diastolic: document.getElementById('enc-dia').value ? parseInt(document.getElementById('enc-dia').value, 10) : undefined,
+        heart_rate: document.getElementById('enc-hr').value ? parseInt(document.getElementById('enc-hr').value, 10) : undefined,
+        temperature: document.getElementById('enc-temp').value ? parseFloat(document.getElementById('enc-temp').value) : undefined,
+        respiratory_rate: document.getElementById('enc-resp').value ? parseInt(document.getElementById('enc-resp').value, 10) : undefined,
+        oxygen_saturation: document.getElementById('enc-spo2').value ? parseInt(document.getElementById('enc-spo2').value, 10) : undefined,
+        weight_kg: document.getElementById('enc-wt').value ? parseFloat(document.getElementById('enc-wt').value) : undefined,
+        height_cm: document.getElementById('enc-ht').value ? parseFloat(document.getElementById('enc-ht').value) : undefined
+      },
+      prescriptions,
+      lab_tests
+    };
+
+    const btn = document.getElementById('btn-save-consultation');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Concluding Encounter...';
+
+    try {
+      const res = await API.post('/consultations/encounters', payload);
+      if (res.success) {
+        Toast.success('Encounter concluded and added to patient longitudinal health record!');
+        onConsultPatientChange(patId);
+        resetConsultationForm();
+      } else {
+        Toast.error(res.message || 'Saving consultation failed.');
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Server error.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Conclude Consultation & Save EMR';
+    }
+  }
+
+  function resetConsultationForm() {
+    document.getElementById('enc-complaint').value = '';
+    document.getElementById('enc-symptoms').value = '';
+    document.getElementById('enc-exam').value = '';
+    document.getElementById('enc-diagnosis').value = '';
+    document.getElementById('enc-treatment').value = '';
+    document.getElementById('enc-doc-notes').value = '';
+    document.getElementById('enc-followup').value = '';
+    document.getElementById('rx-rows-container').innerHTML = '';
+    document.querySelectorAll('input[name="lab_order"]').forEach(c => c.checked = false);
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

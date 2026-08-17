@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Record Search | AuraCare Hospital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">HOSPITAL SYSTEM</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
+        <li>
+          <a href="/search" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;">
+            <i class="fa-solid fa-magnifying-glass"></i> Global Search
+          </a>
+        </li>
+        <li>
+          <a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-chart-pie"></i> Executive Overview
+          </a>
+        </li>
+        <li>
+          <a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-hospital-user"></i> Patients Directory
+          </a>
+        </li>
+        <li>
+          <a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-user-doctor"></i> Doctors & Faculty
+          </a>
+        </li>
+        <li>
+          <a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-calendar-check"></i> Appointments
+          </a>
+        </li>
+        <li>
+          <a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-pills"></i> Pharmacy & Stock
+          </a>
+        </li>
+        <li>
+          <a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-vial-virus"></i> Lab & Pathology
+          </a>
+        </li>
+        <li>
+          <a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+            <i class="fa-solid fa-file-invoice-dollar"></i> Billing & Invoices
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.06); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1);">
+      <div style="font-size: var(--font-size-sm); font-weight: bold; color: white;" data-user-name>User</div>
+      <div style="font-size: var(--font-size-xs); color: #2dd4bf; margin-bottom: var(--space-2);" data-user-role>Role</div>
+      <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-2);">
+        <button class="btn btn-danger btn-sm" data-action-logout><i class="fa-solid fa-power-off"></i> Sign Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;"><i class="fa-solid fa-magnifying-glass text-primary"></i> Secure Global Hospital Search</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Authenticated</span>
+        <a href="/" class="btn btn-outline btn-sm">Public Portal &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid" style="gap: var(--space-5);">
+      
+      <!-- PROMINENT SEARCH BAR CARD -->
+      <div class="card" style="background: var(--gradient-card); box-shadow: var(--shadow-md);">
+        <div class="card-body" style="padding: var(--space-5);">
+          <div style="position: relative; margin-bottom: var(--space-4);">
+            <input 
+              type="text" 
+              id="global-search-input" 
+              class="form-input" 
+              placeholder="Search by patient name, MRN, physician, appointment #, Rx #, medicine name, invoice, or lab test..." 
+              style="padding-left: 3rem; padding-right: 3rem; font-size: var(--font-size-base); height: 48px; border-radius: var(--radius-xl); box-shadow: var(--shadow-sm);"
+              autofocus
+            >
+            <i class="fa-solid fa-magnifying-glass text-primary" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem;"></i>
+            <button id="search-clear-btn" style="display: none; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--color-slate-400); cursor: pointer; font-size: 1.1rem;" onclick="clearSearch()">&times;</button>
+          </div>
+
+          <!-- CATEGORY TABS -->
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center;" id="search-category-tabs">
+            <button class="btn btn-sm btn-primary search-cat-btn" data-cat="all" onclick="setSearchCategory('all')">
+              All Categories <span class="badge badge-light" id="badge-count-all" style="margin-left: 4px;">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="patients" onclick="setSearchCategory('patients')">
+              <i class="fa-solid fa-hospital-user"></i> Patients <span class="badge badge-light" id="badge-count-patients">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="doctors" onclick="setSearchCategory('doctors')">
+              <i class="fa-solid fa-user-doctor"></i> Doctors <span class="badge badge-light" id="badge-count-doctors">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="appointments" onclick="setSearchCategory('appointments')">
+              <i class="fa-solid fa-calendar-check"></i> Appointments <span class="badge badge-light" id="badge-count-appointments">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="prescriptions" onclick="setSearchCategory('prescriptions')">
+              <i class="fa-solid fa-file-prescription"></i> Prescriptions <span class="badge badge-light" id="badge-count-prescriptions">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="lab_tests" onclick="setSearchCategory('lab_tests')">
+              <i class="fa-solid fa-vial-virus"></i> Lab Tests <span class="badge badge-light" id="badge-count-lab_tests">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="invoices" onclick="setSearchCategory('invoices')">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Invoices <span class="badge badge-light" id="badge-count-invoices">0</span>
+            </button>
+            <button class="btn btn-sm btn-outline search-cat-btn" data-cat="medicines" onclick="setSearchCategory('medicines')">
+              <i class="fa-solid fa-pills"></i> Medicines <span class="badge badge-light" id="badge-count-medicines">0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH STATUS / TOTAL MATCHES BANNER -->
+      <div id="search-status-banner" style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="text-sm font-semibold text-muted" id="search-feedback-text">Type at least 2 characters to search hospital records...</span>
+        <span class="badge badge-info" id="search-total-badge" style="display: none;">0 Total Matches</span>
+      </div>
+
+      <!-- RESULTS CONTAINER (CSS GRID SECTIONS) -->
+      <div id="search-results-wrapper" style="display: flex; flex-direction: column; gap: var(--space-5);">
+        
+        <!-- SECTION 1: PATIENTS -->
+        <div class="card search-section" id="section-patients" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #0d9488;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #0f766e;"><i class="fa-solid fa-hospital-user"></i> Patient Records</h4>
+            <span class="badge badge-light" id="header-count-patients">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-3);" id="grid-patients"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: DOCTORS -->
+        <div class="card search-section" id="section-doctors" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #7c3aed;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #6d28d9;"><i class="fa-solid fa-user-doctor"></i> Medical Faculty & Doctors</h4>
+            <span class="badge badge-light" id="header-count-doctors">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-3);" id="grid-doctors"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: APPOINTMENTS -->
+        <div class="card search-section" id="section-appointments" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #2563eb;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #1d4ed8;"><i class="fa-solid fa-calendar-check"></i> Clinical Appointments</h4>
+            <span class="badge badge-light" id="header-count-appointments">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-3);" id="grid-appointments"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: PRESCRIPTIONS -->
+        <div class="card search-section" id="section-prescriptions" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #f59e0b;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #b45309;"><i class="fa-solid fa-file-prescription"></i> Electronic Prescriptions</h4>
+            <span class="badge badge-light" id="header-count-prescriptions">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-3);" id="grid-prescriptions"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 5: LAB TESTS -->
+        <div class="card search-section" id="section-lab_tests" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #e11d48;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #be123c;"><i class="fa-solid fa-vial-virus"></i> Laboratory Diagnostic Tests</h4>
+            <span class="badge badge-light" id="header-count-lab_tests">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3);" id="grid-lab_tests"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: INVOICES -->
+        <div class="card search-section" id="section-invoices" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #059669;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #047857;"><i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices & Accounts</h4>
+            <span class="badge badge-light" id="header-count-invoices">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-3);" id="grid-invoices"></div>
+          </div>
+        </div>
+
+        <!-- SECTION 7: MEDICINES -->
+        <div class="card search-section" id="section-medicines" style="display: none;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #ea580c;">
+            <h4 style="margin: 0; font-size: var(--font-size-base); color: #c2410c;"><i class="fa-solid fa-pills"></i> Pharmacy Formulary & Medicines</h4>
+            <span class="badge badge-light" id="header-count-medicines">0 found</span>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3);" id="grid-medicines"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- INITIAL / EMPTY SEARCH STATE -->
+      <div id="search-empty-state" class="card" style="padding: var(--space-8); text-align: center;">
+        <div style="font-size: 3rem; color: var(--color-slate-300); margin-bottom: var(--space-3);"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <h4 style="color: var(--color-navy-900); margin-bottom: var(--space-2);">Instant Multi-Category Search</h4>
+        <p class="text-muted text-sm" style="max-width: 540px; margin: 0 auto var(--space-4);">
+          Search across <strong>Patients</strong>, <strong>Doctors</strong>, <strong>Appointments</strong>, <strong>Prescriptions</strong>, <strong>Lab Tests</strong>, <strong>Invoices</strong>, and <strong>Medicines</strong> with automatic role-based data protection.
+        </p>
+        <div style="display: flex; justify-content: center; gap: var(--space-2); flex-wrap: wrap;">
+          <span class="badge badge-light">Try searching "Dr. Marcus"</span>
+          <span class="badge badge-light">"Paracetamol"</span>
+          <span class="badge badge-light">"Lipid Profile"</span>
+          <span class="badge badge-light">"Cardiology"</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+
+  <script>
+    let searchDebounce = null;
+    let selectedCategory = 'all';
+    let currentResults = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Guard page for any authenticated hospital user
+      await Auth.guardPage([
+        'super_admin', 'hospital_admin', 'doctor', 'nurse', 
+        'receptionist', 'accountant', 'pharmacist', 'lab_technician', 'patient'
+      ]);
+
+      const input = document.getElementById('global-search-input');
+      const clearBtn = document.getElementById('search-clear-btn');
+
+      // Debounced search input (300ms)
+      input.addEventListener('input', () => {
+        const val = input.value.trim();
+        clearBtn.style.display = val.length > 0 ? 'block' : 'none';
+        
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => {
+          executeGlobalSearch(val);
+        }, 300);
+      });
+
+      // Check URL query parameters (e.g. ?q=cardio)
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialQ = urlParams.get('q');
+      const initialCat = urlParams.get('category');
+      if (initialCat) selectedCategory = initialCat;
+      if (initialQ) {
+        input.value = initialQ;
+        clearBtn.style.display = 'block';
+        executeGlobalSearch(initialQ);
+      }
+    });
+
+    function clearSearch() {
+      const input = document.getElementById('global-search-input');
+      input.value = '';
+      document.getElementById('search-clear-btn').style.display = 'none';
+      executeGlobalSearch('');
+      input.focus();
+    }
+
+    function setSearchCategory(cat) {
+      selectedCategory = cat;
+      document.querySelectorAll('.search-cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = 'btn btn-sm btn-primary search-cat-btn';
+        } else {
+          btn.className = 'btn btn-sm btn-outline search-cat-btn';
+        }
+      });
+      const q = document.getElementById('global-search-input').value.trim();
+      if (q.length >= 2) {
+        executeGlobalSearch(q);
+      }
+    }
+
+    async function executeGlobalSearch(query) {
+      const emptyState = document.getElementById('search-empty-state');
+      const statusText = document.getElementById('search-feedback-text');
+      const totalBadge = document.getElementById('search-total-badge');
+
+      if (query.length < 2) {
+        emptyState.style.display = 'block';
+        totalBadge.style.display = 'none';
+        statusText.textContent = 'Type at least 2 characters to search hospital records...';
+        hideAllSections();
+        resetBadges();
+        return;
+      }
+
+      statusText.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-primary"></i> Searching live MySQL records for "<strong>${query}</strong>"...`;
+
+      try {
+        const res = await API.get('/search', {
+          q: query,
+          category: selectedCategory,
+          limit: 12
+        });
+
+        if (res.success && res.data) {
+          currentResults = res.data;
+          renderSearchResults(currentResults, query);
+        }
+      } catch (err) {
+        statusText.innerHTML = `<span class="text-danger">Search error: ${err.message}</span>`;
+      }
+    }
+
+    function renderSearchResults(data, query) {
+      const emptyState = document.getElementById('search-empty-state');
+      const statusText = document.getElementById('search-feedback-text');
+      const totalBadge = document.getElementById('search-total-badge');
+      const cats = data.categories || {};
+
+      emptyState.style.display = 'none';
+      totalBadge.style.display = 'inline-block';
+      totalBadge.textContent = `${data.total_matches} Total Matches`;
+      statusText.innerHTML = `Showing results for "<strong>${query}</strong>" (${data.total_matches} found):`;
+
+      // Update Tab Badges
+      document.getElementById('badge-count-all').textContent = data.total_matches;
+      document.getElementById('badge-count-patients').textContent = (cats.patients || []).length;
+      document.getElementById('badge-count-doctors').textContent = (cats.doctors || []).length;
+      document.getElementById('badge-count-appointments').textContent = (cats.appointments || []).length;
+      document.getElementById('badge-count-prescriptions').textContent = (cats.prescriptions || []).length;
+      document.getElementById('badge-count-lab_tests').textContent = (cats.lab_tests || []).length;
+      document.getElementById('badge-count-invoices').textContent = (cats.invoices || []).length;
+      document.getElementById('badge-count-medicines').textContent = (cats.medicines || []).length;
+
+      // Render Each Category Card Grid
+      renderPatientsSection(cats.patients || []);
+      renderDoctorsSection(cats.doctors || []);
+      renderAppointmentsSection(cats.appointments || []);
+      renderPrescriptionsSection(cats.prescriptions || []);
+      renderLabTestsSection(cats.lab_tests || []);
+      renderInvoicesSection(cats.invoices || []);
+      renderMedicinesSection(cats.medicines || []);
+
+      if (data.total_matches === 0) {
+        statusText.innerHTML = `<span class="text-muted">No records found matching "<strong>${query}</strong>".</span>`;
+      }
+    }
+
+    function hideAllSections() {
+      document.querySelectorAll('.search-section').forEach(s => s.style.display = 'none');
+    }
+
+    function resetBadges() {
+      ['all', 'patients', 'doctors', 'appointments', 'prescriptions', 'lab_tests', 'invoices', 'medicines'].forEach(c => {
+        const el = document.getElementById('badge-count-' + c);
+        if (el) el.textContent = '0';
+      });
+    }
+
+    // --- CATEGORY RENDERERS ---
+
+    function renderPatientsSection(items) {
+      const sec = document.getElementById('section-patients');
+      const grid = document.getElementById('grid-patients');
+      const count = document.getElementById('header-count-patients');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'patients')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <strong class="text-navy">${p.first_name} ${p.last_name}</strong><br>
+              <code class="text-xs">${p.patient_code}</code>
+            </div>
+            <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">${p.blood_group || 'Blood: —'}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            ${p.gender || 'Patient'} • Phone: ${p.phone || 'N/A'}<br>
+            ${p.allergies ? `<span class="text-danger font-bold">Allergies: ${p.allergies}</span>` : 'NKDA'}
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/patient-profile?id=${p.id}" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-medical text-primary"></i> EMR Chart</a>
+            <a href="/doctor/consultations?patient_id=${p.id}" class="btn btn-primary btn-sm"><i class="fa-solid fa-stethoscope"></i> Consult</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderDoctorsSection(items) {
+      const sec = document.getElementById('section-doctors');
+      const grid = document.getElementById('grid-doctors');
+      const count = document.getElementById('header-count-doctors');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'doctors')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(d => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <strong class="text-navy">Dr. ${d.name}</strong><br>
+              <span class="text-xs font-bold text-primary">${d.specialization || 'Consultant'}</span>
+            </div>
+            <span class="badge ${d.is_available ? 'badge-success' : 'badge-light'}">${d.is_available ? 'Available' : 'Busy'}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            ${d.department_name || 'Clinical Division'} • Room: ${d.room_number || 'TBD'}<br>
+            Fee: <strong class="text-success">$${parseFloat(d.consultation_fee || 0).toFixed(2)}</strong>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/doctors" class="btn btn-outline btn-sm">Faculty Profile</a>
+            <a href="/admin/appointments?doctor_id=${d.id}" class="btn btn-primary btn-sm"><i class="fa-solid fa-calendar-plus"></i> Book</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderAppointmentsSection(items) {
+      const sec = document.getElementById('section-appointments');
+      const grid = document.getElementById('grid-appointments');
+      const count = document.getElementById('header-count-appointments');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'appointments')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <code>${a.appointment_number}</code><br>
+              <strong>${a.first_name} ${a.last_name}</strong>
+            </div>
+            <span class="badge status-badge-${a.status}">${a.status.replace('_', ' ')}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            Date: <strong>${a.appointment_date}</strong> at ${a.appointment_time ? a.appointment_time.substring(0, 5) : ''}<br>
+            Doctor: Dr. ${a.doctor_name || 'Assigned Specialist'} (${a.department_name})
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/appointments" class="btn btn-outline btn-sm"><i class="fa-solid fa-eye"></i> Details</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderPrescriptionsSection(items) {
+      const sec = document.getElementById('section-prescriptions');
+      const grid = document.getElementById('grid-prescriptions');
+      const count = document.getElementById('header-count-prescriptions');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'prescriptions')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(rx => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <code>${rx.prescription_number}</code><br>
+              <strong>${rx.first_name} ${rx.last_name}</strong>
+            </div>
+            <span class="badge status-badge-${rx.status}">${rx.status}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            Diagnosis: <strong class="text-primary">${rx.diagnosis || 'Clinical Rx'}</strong><br>
+            Meds: <span class="text-navy">${rx.medicines_summary || 'Prescribed Items'}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-prescription text-primary"></i> View Rx</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderLabTestsSection(items) {
+      const sec = document.getElementById('section-lab_tests');
+      const grid = document.getElementById('grid-lab_tests');
+      const count = document.getElementById('header-count-lab_tests');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'lab_tests')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(lt => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <strong class="text-navy">${lt.name}</strong><br>
+              <code class="text-xs">${lt.code}</code>
+            </div>
+            <span class="badge badge-info">${lt.category || 'Diagnostics'}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            Sample: ${lt.sample_type || 'Blood / Serum'} • Turnaround: ${lt.turnaround_hours || 24}h<br>
+            Fee: <strong class="text-success">$${parseFloat(lt.price || 0).toFixed(2)}</strong>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/laboratory" class="btn btn-outline btn-sm">Lab Catalog</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderInvoicesSection(items) {
+      const sec = document.getElementById('section-invoices');
+      const grid = document.getElementById('grid-invoices');
+      const count = document.getElementById('header-count-invoices');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'invoices')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(inv => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <code>${inv.invoice_number}</code><br>
+              <strong>${inv.first_name} ${inv.last_name}</strong>
+            </div>
+            <span class="badge status-badge-${inv.status}">${inv.status}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            Total: <strong>$${parseFloat(inv.net_amount).toFixed(2)}</strong> • Paid: <span class="text-success font-bold">$${parseFloat(inv.paid_amount || 0).toFixed(2)}</span><br>
+            Due Balance: <strong class="text-danger">$${parseFloat(inv.remaining_amount || 0).toFixed(2)}</strong>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/billing" class="btn btn-outline btn-sm"><i class="fa-solid fa-file-invoice-dollar text-success"></i> Open Bill</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderMedicinesSection(items) {
+      const sec = document.getElementById('section-medicines');
+      const grid = document.getElementById('grid-medicines');
+      const count = document.getElementById('header-count-medicines');
+
+      if (items.length === 0 || (selectedCategory !== 'all' && selectedCategory !== 'medicines')) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      count.textContent = `${items.length} found`;
+      grid.innerHTML = '';
+
+      items.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.padding = 'var(--space-3)';
+        card.style.border = '1px solid var(--color-slate-200)';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
+            <div>
+              <strong class="text-navy">${m.name}</strong><br>
+              <span class="text-xs text-muted">${m.generic_name || m.category || ''} (${m.form || 'Tablet'})</span>
+            </div>
+            <span class="badge badge-light font-bold text-navy">$${parseFloat(m.unit_price || 0).toFixed(2)}</span>
+          </div>
+          <div class="text-xs text-muted" style="margin-bottom: 8px;">
+            Strength: <strong>${m.strength || 'Standard'}</strong> • Rx Required: ${m.requires_prescription ? '<span class="text-danger font-bold">Yes (Rx)</span>' : 'No (OTC)'}<br>
+            ${m.stock_quantity !== undefined ? `Stock: <strong>${m.stock_quantity}</strong> units available` : ''}
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+            <a href="/admin/pharmacy" class="btn btn-outline btn-sm">Pharmacy Stock</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

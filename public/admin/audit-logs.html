@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Audit Trail | AuraCare Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid" style="max-height: calc(100vh - 220px); overflow-y: auto;">
+        
+          <li>
+            <a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-chart-pie"></i> Executive Overview
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/users" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-users-gear"></i> Users Directory
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/roles" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-shield"></i> Roles & Permissions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> Patients Directory
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/doctors" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctors & Faculty
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-building-shield"></i> Clinical Divisions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-check"></i> Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/opd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> OPD Queue
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/ipd" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-bed-pulse"></i> Inpatient & Wards
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/laboratory" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab & Pathology
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology Imaging
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/pharmacy" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-pills"></i> Pharmacy & Stock
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Billing Invoices
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/payments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-money-bill-wave"></i> Payments Ledger
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/staff" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-badge"></i> Hospital Staff
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/reports" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-chart-line"></i> Reports & Analytics
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/notifications" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/audit-logs" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-shield-halved"></i> Security Audit Logs
+            </a>
+          </li>
+        
+          <li>
+            <a href="/admin/settings" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-sliders"></i> System Settings
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.06); padding: var(--space-3); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1);">
+      <div style="font-size: var(--font-size-sm); font-weight: bold; color: white;" data-user-name>Administrator</div>
+      <div style="font-size: var(--font-size-xs); color: #2dd4bf; margin-bottom: var(--space-2);" data-user-role>Admin</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+        <a href="/admin/settings" class="btn btn-outline btn-sm" style="color: white; border-color: rgba(255,255,255,0.2); text-align: center;"><i class="fa-solid fa-gear"></i></a>
+        <button class="btn btn-danger btn-sm" data-action-logout><i class="fa-solid fa-power-off"></i> Out</button>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Security Audit Trail</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <div class="health-badge" id="admin-health-badge">
+          <span class="health-dot online"></span>
+          <span>Live API / MySQL Active</span>
+        </div>
+        <a href="/" class="btn btn-outline btn-sm">Public Site &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;">Immutable Security & Authentication Audit Trail</h4>
+    <button class="btn btn-outline btn-sm" onclick="loadAudit()"><i class="fa-solid fa-arrows-rotate"></i> Refresh</button>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead><tr><th>ID</th><th>Action Event</th><th>Entity</th><th>Actor</th><th>IP</th><th>Time</th></tr></thead>
+        <tbody id="admin-audit-tbody"><tr><td colspan="6" class="text-center text-muted" style="padding: var(--space-6);">Loading audit records...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => loadAudit());
+  async function loadAudit() {
+    try {
+      const res = await API.get('/auth/audit-logs', { limit: 25 });
+      if (res.success && res.data) {
+        const tbody = document.getElementById('admin-audit-tbody');
+        tbody.innerHTML = '';
+        res.data.forEach(log => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>#${log.id}</code></td>
+            <td><span class="badge badge-info">${log.action}</span></td>
+            <td><code>${log.entity || 'system'}</code></td>
+            <td>${log.user_name || 'System / Guest'}</td>
+            <td>${log.ip_address || '127.0.0.1'}</td>
+            <td class="text-xs text-muted">${new Date(log.created_at).toLocaleString()}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (err) { console.error(err); }
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

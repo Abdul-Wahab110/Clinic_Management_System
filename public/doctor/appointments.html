@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assigned Patient Appointments | AuraCare Physician</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="dashboard-layout">
+  
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">PHYSICIAN PORTAL</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        
+          <li>
+            <a href="/doctor/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-user-doctor"></i> Doctor Workspace
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/appointments" class="btn btn-primary btn-block" style="justify-content: start; text-align: left; ">
+              <i class="fa-solid fa-calendar-check"></i> My Appointments
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-hospital-user"></i> My Patients
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/consultations" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-stethoscope"></i> Clinical Notes
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/medical-records" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-file-waveform"></i> Medical History
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/prescriptions" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-prescription"></i> Prescriptions
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/lab-orders" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-vial-virus"></i> Lab Orders
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/radiology" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-x-ray"></i> Radiology PACS
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/follow-ups" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-clock-rotate-left"></i> Follow-up Roster
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/schedule" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-calendar-days"></i> Weekly Timetable
+            </a>
+          </li>
+        
+          <li>
+            <a href="/doctor/profile" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);">
+              <i class="fa-solid fa-id-card"></i> My Credentials
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Physician</div>
+          <div class="sidebar-user-role" data-user-role>Doctor</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/doctor/profile" class="btn btn-outline btn-sm" title="My Profile" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-id-badge"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+  
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <h3 style="font-size: var(--font-size-lg); margin: 0;">Assigned Patient Appointments</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span class="badge badge-success" data-user-role-badge>Physician Authenticated</span>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+        <a href="/" class="btn btn-outline btn-sm">Clinic Home &rarr;</a>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid">
+      
+<div class="card" style="margin-bottom: var(--space-4);">
+  <div class="card-body" style="padding: var(--space-4);">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-2); align-items: center;">
+      <div style="position: relative;">
+        <input type="text" id="doc-appt-search" class="form-input" placeholder="Search patient name, code, phone..." style="padding-left: 2rem;">
+        <i class="fa-solid fa-magnifying-glass text-muted" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);"></i>
+      </div>
+      <div>
+        <select id="doc-appt-status" class="form-select">
+          <option value="all">All Consultation Statuses</option>
+          <option value="checked_in">Checked-In (Waiting in Clinic)</option>
+          <option value="in_progress">In Consultation (Active)</option>
+          <option value="confirmed">Confirmed (Scheduled)</option>
+          <option value="completed">Completed</option>
+          <option value="no_show">No Show</option>
+        </select>
+      </div>
+      <div>
+        <select id="doc-appt-preset" class="form-select">
+          <option value="today">Today's Clinic Queue</option>
+          <option value="tomorrow">Tomorrow</option>
+          <option value="this_week">This Week</option>
+          <option value="upcoming">All Upcoming</option>
+          <option value="all">All Dates</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-sm" onclick="loadDoctorAppointments()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-stethoscope text-primary"></i> My Patient Consultation Queue</h4>
+    <span class="badge badge-success" id="doc-queue-count">0 Patients</span>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive" style="border: none;">
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Appt #</th>
+            <th>Patient Name</th>
+            <th>Scheduled Time</th>
+            <th>Type</th>
+            <th>Chief Complaint</th>
+            <th>Status</th>
+            <th style="text-align: right;">Clinical Actions</th>
+          </tr>
+        </thead>
+        <tbody id="doc-appts-tbody">
+          <tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Loading appointment queue...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  let docApptDebounce = null;
+  document.addEventListener('DOMContentLoaded', async () => {
+    loadDoctorAppointments();
+
+    document.getElementById('doc-appt-search').addEventListener('input', () => {
+      clearTimeout(docApptDebounce);
+      docApptDebounce = setTimeout(loadDoctorAppointments, 300);
+    });
+    document.getElementById('doc-appt-status').addEventListener('change', loadDoctorAppointments);
+    document.getElementById('doc-appt-preset').addEventListener('change', loadDoctorAppointments);
+  });
+
+  async function loadDoctorAppointments() {
+    const tbody = document.getElementById('doc-appts-tbody');
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);"><i class="fa-solid fa-spinner fa-spin"></i> Loading queue...</td></tr>';
+
+    try {
+      const params = {
+        search: document.getElementById('doc-appt-search').value.trim() || undefined,
+        status: document.getElementById('doc-appt-status').value,
+        date_preset: document.getElementById('doc-appt-preset').value,
+        limit: 50
+      };
+
+      const res = await API.get('/appointments', params);
+      if (res.success && res.data) {
+        document.getElementById('doc-queue-count').textContent = res.data.length + ' Patients';
+
+        if (res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: var(--space-6);">No patients found in queue matching filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        res.data.forEach(a => {
+          const tr = document.createElement('tr');
+          let actionBtns = '';
+
+          if (a.status === 'checked_in') {
+            actionBtns = `
+              <button class="btn btn-sm" style="background:#7c3aed; color:white;" onclick="docUpdateStatus(${a.id}, 'in_progress')" title="Call in patient"><i class="fa-solid fa-stethoscope"></i> Call In</button>
+            `;
+          } else if (a.status === 'in_progress') {
+            actionBtns = `
+              <button class="btn btn-success btn-sm" onclick="docUpdateStatus(${a.id}, 'completed')" title="Complete Consultation"><i class="fa-solid fa-circle-check"></i> Complete</button>
+            `;
+          } else if (a.status === 'confirmed') {
+            actionBtns = `
+              <button class="btn btn-outline btn-sm" onclick="docUpdateStatus(${a.id}, 'checked_in')"><i class="fa-solid fa-user-check"></i> Check-In</button>
+              <button class="btn btn-outline-danger btn-sm" onclick="docUpdateStatus(${a.id}, 'no_show')"><i class="fa-solid fa-user-slash"></i> No-Show</button>
+            `;
+          } else {
+            actionBtns = '<span class="text-xs text-muted">Completed / Logged</span>';
+          }
+
+          tr.innerHTML = `
+            <td><code>${a.appointment_number}</code></td>
+            <td>
+              <strong>${a.patient_name}</strong><br>
+              <span class="text-xs text-muted"><code>${a.patient_code}</code> • ${a.patient_phone || 'No phone'}</span>
+            </td>
+            <td>
+              <strong>${a.appointment_date}</strong><br>
+              <span class="text-xs font-bold text-primary">${a.appointment_time.substring(0, 5)}</span>
+            </td>
+            <td><span class="badge badge-light" style="text-transform: uppercase; font-size: 0.65rem;">${a.type}</span></td>
+            <td class="text-xs text-muted" style="max-width: 200px;">${a.reason || 'General encounter'}</td>
+            <td><span class="badge status-badge-${a.status}">${a.status.replace('_', ' ')}</span></td>
+            <td style="text-align: right; white-space: nowrap;">
+              ${actionBtns}
+              <a href="/admin/patient-profile?id=${a.patient_id}" class="btn btn-outline btn-sm" title="View Patient EMR"><i class="fa-solid fa-file-medical text-primary"></i></a>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger" style="padding: var(--space-6);">Error: ${err.message}</td></tr>`;
+    }
+  }
+
+  async function docUpdateStatus(id, newStatus) {
+    try {
+      const res = await API.patch('/appointments/' + id + '/status', { status: newStatus });
+      if (res.success) {
+        Toast.success('Encounter updated to ' + newStatus.replace('_', ' '));
+        loadDoctorAppointments();
+      }
+    } catch (err) {
+      Toast.error(err.message || 'Failed to update encounter.');
+    }
+  }
+</script>
+
+    </main>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
+</body>
+</html>

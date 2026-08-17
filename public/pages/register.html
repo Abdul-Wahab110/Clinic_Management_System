@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Registration | AuraCare Medical Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body style="background: var(--color-slate-100); min-height: 100vh; padding: var(--space-8) 0;">
+
+  <div class="container" style="max-width: 640px;">
+    <div class="text-center mb-6">
+      <a href="/" class="brand-logo-grid" style="justify-content: center; margin-bottom: var(--space-3);">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <span>AuraCare Health</span>
+      </a>
+      <h2>Patient Portal Registration</h2>
+      <p class="text-muted" style="font-size: var(--font-size-sm);">
+        Create your confidential patient profile to schedule visits and view electronic records.
+      </p>
+    </div>
+
+    <div class="card" style="box-shadow: var(--shadow-xl);">
+      <div class="card-body" style="padding: var(--space-8);">
+        
+        <div id="reg-alert-box" class="hidden mb-4" style="padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--font-size-xs);"></div>
+
+        <form id="form-register">
+          <div class="form-grid">
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="reg-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="reg-name" name="full_name" class="form-input" placeholder="e.g. Zarnab Shah" required minlength="2">
+            </div>
+
+            <!-- Email & Phone Grid (CSS Grid 2-col) -->
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="reg-email">Email Address <span class="required">*</span></label>
+                <input type="email" id="reg-email" name="email" class="form-input" placeholder="e.g. patient@example.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-phone">Contact Phone <span class="required">*</span></label>
+                <input type="tel" id="reg-phone" name="phone" class="form-input" placeholder="03212345676 or +923212345676" required>
+                <span class="form-help">Pakistani (03xx...) or international format.</span>
+              </div>
+            </div>
+
+            <!-- Gender, DOB & Blood Group Grid (CSS Grid 3-col) -->
+            <div class="grid-3-col">
+              <div class="form-group">
+                <label class="form-label" for="reg-gender">Gender <span class="required">*</span></label>
+                <select id="reg-gender" name="gender" class="form-select" required>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-dob">Date of Birth <span class="required">*</span></label>
+                <input type="date" id="reg-dob" name="date_of_birth" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-blood">Blood Group</label>
+                <select id="reg-blood" name="blood_group" class="form-select">
+                  <option value="Unknown">Unknown</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Password Grid (CSS Grid 2-col) -->
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="reg-password">Password <span class="required">*</span></label>
+                <div class="input-password-wrapper">
+                  <input type="password" id="reg-password" name="password" class="form-input" placeholder="••••••••" required minlength="8">
+                  <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('reg-password', this)" aria-label="Toggle password view" title="Show password">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+                <span class="form-help">Min 8 chars with upper, lower, number & special char.</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-confirm">Confirm Password <span class="required">*</span></label>
+                <div class="input-password-wrapper">
+                  <input type="password" id="reg-confirm" name="confirm_password" class="form-input" placeholder="••••••••" required minlength="8">
+                  <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('reg-confirm', this)" aria-label="Toggle password view" title="Show password">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Residential Address -->
+            <div class="form-group">
+              <label class="form-label" for="reg-address">Residential Address</label>
+              <textarea id="reg-address" name="address" rows="2" class="form-textarea" placeholder="Area gate, Gujrat, Punjab, Pakistan"></textarea>
+            </div>
+
+            <button type="submit" id="btn-register-submit" class="btn btn-primary btn-block mt-4">
+              <i class="fa-solid fa-user-plus"></i> Complete Patient Registration
+            </button>
+          </div>
+        </form>
+
+        <div style="text-align: center; margin-top: var(--space-6); font-size: var(--font-size-sm); color: var(--color-slate-600);">
+          Already have an account? <a href="/pages/login.html" class="font-semibold">Sign in here</a>
+          <div class="mt-2">
+            <a href="/" style="color: var(--color-slate-500); font-size: var(--font-size-xs);">&larr; Return to Clinic Homepage</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    function showRegAlert(message, type = 'error') {
+      const box = document.getElementById('reg-alert-box');
+      if (!box) return;
+      box.classList.remove('hidden');
+      if (type === 'error') {
+        box.style.background = 'var(--color-danger-light)';
+        box.style.color = 'var(--color-danger-hover)';
+        box.style.border = '1px solid var(--color-danger-border)';
+      } else {
+        box.style.background = 'var(--color-success-light)';
+        box.style.color = 'var(--color-success-hover)';
+        box.style.border = '1px solid var(--color-success-border)';
+      }
+      box.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${message}`;
+    }
+
+    function hideRegAlert() {
+      const box = document.getElementById('reg-alert-box');
+      if (box) box.classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('form-register');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideRegAlert();
+
+        const submitBtn = document.getElementById('btn-register-submit');
+        const originalText = submitBtn.innerHTML;
+
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+
+        if (password !== confirmPassword) {
+          showRegAlert('Passwords do not match. Please re-enter your password.', 'error');
+          if (typeof Toast !== 'undefined') Toast.error('Passwords do not match.');
+          return;
+        }
+
+        const payload = {
+          full_name: form.full_name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          gender: form.gender.value,
+          date_of_birth: form.date_of_birth.value,
+          blood_group: form.blood_group.value,
+          password: password,
+          address: form.address.value.trim() || undefined
+        };
+
+        try {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Registering...';
+
+          const user = await Auth.register(payload);
+          if (typeof Toast !== 'undefined') Toast.success('Patient account registered successfully!');
+
+          setTimeout(() => {
+            window.location.href = '/patient/dashboard';
+          }, 500);
+        } catch (err) {
+          const errorMsg = (err.errors && err.errors.length > 0) ? err.errors.join(' ') : (err.message || 'Registration failed.');
+          showRegAlert(errorMsg, 'error');
+          if (typeof Toast !== 'undefined') Toast.error(errorMsg);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

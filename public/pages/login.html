@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | AuraCare Medical Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body style="background: var(--color-slate-100); min-height: 100vh;">
+
+  <div class="auth-page-grid">
+    <!-- Left Hero Banner (CSS Grid) -->
+    <div class="auth-banner-grid">
+      <a href="/" class="brand-logo-grid" style="color: white;">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <span>AuraCare Health</span>
+      </a>
+
+      <div style="display: grid; align-content: center; gap: var(--space-4);">
+        <span class="badge badge-primary" style="width: fit-content; background: rgba(13,148,136,0.25); color: #5eead4; border: 1px solid rgba(94,234,212,0.3);">
+          Integrated Clinical System
+        </span>
+        <h1 style="color: white; font-size: var(--font-size-3xl);">Unified Hospital Portal & Role Authorization</h1>
+        <p style="color: var(--color-slate-300); font-size: var(--font-size-base); max-width: 480px;">
+          Seamlessly access administrative dashboards, clinical consultation tools, pharmacy dispensing, laboratory diagnostic pipelines, and patient electronic health records.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-4);">
+          <div style="background: rgba(255,255,255,0.06); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: var(--font-weight-bold); color: #2dd4bf;">9 System Roles</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-slate-300);">Fine-grained RBAC permissions</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: var(--font-weight-bold); color: #2dd4bf;">Audit Logged</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-slate-300);">Encrypted bcrypt & JWT tokens</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+        &copy; 2026 AuraCare Medical Center • HIPAA-aligned Architecture
+      </div>
+    </div>
+
+    <!-- Right Interactive Form Grid -->
+    <div class="auth-form-container-grid">
+      <div class="card" style="width: 100%; max-width: 500px; box-shadow: var(--shadow-xl);">
+        <div class="card-body" style="padding: var(--space-8);">
+          
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-6);">
+            <div>
+              <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--space-1);">Account Sign In</h2>
+              <p class="text-muted" style="font-size: var(--font-size-sm); margin: 0;">
+                Enter your authorized credentials or click a demo role below.
+              </p>
+            </div>
+            <a href="/" class="btn btn-outline btn-sm" title="Cancel and return home">
+              <i class="fa-solid fa-xmark"></i> Cancel
+            </a>
+          </div>
+
+          <!-- Session Alert Message Container -->
+          <div id="auth-alert-box" class="hidden mb-4" style="padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--font-size-xs);"></div>
+
+          <!-- Login Form -->
+          <form id="form-login">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="login-email">Email Address <span class="required">*</span></label>
+                <input type="email" id="login-email" name="email" class="form-input" placeholder="e.g. admin@auracare.com" required autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <label class="form-label" for="login-password">Password <span class="required">*</span></label>
+                  <a href="/forgot-password" style="font-size: var(--font-size-xs);">Forgot Password?</a>
+                </div>
+                <div class="input-password-wrapper">
+                  <input type="password" id="login-password" name="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                  <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('login-password', this)" aria-label="Toggle password view" title="Show password">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
+                <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block">
+                  <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+                </button>
+                <a href="/" class="btn btn-outline" title="Cancel">
+                  <i class="fa-solid fa-arrow-left"></i> Cancel
+                </a>
+              </div>
+            </div>
+          </form>
+
+          <!-- Quick Demo Role Switcher Bar with dummy logins & passwords -->
+          <div style="margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-slate-200);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+              <span style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-slate-600); text-transform: uppercase;">
+                <i class="fa-solid fa-key" style="color: var(--color-primary);"></i> Quick Demo Role Sign In (Password: <code>Clinic2026!</code>)
+              </span>
+            </div>
+            
+            <div class="role-pills-grid">
+              <button type="button" class="role-pill-btn" data-demo-email="superadmin@auracare.com" onclick="fillCredentials('superadmin@auracare.com', this)">👑 Super Admin</button>
+              <button type="button" class="role-pill-btn" data-demo-email="admin@auracare.com" onclick="fillCredentials('admin@auracare.com', this)">🏥 Hospital Admin</button>
+              <button type="button" class="role-pill-btn" data-demo-email="marcus.vance@auracare.com" onclick="fillCredentials('marcus.vance@auracare.com', this)">🩺 Doctor</button>
+              <button type="button" class="role-pill-btn" data-demo-email="patient@auracare.com" onclick="fillCredentials('patient@auracare.com', this)">👤 Patient</button>
+              <button type="button" class="role-pill-btn" data-demo-email="reception@auracare.com" onclick="fillCredentials('reception@auracare.com', this)">📋 Receptionist</button>
+              <button type="button" class="role-pill-btn" data-demo-email="nurse@auracare.com" onclick="fillCredentials('nurse@auracare.com', this)">💉 Nurse</button>
+              <button type="button" class="role-pill-btn" data-demo-email="lab@auracare.com" onclick="fillCredentials('lab@auracare.com', this)">🔬 Lab Tech</button>
+              <button type="button" class="role-pill-btn" data-demo-email="pharmacy@auracare.com" onclick="fillCredentials('pharmacy@auracare.com', this)">💊 Pharmacist</button>
+              <button type="button" class="role-pill-btn" data-demo-email="billing@auracare.com" onclick="fillCredentials('billing@auracare.com', this)">💰 Accountant</button>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: var(--space-6); font-size: var(--font-size-sm); color: var(--color-slate-600);">
+            New Patient? <a href="/register" class="font-semibold">Register for Patient Portal</a>
+            <div class="mt-2">
+              <a href="/" style="color: var(--color-slate-500); font-size: var(--font-size-xs);">&larr; Return to Clinic Homepage</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Root -->
+  <div class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      if (urlParams.has('logged_out')) {
+        showAlert('You have been logged out successfully.', 'info');
+      } else if (urlParams.has('session_expired')) {
+        showAlert('Your session has expired. Please sign in again to continue.', 'warning');
+      } else if (urlParams.has('registered')) {
+        showAlert('Registration successful! Please sign in with your email and password.', 'success');
+      } else if (urlParams.has('password_reset')) {
+        showAlert('Password reset completed. You can now login.', 'success');
+      }
+
+      // If user is already authenticated, redirect directly to their dashboard
+      if (Auth.isAuthenticated()) {
+        const user = Auth.getUser();
+        if (user && user.role) {
+          const redirectUrl = urlParams.get('redirect') || Auth.getDashboardUrl(user.role);
+          window.location.href = redirectUrl;
+        }
+      }
+
+      // Handle Form Submit
+      const form = document.getElementById('form-login');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btn-login-submit');
+        const originalBtnText = submitBtn.innerHTML;
+
+        const email = form.email.value.trim();
+        const password = form.password.value;
+
+        try {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
+          hideAlert();
+
+          const user = await Auth.login(email, password);
+          Toast.success(`Welcome back, ${user.fullName}!`);
+
+          // Determine redirection URL
+          const redirectTarget = urlParams.get('redirect') || Auth.getDashboardUrl(user.role);
+          setTimeout(() => {
+            window.location.href = redirectTarget;
+          }, 400);
+        } catch (err) {
+          showAlert(err.message || 'Invalid email or password.', 'error');
+          Toast.error(err.message || 'Login failed.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      });
+    });
+
+    function showAlert(message, type = 'info') {
+      const box = document.getElementById('auth-alert-box');
+      if (!box) return;
+      box.classList.remove('hidden', 'badge-info', 'badge-warning', 'badge-danger', 'badge-success');
+      if (type === 'error') {
+        box.style.background = 'var(--color-danger-light)';
+        box.style.color = 'var(--color-danger-hover)';
+        box.style.border = '1px solid var(--color-danger-border)';
+      } else if (type === 'warning') {
+        box.style.background = 'var(--color-warning-light)';
+        box.style.color = 'var(--color-warning-hover)';
+        box.style.border = '1px solid var(--color-warning-border)';
+      } else if (type === 'success') {
+        box.style.background = 'var(--color-success-light)';
+        box.style.color = 'var(--color-success-hover)';
+        box.style.border = '1px solid var(--color-success-border)';
+      } else {
+        box.style.background = 'var(--color-info-light)';
+        box.style.color = 'var(--color-info-hover)';
+        box.style.border = '1px solid var(--color-info-border)';
+      }
+      box.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${message}`;
+    }
+
+    function hideAlert() {
+      const box = document.getElementById('auth-alert-box');
+      if (box) box.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

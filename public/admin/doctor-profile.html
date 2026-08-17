@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physician Detailed Profile | AuraCare Clinical Faculty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .doctor-profile-hero {
+      background: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-900) 60%, var(--color-primary-dark) 100%);
+      color: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    .doctor-hero-grid {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-6);
+      align-items: center;
+    }
+    .doctor-hero-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+      color: var(--color-navy-950);
+      font-size: 2.5rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      border: 4px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .timetable-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: var(--space-3);
+    }
+    .timetable-day-card {
+      background: var(--color-slate-50);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3);
+      text-align: center;
+      transition: all var(--transition-normal);
+    }
+    .timetable-day-card.active {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .timetable-day-card.inactive {
+      opacity: 0.6;
+      background: #f8fafc;
+    }
+    @media (max-width: 900px) {
+      .doctor-hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+      }
+    }
+  </style>
+</head>
+<body class="dashboard-layout">
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="dashboard-sidebar">
+    <div>
+      <a href="/" class="brand-logo-grid" style="color: white; margin-bottom: var(--space-4);">
+        <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+        <div>
+          <span>AuraCare</span>
+          <span style="display: block; font-size: 0.65rem; color: #2dd4bf; letter-spacing: 0.05em; font-weight: bold;">ADMIN CONSOLE</span>
+        </div>
+      </a>
+
+      <ul class="sidebar-nav-grid">
+        <li><a href="/admin/dashboard" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-chart-pie"></i> Executive Overview</a></li>
+        <li><a href="/admin/users" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-users-gear"></i> Users Directory</a></li>
+        <li><a href="/admin/patients" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-hospital-user"></i> Patients Directory</a></li>
+        <li><a href="/admin/doctors" class="btn btn-primary btn-block" style="justify-content: start; text-align: left;"><i class="fa-solid fa-user-doctor"></i> Doctors & Faculty</a></li>
+        <li><a href="/admin/departments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-building-shield"></i> Clinical Divisions</a></li>
+        <li><a href="/admin/appointments" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-calendar-check"></i> Master Bookings</a></li>
+        <li><a href="/admin/billing" class="btn btn-outline btn-block" style="justify-content: start; text-align: left; color: var(--color-slate-300); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-file-invoice-dollar"></i> Finance & Invoices</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-header">
+        <div class="sidebar-user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" data-user-name>Administrator</div>
+          <div class="sidebar-user-role" data-user-role>Hospital Admin</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-2); margin-top: 2px;">
+        <button class="btn btn-outline-danger btn-sm" data-action-logout style="display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; color: #fca5a5; border-color: rgba(239,68,68,0.35);">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+        <a href="/admin/settings" class="btn btn-outline btn-sm" title="Settings" style="color: white; border-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="dashboard-main">
+    <header class="dashboard-topbar-grid">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <a href="/admin/doctors" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Back to Faculty</a>
+        <h3 style="font-size: var(--font-size-base); margin: 0;" id="topbar-doc-title">Physician Clinical File</h3>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-2);">
+        <button class="btn btn-outline btn-sm" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Profile</button>
+        <button class="btn btn-primary btn-sm" id="btn-edit-hero" onclick="openEditCurrentDoctor()"><i class="fa-solid fa-pen-to-square"></i> Edit Credentials</button>
+        <button class="btn btn-outline-danger btn-sm" data-action-logout title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Sign Out</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-content-grid" style="gap: var(--space-5);">
+      
+      <!-- HERO HEADER CARD -->
+      <div class="doctor-profile-hero">
+        <div class="doctor-hero-grid">
+          <div class="doctor-hero-avatar" id="doc-hero-avatar">DR</div>
+          <div>
+            <div style="display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; margin-bottom: 6px;">
+              <span class="badge" style="background: rgba(45,212,191,0.2); color: #2dd4bf; font-weight: 700;" id="doc-hero-code">DOC-2026-0000</span>
+              <span class="badge" style="background: rgba(255,255,255,0.15); color: white;" id="doc-hero-dept">Department</span>
+              <span class="badge" id="doc-hero-status">Active</span>
+            </div>
+            <h2 style="color: white; margin: 0 0 4px 0; font-size: 1.85rem;" id="doc-hero-name">Loading Doctor...</h2>
+            <div style="color: #5eead4; font-size: 1.05rem; font-weight: 600; margin-bottom: var(--space-3);" id="doc-hero-spec">Specialization Title</div>
+            <div style="display: flex; gap: var(--space-4); font-size: var(--font-size-sm); color: var(--color-slate-300); flex-wrap: wrap;">
+              <span><i class="fa-solid fa-envelope"></i> <span id="doc-hero-email">email@auracare.com</span></span>
+              <span><i class="fa-solid fa-phone"></i> <span id="doc-hero-phone">+1 (555) 000-0000</span></span>
+              <span><i class="fa-solid fa-id-badge"></i> License: <span id="doc-hero-license">MD-00000</span></span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-2); min-width: 180px;">
+            <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid rgba(255,255,255,0.15);">
+              <div class="text-xs" style="color: var(--color-slate-300); text-transform: uppercase;">Consultation Fee</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: #34d399;" id="doc-hero-fee">$0.00</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid rgba(255,255,255,0.15);">
+              <div class="text-xs" style="color: var(--color-slate-300); text-transform: uppercase;">Room / Location</div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: white;" id="doc-hero-room">Suite 000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN 2-COLUMN CSS GRID CONTENT -->
+      <div class="grid-split-60-40" style="gap: var(--space-5);">
+        
+        <!-- LEFT COLUMN: Credentials, Bio, Weekly Timetable, Recent Consultations -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-5);">
+          
+          <!-- CARD 1: Credentials & Bio -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-graduation-cap text-primary"></i> Academic Qualifications & Biography</h4>
+            </div>
+            <div class="card-body">
+              <div style="margin-bottom: var(--space-4);">
+                <label class="text-xs text-muted font-bold text-uppercase">Qualifications & Board Certifications</label>
+                <div class="font-bold text-navy" style="font-size: 1.05rem;" id="doc-qualifications">MD, Board Certified</div>
+              </div>
+              <div style="margin-bottom: var(--space-4);">
+                <label class="text-xs text-muted font-bold text-uppercase">Clinical Biography & Special Interests</label>
+                <p style="color: var(--color-slate-700); line-height: 1.6; margin: 4px 0 0 0;" id="doc-bio-text">
+                  Doctor clinical background and bio...
+                </p>
+              </div>
+              <div class="grid-2-col" style="gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-slate-200);">
+                <div>
+                  <label class="text-xs text-muted font-bold text-uppercase">Clinical Experience</label>
+                  <div class="font-bold text-navy" id="doc-experience">0 years</div>
+                </div>
+                <div>
+                  <label class="text-xs text-muted font-bold text-uppercase">Registration Date</label>
+                  <div class="text-navy" id="doc-registered-date">2026-01-01</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: 7-Day Weekly Timetable -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-calendar-days text-primary"></i> 7-Day Consultation Schedule Matrix</h4>
+              <button class="btn btn-outline btn-sm" onclick="openScheduleEditorModalCurrent()"><i class="fa-regular fa-clock"></i> Modify Shift Hours</button>
+            </div>
+            <div class="card-body">
+              <div class="timetable-grid" id="doc-timetable-grid">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: Recent Patient Consultations -->
+          <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-stethoscope text-primary"></i> Recent Patient Consultations</h4>
+              <span class="text-xs text-muted" id="doc-consultations-count">0 recent records</span>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-responsive" style="border: none;">
+                <table class="table-modern">
+                  <thead>
+                    <tr>
+                      <th>Appointment #</th>
+                      <th>Date & Time</th>
+                      <th>Patient</th>
+                      <th>Reason / Complaint</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="doc-recent-consultations-tbody">
+                    <tr><td colspan="5" class="text-center text-muted" style="padding: var(--space-6);">No recent consultation records.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Department Info, Stats, Status & Admin Actions -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-5);">
+          
+          <!-- CARD 4: Consultation Performance Metrics -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-chart-line text-primary"></i> Clinical Activity Metrics</h4>
+            </div>
+            <div class="card-body">
+              <div class="grid-2-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+                <div style="background: var(--color-slate-50); padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid var(--color-slate-200);">
+                  <div class="text-xs text-muted font-bold text-uppercase">Total Visits</div>
+                  <div class="text-2xl font-extrabold text-navy" id="metric-total-appts">0</div>
+                </div>
+                <div style="background: #f0fdf4; padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid #86efac;">
+                  <div class="text-xs text-muted font-bold text-uppercase">Completed</div>
+                  <div class="text-2xl font-extrabold" style="color: #059669;" id="metric-completed-appts">0</div>
+                </div>
+              </div>
+              <div class="grid-2-col" style="gap: var(--space-3);">
+                <div style="background: #eff6ff; padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid #bfdbfe;">
+                  <div class="text-xs text-muted font-bold text-uppercase">Upcoming Queue</div>
+                  <div class="text-2xl font-extrabold" style="color: #2563eb;" id="metric-upcoming-appts">0</div>
+                </div>
+                <div style="background: #fdf4ff; padding: var(--space-3); border-radius: var(--radius-lg); text-align: center; border: 1px solid #f5d0fe;">
+                  <div class="text-xs text-muted font-bold text-uppercase">Unique Patients</div>
+                  <div class="text-2xl font-extrabold" style="color: #a855f7;" id="metric-unique-patients">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5: Department & Practice Assignment -->
+          <div class="card">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-hospital-user text-primary"></i> Clinical Department & Division</h4>
+            </div>
+            <div class="card-body">
+              <div style="margin-bottom: var(--space-3);">
+                <label class="text-xs text-muted font-bold text-uppercase">Department Name</label>
+                <div class="font-bold text-navy" id="doc-dept-name">Department</div>
+              </div>
+              <div style="margin-bottom: var(--space-3);">
+                <label class="text-xs text-muted font-bold text-uppercase">Department Code</label>
+                <div><code id="doc-dept-code">CARD</code></div>
+              </div>
+              <div>
+                <label class="text-xs text-muted font-bold text-uppercase">Scope of Practice</label>
+                <p class="text-xs text-muted" style="margin: 2px 0 0 0;" id="doc-dept-desc">Department description</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6: Administrative Status & Account Controls -->
+          <div class="card" style="border-top: 4px solid var(--color-primary);">
+            <div class="card-header">
+              <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-shield-halved text-primary"></i> Administrative & Status Controls</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group" style="margin-bottom: var(--space-4);">
+                <label class="form-label font-bold">Quick Faculty Status Switch</label>
+                <select id="select-quick-status" class="form-select" onchange="quickUpdateDoctorStatus(this.value)">
+                  <option value="active">Active (Available on Duty)</option>
+                  <option value="on_leave">On Leave / Rotations</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                <button class="btn btn-outline btn-block" onclick="openEditCurrentDoctor()">
+                  <i class="fa-solid fa-user-pen"></i> Edit Doctor Credentials
+                </button>
+                <button class="btn btn-outline btn-block" onclick="openScheduleEditorModalCurrent()">
+                  <i class="fa-solid fa-calendar-days"></i> Reconfigure Weekly Timetable
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Include Shared Modals from Admin Console -->
+  <div id="modal-doctor-form" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.7); z-index: var(--z-modal); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="width: 100%; max-width: 860px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-2xl);">
+      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; background: var(--color-navy-900); color: white;">
+        <h4 id="doctor-modal-title" style="margin: 0; color: white;"><i class="fa-solid fa-user-doctor text-primary"></i> Edit Doctor Credentials</h4>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeDoctorModal()" style="color: white; border-color: rgba(255,255,255,0.2);">&times;</button>
+      </div>
+      <div class="card-body" style="overflow-y: auto; padding: var(--space-6);">
+        <form id="doctor-form">
+          <input type="hidden" id="form-doctor-id">
+          <div class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group"><label class="form-label">First Name *</label><input type="text" id="form-doc-first-name" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Last Name *</label><input type="text" id="form-doc-last-name" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Phone *</label><input type="tel" id="form-doc-phone" class="form-input" required></div>
+          </div>
+          <div class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group"><label class="form-label">Department *</label><select id="form-doc-dept" class="form-select" required></select></div>
+            <div class="form-group"><label class="form-label">Specialization *</label><input type="text" id="form-doc-specialization" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Qualifications *</label><input type="text" id="form-doc-qualification" class="form-input" required></div>
+          </div>
+          <div class="grid-3-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group"><label class="form-label">Medical License #</label><input type="text" id="form-doc-license" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Experience (Yrs)</label><input type="number" id="form-doc-experience" class="form-input" min="0"></div>
+            <div class="form-group"><label class="form-label">Consultation Fee ($)</label><input type="number" id="form-doc-fee" class="form-input" min="0"></div>
+          </div>
+          <div class="grid-2-col" style="gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="form-group"><label class="form-label">Room / Clinic Location</label><input type="text" id="form-doc-room" class="form-input"></div>
+            <div class="form-group">
+              <label class="form-label">Faculty Status</label>
+              <select id="form-doc-status" class="form-select">
+                <option value="active">Active</option>
+                <option value="on_leave">On Leave</option>
+                <option value="inactive">Inactive</option>
+                <option value="suspended">Suspended</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Doctor Bio</label><textarea id="form-doc-bio" class="form-input" rows="3"></textarea></div>
+        </form>
+      </div>
+      <div class="card-footer" style="display: flex; justify-content: flex-end; gap: var(--space-2); background: var(--color-slate-50);">
+        <button type="button" class="btn btn-outline" onclick="closeDoctorModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitDoctorEdit()"><i class="fa-solid fa-check"></i> Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/responsive.js"></script>
+  <script>
+    let currentDoctorId = null;
+    let currentDoctorData = null;
+    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin', 'doctor', 'receptionist']);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      currentDoctorId = urlParams.get('id') || 1;
+
+      loadDepartments();
+      loadDoctorProfile(currentDoctorId);
+    });
+
+    async function loadDepartments() {
+      try {
+        const res = await API.get('/departments');
+        if (res.success && res.data) {
+          const select = document.getElementById('form-doc-dept');
+          select.innerHTML = '<option value="">Select Department</option>';
+          res.data.forEach(d => {
+            select.innerHTML += `<option value="${d.id}">${d.name} (${d.code})</option>`;
+          });
+        }
+      } catch (_) {}
+    }
+
+    async function loadDoctorProfile(docId) {
+      try {
+        const res = await API.get(`/doctors/${docId}`);
+        if (res.success && res.data) {
+          currentDoctorData = res.data;
+          renderDoctorHero(res.data);
+          renderDoctorDetails(res.data);
+          renderTimetable(res.data.schedules || []);
+          renderMetrics(res.data.stats || {});
+          renderRecentConsultations(res.data.recent_appointments || []);
+        } else {
+          Toast.error('Doctor profile not found.');
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Error loading doctor profile.');
+      }
+    }
+
+    function renderDoctorHero(doc) {
+      const initials = doc.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+      document.getElementById('doc-hero-avatar').textContent = initials;
+      document.getElementById('doc-hero-code').textContent = doc.doctor_code;
+      document.getElementById('doc-hero-dept').textContent = doc.department_name;
+      document.getElementById('doc-hero-name').textContent = doc.name;
+      document.getElementById('doc-hero-spec').textContent = doc.specialization;
+      document.getElementById('doc-hero-email').textContent = doc.email;
+      document.getElementById('doc-hero-phone').textContent = doc.phone || 'N/A';
+      document.getElementById('doc-hero-license').textContent = doc.license_number || 'N/A';
+      document.getElementById('doc-hero-fee').textContent = '$' + parseFloat(doc.consultation_fee).toFixed(2);
+      document.getElementById('doc-hero-room').textContent = doc.room_number || 'Room TBD';
+
+      const statusEl = document.getElementById('doc-hero-status');
+      statusEl.textContent = doc.status.toUpperCase();
+      statusEl.className = `badge ${doc.status === 'active' ? 'badge-success' : (doc.status === 'on_leave' ? 'badge-warning' : 'badge-danger')}`;
+      document.getElementById('select-quick-status').value = doc.status;
+      document.getElementById('topbar-doc-title').textContent = `${doc.name} (${doc.doctor_code})`;
+    }
+
+    function renderDoctorDetails(doc) {
+      document.getElementById('doc-qualifications').textContent = doc.qualification;
+      document.getElementById('doc-bio-text').textContent = doc.bio || 'No clinical biography provided.';
+      document.getElementById('doc-experience').textContent = `${doc.experience_years} years professional practice`;
+      document.getElementById('doc-registered-date').textContent = doc.created_at ? doc.created_at.substring(0, 10) : '2026-01-01';
+
+      document.getElementById('doc-dept-name').textContent = doc.department_name;
+      document.getElementById('doc-dept-code').textContent = doc.department_code;
+      document.getElementById('doc-dept-desc').textContent = doc.department_description || 'Division of ' + doc.department_name;
+    }
+
+    function renderTimetable(schedules) {
+      const container = document.getElementById('doc-timetable-grid');
+      container.innerHTML = '';
+
+      weekDays.forEach(day => {
+        const slot = schedules.find(s => s.day_of_week === day);
+        const isActive = slot && slot.is_active;
+
+        const card = document.createElement('div');
+        card.className = `timetable-day-card ${isActive ? 'active' : 'inactive'}`;
+        card.innerHTML = `
+          <div style="font-weight: 700; font-size: 0.85rem; color: ${isActive ? '#047857' : '#64748b'};">${day.substring(0, 3)}</div>
+          <div style="font-size: 0.72rem; color: var(--color-slate-500); margin: 2px 0;">${day}</div>
+          <div style="margin: 6px 0;">
+            <span class="badge ${isActive ? 'badge-success' : 'badge-light'}" style="font-size: 0.65rem;">
+              ${isActive ? 'ON DUTY' : 'OFF'}
+            </span>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 600; color: var(--color-navy-900);">
+            ${isActive ? slot.start_time.substring(0, 5) + ' - ' + slot.end_time.substring(0, 5) : '—'}
+          </div>
+          <div class="text-xs text-muted" style="font-size: 0.65rem;">
+            ${isActive ? slot.slot_duration_minutes + 'm / ' + slot.max_patients + ' max' : 'No Clinic'}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderMetrics(stats) {
+      document.getElementById('metric-total-appts').textContent = stats.total_appointments || 0;
+      document.getElementById('metric-completed-appts').textContent = stats.completed_consultations || 0;
+      document.getElementById('metric-upcoming-appts').textContent = stats.upcoming_consultations || 0;
+      document.getElementById('metric-unique-patients').textContent = stats.total_unique_patients || 0;
+    }
+
+    function renderRecentConsultations(appointments) {
+      const tbody = document.getElementById('doc-recent-consultations-tbody');
+      document.getElementById('doc-consultations-count').textContent = `${appointments.length} records`;
+
+      if (appointments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: var(--space-6);">No past or upcoming consultations found for this doctor.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      appointments.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><code>${a.appointment_number}</code></td>
+          <td><strong>${a.appointment_date}</strong><br><span class="text-xs text-muted">${a.appointment_time}</span></td>
+          <td>
+            <a href="/admin/patient-profile?id=${a.patient_id}" class="font-bold text-navy" style="text-decoration: none;">
+              ${a.first_name} ${a.last_name}
+            </a><br>
+            <span class="text-xs text-muted">${a.patient_code}</span>
+          </td>
+          <td><span class="text-xs">${a.reason || 'General consultation'}</span></td>
+          <td><span class="badge ${a.status === 'completed' ? 'badge-success' : (a.status === 'confirmed' ? 'badge-primary' : 'badge-warning')}">${a.status}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function quickUpdateDoctorStatus(newStatus) {
+      try {
+        const res = await API.patch(`/doctors/${currentDoctorId}/status`, { status: newStatus });
+        if (res.success) {
+          Toast.success(`Doctor status changed to ${newStatus}`);
+          loadDoctorProfile(currentDoctorId);
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Failed to update status');
+      }
+    }
+
+    function openEditCurrentDoctor() {
+      if (!currentDoctorData) return;
+      const doc = currentDoctorData;
+      document.getElementById('form-doctor-id').value = doc.id;
+      const nameParts = doc.name.replace(/^Dr\.\s*/i, '').split(' ');
+      document.getElementById('form-doc-first-name').value = nameParts[0] || '';
+      document.getElementById('form-doc-last-name').value = nameParts.slice(1).join(' ') || '';
+      document.getElementById('form-doc-phone').value = doc.phone || '';
+      document.getElementById('form-doc-dept').value = doc.department_id;
+      document.getElementById('form-doc-specialization').value = doc.specialization;
+      document.getElementById('form-doc-qualification').value = doc.qualification;
+      document.getElementById('form-doc-license').value = doc.license_number || '';
+      document.getElementById('form-doc-experience').value = doc.experience_years || 0;
+      document.getElementById('form-doc-fee').value = doc.consultation_fee;
+      document.getElementById('form-doc-room').value = doc.room_number || '';
+      document.getElementById('form-doc-status').value = doc.status;
+      document.getElementById('form-doc-bio').value = doc.bio || '';
+      document.getElementById('modal-doctor-form').style.display = 'flex';
+    }
+
+    function closeDoctorModal() {
+      document.getElementById('modal-doctor-form').style.display = 'none';
+    }
+
+    async function submitDoctorEdit() {
+      const payload = {
+        first_name: document.getElementById('form-doc-first-name').value.trim(),
+        last_name: document.getElementById('form-doc-last-name').value.trim(),
+        phone: document.getElementById('form-doc-phone').value.trim(),
+        department_id: parseInt(document.getElementById('form-doc-dept').value, 10),
+        specialization: document.getElementById('form-doc-specialization').value.trim(),
+        qualification: document.getElementById('form-doc-qualification').value.trim(),
+        license_number: document.getElementById('form-doc-license').value.trim(),
+        experience_years: parseInt(document.getElementById('form-doc-experience').value, 10) || 0,
+        consultation_fee: parseFloat(document.getElementById('form-doc-fee').value),
+        room_number: document.getElementById('form-doc-room').value.trim(),
+        status: document.getElementById('form-doc-status').value,
+        bio: document.getElementById('form-doc-bio').value.trim()
+      };
+
+      try {
+        const res = await API.put(`/doctors/${currentDoctorId}`, payload);
+        if (res.success) {
+          Toast.success('Doctor credentials updated successfully!');
+          closeDoctorModal();
+          loadDoctorProfile(currentDoctorId);
+        } else {
+          Toast.error(res.message || 'Update failed.');
+        }
+      } catch (err) {
+        Toast.error(err.message || 'Error updating profile.');
+      }
+    }
+
+    function openScheduleEditorModalCurrent() {
+      window.location.href = `/admin/doctors`;
+    }
+  </script>
+</body>
+</html>

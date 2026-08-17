@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Hospital Directions | AuraCare Medical Center</title>
+  <meta name="description" content="Get in touch with AuraCare patient advocacy, concierge, visiting hours, and emergency directions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="page-shell">
+
+        <!-- Top Bar -->
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-phone" style="color: #2dd4bf;"></i> 24/7 Trauma: <strong>+1 (800) 555-AURA</strong></span>
+        <span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-clock"></i> Open 24/7</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fa-solid fa-location-dot" style="color: #2dd4bf;"></i> 100 Medical Plaza, Metro Health District</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo-grid">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-staff-snake"></i>
+        </div>
+        <div>
+          <span class="brand-name" data-hospital-name>AuraCare</span>
+          <span class="brand-sub">MEDICAL CENTER</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link ">Home</a></li>
+          <li><a href="/about" class="nav-link ">About</a></li>
+          <li><a href="/departments" class="nav-link ">Departments</a></li>
+          <li><a href="/doctors" class="nav-link ">Doctors</a></li>
+          <li><a href="/services" class="nav-link ">Services</a></li>
+          <li><a href="/appointments" class="nav-link ">Appointments</a></li>
+          <li><a href="/emergency" class="nav-link nav-link-emergency "><i class="fa-solid fa-truck-medical"></i> Emergency</a></li>
+          <li><a href="/contact" class="nav-link active">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Live System Health Badge (Pill) -->
+        <div class="health-badge" id="system-health-badge" title="Connecting to backend...">
+          <span class="health-dot" id="health-dot"></span>
+          <span class="health-text" id="health-text">Online • MySQL</span>
+        </div>
+
+        <!-- Auth Action Buttons (Desktop & Tablet) -->
+        <div id="header-auth-actions" class="header-auth-actions">
+          <button class="btn btn-outline-primary btn-sm" data-modal-target="modal-login">
+            <i class="fa-solid fa-user-lock"></i> <span>Sign In</span>
+          </button>
+          <a href="/appointments" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-calendar-check"></i> <span>Book Visit</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars" id="mobile-nav-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer / Dropdown -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="/" class="mobile-nav-link "><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="/about" class="mobile-nav-link "><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+        <li><a href="/departments" class="mobile-nav-link "><i class="fa-solid fa-hospital"></i> Medical Departments</a></li>
+        <li><a href="/doctors" class="mobile-nav-link "><i class="fa-solid fa-user-doctor"></i> Our Physicians</a></li>
+        <li><a href="/services" class="mobile-nav-link "><i class="fa-solid fa-stethoscope"></i> Clinical Services</a></li>
+        <li><a href="/appointments" class="mobile-nav-link "><i class="fa-regular fa-calendar-check"></i> Book Appointment</a></li>
+        <li><a href="/emergency" class="mobile-nav-link text-danger font-bold "><i class="fa-solid fa-truck-medical"></i> Emergency 24/7</a></li>
+        <li><a href="/contact" class="mobile-nav-link active"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+      </ul>
+      <div class="mobile-nav-auth" id="mobile-nav-auth">
+        <button class="btn btn-outline-primary btn-block" data-modal-target="modal-login">
+          <i class="fa-solid fa-user-lock"></i> Staff / Patient Sign In
+        </button>
+        <a href="/appointments" class="btn btn-primary btn-block">
+          <i class="fa-regular fa-calendar-check"></i> Request Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero Header -->
+  <section style="background: var(--gradient-primary); color: white; padding: var(--space-10) var(--space-6);">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <span class="badge badge-primary" style="background: rgba(255,255,255,0.15); color: #2dd4bf; margin-bottom: var(--space-2);"><i class="fa-solid fa-envelope-open-text"></i> PATIENT ADVOCACY & INQUIRIES</span>
+      <h1 style="color: white; font-size: var(--font-size-3xl); margin-bottom: var(--space-2);">Contact Us & Medical Campus</h1>
+      <p style="color: var(--color-slate-200); font-size: var(--font-size-base); max-width: 720px; margin: 0;">Have a question about clinical treatments, visiting hours, or insurance? Our patient advocacy team is here to assist.</p>
+    </div>
+  </section>
+
+  <!-- Main Content Container (CSS Grid) -->
+  <main style="max-width: 1280px; margin: var(--space-8) auto; padding: 0 var(--space-6); min-height: 60vh;">
+    
+    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--space-8); align-items: start;">
+      
+      <!-- INQUIRY FORM CARD (CSS GRID) -->
+      <div class="card" style="padding: var(--space-8);">
+        <div style="margin-bottom: var(--space-5);">
+          <h2 style="font-size: var(--font-size-xl); margin-bottom: var(--space-1); color: var(--color-navy-900);">Send Us a Message</h2>
+          <p class="text-muted" style="font-size: var(--font-size-sm); margin: 0;">Our clinical desk and patient concierge will review your inquiry and respond promptly.</p>
+        </div>
+
+        <form id="contact-form" onsubmit="handleContactSubmit(event)">
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="cf-name">Full Name <span class="text-danger">*</span></label>
+                <input type="text" id="cf-name" name="name" class="form-input" placeholder="e.g. Sophia Martinez" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cf-email">Email Address <span class="text-danger">*</span></label>
+                <input type="email" id="cf-email" name="email" class="form-input" placeholder="e.g. sophia@example.com" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="cf-phone">Phone Number (Optional)</label>
+                <input type="tel" id="cf-phone" name="phone" class="form-input" placeholder="+1 (555) 019-2233">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cf-type">Inquiry Type <span class="text-danger">*</span></label>
+                <select id="cf-type" name="inquiry_type" class="form-select" required>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Appointment Question">Appointment Question</option>
+                  <option value="Billing & Insurance">Billing & Insurance</option>
+                  <option value="Medical Records">Medical Records Request</option>
+                  <option value="Feedback / Complaint">Patient Feedback / Experience</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cf-dept">Clinical Division (Optional)</label>
+              <select id="cf-dept" name="department_id" class="form-select">
+                <option value="">Select Clinical Department (Optional)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cf-subj">Subject <span class="text-danger">*</span></label>
+              <input type="text" id="cf-subj" name="subject" class="form-input" placeholder="e.g. Inquiry regarding diagnostic cardiac catheterization" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cf-msg">Message / Inquiry Details <span class="text-danger">*</span></label>
+              <textarea id="cf-msg" name="message" rows="5" class="form-input" placeholder="Please provide specific details so our medical concierge can assist you accurately..." required></textarea>
+            </div>
+
+            <button type="submit" id="btn-contact-submit" class="btn btn-primary btn-block" style="padding: var(--space-3); font-size: 0.95rem; font-weight: 700;">
+              <i class="fa-solid fa-paper-plane"></i> Send Inquiry to Patient Concierge
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- CAMPUS & VISITING INFORMATION (CSS GRID) -->
+      <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+        
+        <!-- CAMPUS ADDRESS CARD -->
+        <div class="card" style="padding: var(--space-6); border-left: 4px solid var(--color-primary);">
+          <h3 style="font-size: 1.1rem; margin-bottom: var(--space-2); color: var(--color-navy-900);"><i class="fa-solid fa-hospital text-primary"></i> Main Hospital Campus</h3>
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: var(--space-4);">
+            100 Medical Plaza, Metro Health District, CA 90210
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-3); font-size: 0.85rem; color: var(--color-slate-700);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #e0f2fe; color: var(--color-primary); display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.75rem; color: var(--color-slate-400);">CENTRAL DESK</div>
+                <div>+1 (800) 555-0100</div>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.75rem; color: var(--color-slate-400);">DIRECT EMAIL</div>
+                <div>concierge@auracare.com</div>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.75rem; color: var(--color-slate-400);">VISITING HOURS</div>
+                <div>08:00 AM – 08:00 PM Daily</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 24/7 TRAUMA & EMERGENCY ALERT CARD -->
+        <div class="card" style="padding: var(--space-6); background: var(--gradient-primary); color: white;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-2);">
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #2dd4bf;"><i class="fa-solid fa-truck-medical"></i></div>
+            <h4 style="color: white; font-size: 1.05rem; margin: 0;">24/7 Emergency & Trauma</h4>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--color-slate-200); margin-bottom: var(--space-4);">For acute life-threatening chest pain, stroke symptoms, or severe trauma, contact emergency dispatch immediately.</p>
+          <a href="tel:18005552872" class="btn btn-primary btn-sm btn-block" style="background: white; color: var(--color-danger); font-weight: 800;">
+            <i class="fa-solid fa-phone-volume"></i> 24/7 HOTLINE: +1 (800) 555-AURA
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Public Footer -->
+  <footer style="background: var(--color-navy-950); color: var(--color-slate-400); padding: var(--space-12) var(--space-6) var(--space-6); margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: var(--space-8); margin-bottom: var(--space-8);">
+      <div>
+        <div class="brand-logo-grid" style="color: white; margin-bottom: var(--space-3);">
+          <div class="brand-icon-box"><i class="fa-solid fa-hospital"></i></div>
+          <span>AuraCare Medical</span>
+        </div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-slate-400); margin-bottom: var(--space-4);">
+          International healthcare excellence delivering specialized cardiology, neurology, pediatrics, and diagnostic pathology with board-certified physicians.
+        </p>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Quick Links</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/about" style="color: inherit; text-decoration: none;">About Hospital</a></li>
+          <li><a href="/departments" style="color: inherit; text-decoration: none;">Clinical Departments</a></li>
+          <li><a href="/doctors" style="color: inherit; text-decoration: none;">Find a Doctor</a></li>
+          <li><a href="/appointments" style="color: inherit; text-decoration: none;">Book Consultation</a></li>
+          <li><a href="/emergency" style="color: inherit; text-decoration: none;">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Patient Care</h4>
+        <ul style="list-style: none; display: grid; gap: var(--space-2); font-size: var(--font-size-xs);">
+          <li><a href="/pages/login.html" data-modal-target="modal-login" style="color: inherit; text-decoration: none;">Patient Portal</a></li>
+          <li><a href="/register" style="color: inherit; text-decoration: none;">Register Online</a></li>
+          <li><a href="/blog" style="color: inherit; text-decoration: none;">Health Articles</a></li>
+          <li><a href="/faq" style="color: inherit; text-decoration: none;">Patient FAQs</a></li>
+          <li><a href="/contact" style="color: inherit; text-decoration: none;">Contact & Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Emergency & Support</h4>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-300); margin-bottom: var(--space-2);">
+          <strong>24/7 Trauma Hotline:</strong><br>
+          <span style="font-size: var(--font-size-base); color: #2dd4bf; font-weight: bold;">+1 (800) 555-AURA</span>
+        </p>
+        <p style="font-size: var(--font-size-xs); color: var(--color-slate-400);">
+          100 Medical Plaza, Metro Health District<br>
+          Email: concierge@auracare.com
+        </p>
+      </div>
+    </div>
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: var(--font-size-xs); color: var(--color-slate-500);">
+      &copy; 2026 AuraCare Medical Center. True Multi-Page Application (MPA) Architecture.
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/modal.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await API.get('/departments');
+        if (res.success && res.data) {
+          const deptSelect = document.getElementById('cf-dept');
+          res.data.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.id;
+            opt.textContent = `${d.name} Care`;
+            deptSelect.appendChild(opt);
+          });
+        }
+      } catch (_) {}
+    });
+
+    async function handleContactSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-contact-submit');
+      const form = document.getElementById('contact-form');
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim() || undefined,
+        inquiry_type: form.inquiry_type.value,
+        department_id: form.department_id.value ? parseInt(form.department_id.value, 10) : undefined,
+        subject: form.subject.value.trim(),
+        message: form.message.value.trim()
+      };
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting to Concierge...';
+
+      try {
+        const res = await API.post('/contact', payload);
+        Toast.success(res.message || 'Inquiry submitted successfully. We will contact you shortly.');
+        form.reset();
+      } catch (err) {
+        Toast.error(err.message || 'Failed to submit contact message. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Inquiry to Patient Concierge';
+      }
+    }
+  </script>
+  <script src="/js/responsive.js"></script>
+</body>
+</html>
