@@ -174,7 +174,10 @@
       <h4 style="font-size: var(--font-size-base); margin: 0;">Patient Directory & Medical Records</h4>
       <p class="text-muted text-xs" style="margin: 0;">Registered patient profiles and electronic clinical files in MySQL</p>
     </div>
-    <a href="/register" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i> Register Patient</a>
+    <div style="display: flex; gap: var(--space-2);">
+      <button type="button" class="btn btn-primary btn-sm" onclick="openAdminPatientModal()"><i class="fa-solid fa-user-plus"></i> Register Patient</button>
+      <a href="/register" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Public Form</a>
+    </div>
   </div>
   <div class="card-body" style="padding: 0;">
     <div class="table-responsive" style="border: none;">
@@ -185,26 +188,165 @@
     </div>
   </div>
 </div>
+
+<!-- Admin Patient Creation Modal -->
+<div class="modal-backdrop" id="modal-admin-patient" style="display: none;">
+  <div class="modal-dialog" style="max-width: 600px;">
+    <div class="modal-header">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-user-plus"></i></div>
+        <div>
+          <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Register New Patient</h4>
+          <span class="text-xs text-muted">Create authorized patient profile & medical record in MySQL</span>
+        </div>
+      </div>
+      <button class="modal-close" data-modal-close aria-label="Close modal">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: var(--space-6);">
+      <div id="modal-patient-alert" class="hidden mb-4" style="padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--font-size-xs);"></div>
+      <form id="form-admin-create-patient">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Full Name <span class="required">*</span></label>
+            <input type="text" id="adm-pat-name" name="full_name" class="form-input" placeholder="e.g. Zarnab Shah" required minlength="2">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Email Address <span class="required">*</span></label>
+              <input type="email" id="adm-pat-email" name="email" class="form-input" placeholder="patient@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Phone <span class="required">*</span></label>
+              <input type="tel" id="adm-pat-phone" name="phone" class="form-input" placeholder="03212345676 or +923212345676" required>
+            </div>
+          </div>
+          <div class="grid-3-col">
+            <div class="form-group">
+              <label class="form-label">Gender <span class="required">*</span></label>
+              <select id="adm-pat-gender" name="gender" class="form-select" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth <span class="required">*</span></label>
+              <input type="date" id="adm-pat-dob" name="date_of_birth" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Blood Group</label>
+              <select id="adm-pat-blood" name="blood_group" class="form-select">
+                <option value="Unknown">Unknown</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Residential Address</label>
+            <textarea id="adm-pat-address" name="address" rows="2" class="form-textarea" placeholder="Area gate, Gujrat, Punjab, Pakistan"></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
+            <button type="submit" id="btn-adm-pat-submit" class="btn btn-primary btn-block"><i class="fa-solid fa-save"></i> Save Patient</button>
+            <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', async () => {
+  function openAdminPatientModal() {
+    const modal = document.getElementById('modal-admin-patient');
+    if (modal) {
+      modal.style.display = 'flex';
+      const alertBox = document.getElementById('modal-patient-alert');
+      if (alertBox) alertBox.classList.add('hidden');
+    }
+  }
+
+  async function loadAdminPatients() {
     try {
-      const res = await API.get('/admin/users', { role: 'patient', limit: 20 });
+      const res = await API.get('/patients', { limit: 25 });
       if (res.success && res.data) {
         const tbody = document.getElementById('admin-patients-tbody');
         tbody.innerHTML = '';
+        if (res.data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: var(--space-6);">No patients found.</td></tr>';
+          return;
+        }
         res.data.forEach(p => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td><code>${p.patient_code || 'PAT-RECORD'}</code></td>
-            <td><strong>${p.full_name}</strong><br><span class="text-xs text-muted">${p.email}</span></td>
-            <td>Patient Profile</td>
+            <td><strong>${p.full_name}</strong><br><span class="text-xs text-muted">${p.email || 'No email'}</span></td>
+            <td>${p.gender} (${p.age !== null && p.age !== undefined ? p.age + ' yrs' : 'N/A'})</td>
             <td>${p.phone || 'No phone'}</td>
-            <td><a href="/patient/dashboard" class="btn btn-outline btn-sm"><i class="fa-regular fa-eye"></i> EMR Record</a></td>
+            <td><a href="/admin/patient-profile?id=${p.id}" class="btn btn-outline btn-sm"><i class="fa-regular fa-eye"></i> EMR Record</a></td>
           `;
           tbody.appendChild(tr);
         });
       }
     } catch (err) { console.error(err); }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await Auth.guardPage(['super_admin', 'hospital_admin']);
+    loadAdminPatients();
+
+    const form = document.getElementById('form-admin-create-patient');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btn-adm-pat-submit');
+        const originalText = submitBtn.innerHTML;
+        const alertBox = document.getElementById('modal-patient-alert');
+        if (alertBox) alertBox.classList.add('hidden');
+
+        const payload = {
+          full_name: form.full_name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          gender: form.gender.value,
+          date_of_birth: form.date_of_birth.value,
+          blood_group: form.blood_group.value,
+          address: form.address.value.trim() || undefined
+        };
+
+        try {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+          const res = await API.post('/patients', payload);
+          if (res.success) {
+            Toast.success('Patient registered successfully!');
+            document.getElementById('modal-admin-patient').style.display = 'none';
+            form.reset();
+            loadAdminPatients();
+          }
+        } catch (err) {
+          const msg = (err.errors && err.errors.length > 0) ? err.errors.join(' ') : (err.message || 'Validation failed');
+          if (alertBox) {
+            alertBox.classList.remove('hidden');
+            alertBox.style.background = 'var(--color-danger-light)';
+            alertBox.style.color = 'var(--color-danger-hover)';
+            alertBox.style.border = '1px solid var(--color-danger-border)';
+            alertBox.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+          }
+          Toast.error(msg);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    }
   });
 </script>
 
@@ -213,14 +355,10 @@
 
   <div class="toast-container"></div>
   <script src="/js/api.js"></script>
+  <script src="/js/settings.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/modal.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/responsive.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      await Auth.guardPage(['super_admin', 'hospital_admin']);
-    });
-  </script>
 </body>
 </html>
