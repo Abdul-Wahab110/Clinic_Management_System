@@ -81,14 +81,12 @@ async function getDepartments(filters = {}, pagination = {}) {
         u_head.full_name as head_doctor_name,
         d_head.doctor_code as head_doctor_code,
         d_head.specialization as head_doctor_specialization,
-        COUNT(DISTINCT doc.id) as doctors_count,
-        COUNT(DISTINCT CASE WHEN doc.status = 'active' THEN doc.id END) as active_doctors_count
+        (SELECT COUNT(*) FROM doctors doc WHERE doc.department_id = dept.id) as doctors_count,
+        (SELECT COUNT(*) FROM doctors doc WHERE doc.department_id = dept.id AND doc.status = 'active') as active_doctors_count
      FROM departments dept
      LEFT JOIN doctors d_head ON dept.head_doctor_id = d_head.id
      LEFT JOIN users u_head ON d_head.user_id = u_head.id
-     LEFT JOIN doctors doc ON doc.department_id = dept.id
      ${whereClause}
-     GROUP BY dept.id
      ORDER BY ${sortColumn} ${order}
      LIMIT ? OFFSET ?`,
     [...params, limit, offset]

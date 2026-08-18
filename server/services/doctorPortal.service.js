@@ -252,7 +252,7 @@ async function getDoctorPatients(user, query = {}) {
      LEFT JOIN appointments a ON a.patient_id = p.id AND a.doctor_id = ?
      LEFT JOIN prescription_orders po ON po.patient_id = p.id AND po.doctor_id = ?
      WHERE ${conditions.join(' AND ')}
-     GROUP BY p.id
+     GROUP BY p.id, p.patient_code, p.first_name, p.last_name, p.gender, p.date_of_birth, p.blood_group, p.phone, p.email, p.address, p.allergies, p.medical_history, p.emergency_contact_phone
      ORDER BY last_visit_date DESC, p.last_name ASC`,
     [doctor.id, doctor.id, doctor.id, ...params]
   );
