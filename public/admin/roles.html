@@ -169,425 +169,86 @@
     <main class="dashboard-content-grid">
       
 <div class="card" style="margin-bottom: var(--space-6);">
-  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
-    <div>
-      <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-users-gear text-primary"></i> Configured System Roles</h4>
-      <p class="text-muted text-xs" style="margin: 0;">Authorized access levels and active account assignments</p>
-    </div>
-    <button class="btn btn-primary btn-sm" onclick="openAddRoleModal()"><i class="fa-solid fa-plus"></i> Create New Custom Role</button>
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h4 style="font-size: var(--font-size-base); margin: 0;">Configured System Roles</h4>
   </div>
   <div class="card-body">
-    <div class="grid-cards-auto" id="admin-roles-grid" style="gap: var(--space-4);">
-      <p class="text-muted">Loading roles from database...</p>
+    <div class="grid-cards-auto" id="admin-roles-grid">
+      <p class="text-muted">Loading roles...</p>
     </div>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
+  <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
-      <h4 style="font-size: var(--font-size-base); margin: 0;"><i class="fa-solid fa-shield-halved text-primary"></i> Role-Based Access Control Matrix (RBAC)</h4>
-      <p class="text-muted text-xs" style="margin: 0;">Configure granular system capabilities per clinical & administrative role in MySQL</p>
-    </div>
-    <div style="display: flex; align-items: center; gap: var(--space-3);">
-      <span id="matrix-save-status" class="badge badge-success" style="font-size: 0.75rem;"><i class="fa-solid fa-circle-check"></i> All Saved</span>
-      <button type="button" id="btn-save-all-matrix" class="btn btn-primary btn-sm" onclick="saveAllMatrixChanges()"><i class="fa-solid fa-floppy-disk"></i> Save All Changes</button>
-      <button type="button" class="btn btn-outline btn-sm" onclick="loadRolesAndMatrix()"><i class="fa-solid fa-rotate"></i> Reset</button>
+      <h4 style="font-size: var(--font-size-base); margin: 0;">Interactive Role-Permission Matrix (RBAC)</h4>
+      <p class="text-muted text-xs" style="margin: 0;">Real-time toggle and save permissions in MySQL</p>
     </div>
   </div>
-
-  <!-- Filters & Search Toolbar -->
-  <div style="padding: var(--space-4) var(--space-6); background: var(--color-slate-50); border-bottom: 1px solid var(--color-slate-200); display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center;">
-    <div style="flex: 1; min-width: 220px; position: relative;">
-      <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 11px; color: var(--color-slate-400);"></i>
-      <input type="text" id="matrix-search" class="form-input" style="padding-left: 36px;" placeholder="Search permissions (e.g. appointments.create, view, delete)..." oninput="filterMatrix()">
-    </div>
-    <div style="min-width: 180px;">
-      <select id="matrix-module-filter" class="form-select" onchange="filterMatrix()">
-        <option value="all">All Modules (All Areas)</option>
-      </select>
-    </div>
-    <div style="min-width: 180px;">
-      <select id="matrix-role-filter" class="form-select" onchange="filterMatrixRoles()">
-        <option value="all">All Roles View</option>
-      </select>
-    </div>
-  </div>
-
   <div class="card-body" style="padding: 0;">
-    <div class="table-responsive" style="max-height: 600px; overflow-y: auto; overflow-x: auto; border: none; position: relative;">
-      <table class="table-modern rbac-matrix-table" id="admin-matrix-table" style="min-width: 1100px; border-collapse: separate; border-spacing: 0;">
-        <thead id="admin-matrix-thead" style="position: sticky; top: 0; z-index: 10; background: var(--color-navy-900); color: white;">
-          <tr>
-            <th style="min-width: 320px; position: sticky; left: 0; z-index: 11; background: var(--color-navy-900);">Permission & Clinical Scope</th>
-          </tr>
-        </thead>
-        <tbody id="admin-matrix-tbody">
-          <tr><td colspan="10" class="text-center text-muted" style="padding: var(--space-8);"><i class="fa-solid fa-spinner fa-spin"></i> Loading permissions from MySQL...</td></tr>
-        </tbody>
+    <div class="table-responsive" style="max-height: 500px; overflow-y: auto; border: none;">
+      <table class="table-modern" id="admin-matrix-table">
+        <thead id="admin-matrix-thead"><tr><th>Permission / Module</th></tr></thead>
+        <tbody id="admin-matrix-tbody"><tr><td class="text-center text-muted" style="padding: var(--space-6);">Building matrix...</td></tr></tbody>
       </table>
     </div>
   </div>
 </div>
-
-<!-- Add Role Modal -->
-<div class="modal-backdrop" id="modal-add-role" style="display: none;">
-  <div class="modal-dialog" style="max-width: 500px;">
-    <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-shield-halved"></i></div>
-        <div>
-          <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Create Custom System Role</h4>
-          <span class="text-xs text-muted">Define new functional staff or administrative tier</span>
-        </div>
-      </div>
-      <button class="modal-close" data-modal-close>&times;</button>
-    </div>
-    <div class="modal-body" style="padding: var(--space-6);">
-      <form id="form-add-role">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Role Display Name <span class="required">*</span></label>
-            <input type="text" id="role-display-name" name="display_name" class="form-input" placeholder="e.g. Senior Medical Registrar" required minlength="2">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Role Code Identifier <span class="required">*</span></label>
-            <input type="text" id="role-name" name="name" class="form-input" placeholder="e.g. senior_registrar" required minlength="2">
-            <span class="form-help">Lowercase alphanumeric identifier with underscores.</span>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Description</label>
-            <textarea id="role-desc" name="description" rows="2" class="form-textarea" placeholder="Clinical responsibilities and system scope..."></textarea>
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
-            <button type="submit" id="btn-add-role-submit" class="btn btn-primary btn-block"><i class="fa-solid fa-save"></i> Save Role</button>
-            <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<style>
-  .rbac-matrix-table th, .rbac-matrix-table td {
-    padding: 10px 14px;
-    vertical-align: middle;
-  }
-  .rbac-matrix-table td.sticky-col, .rbac-matrix-table th.sticky-col {
-    position: sticky;
-    left: 0;
-    z-index: 5;
-    background: white;
-    border-right: 2px solid var(--color-slate-200);
-    box-shadow: 2px 0 6px rgba(0,0,0,0.03);
-  }
-  .rbac-matrix-table thead th.sticky-col {
-    z-index: 15;
-    background: var(--color-navy-900);
-  }
-  .rbac-cb-wrapper {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  .rbac-cb-wrapper input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--color-primary);
-  }
-  .rbac-cb-wrapper input[type="checkbox"]:disabled {
-    cursor: not-allowed;
-    opacity: 0.8;
-  }
-  .module-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: var(--color-slate-200);
-    color: var(--color-slate-700);
-  }
-</style>
-
 <script>
-  let cachedMatrixData = null;
-  let unsavedChanges = false;
-
   document.addEventListener('DOMContentLoaded', async () => {
-    await Auth.guardPage(['super_admin', 'hospital_admin']);
     loadRolesAndMatrix();
-
-    // Wire Add Role form
-    const addRoleForm = document.getElementById('form-add-role');
-    if (addRoleForm) {
-      addRoleForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('btn-add-role-submit');
-        const orig = submitBtn.innerHTML;
-        try {
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-          const payload = {
-            display_name: addRoleForm.display_name.value.trim(),
-            name: addRoleForm.name.value.trim(),
-            description: addRoleForm.description.value.trim() || undefined
-          };
-          const res = await API.post('/admin/roles', payload);
-          if (res.success) {
-            Toast.success('New role created successfully!');
-            document.getElementById('modal-add-role').style.display = 'none';
-            addRoleForm.reset();
-            loadRolesAndMatrix();
-          }
-        } catch (err) {
-          Toast.error(err.message || 'Failed to create role.');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = orig;
-        }
-      });
-    }
   });
-
-  function openAddRoleModal() {
-    const modal = document.getElementById('modal-add-role');
-    if (modal) modal.style.display = 'flex';
-  }
-
-  function setUnsavedState(hasUnsaved) {
-    unsavedChanges = hasUnsaved;
-    const statusEl = document.getElementById('matrix-save-status');
-    if (!statusEl) return;
-    if (hasUnsaved) {
-      statusEl.className = 'badge badge-warning';
-      statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Unsaved Changes';
-    } else {
-      statusEl.className = 'badge badge-success';
-      statusEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> All Saved';
-    }
-  }
 
   async function loadRolesAndMatrix() {
     try {
       const res = await API.get('/admin/matrix');
       if (res.success && res.data) {
-        cachedMatrixData = res.data;
-        setUnsavedState(false);
-        renderRolesGrid(res.data.roles);
-        populateModuleFilter(res.data.permissions);
-        populateRoleFilter(res.data.roles);
-        renderMatrixTable(res.data);
+        const { roles, permissions, matrix } = res.data;
+        const grid = document.getElementById('admin-roles-grid');
+        grid.innerHTML = '';
+        roles.forEach(r => {
+          const c = document.createElement('div');
+          c.className = 'card';
+          c.style.padding = 'var(--space-4)';
+          c.innerHTML = `
+            <h5 style="margin-bottom: 2px;">${r.display_name}</h5>
+            <code style="font-size: 0.75rem; color: var(--color-slate-400);">${r.name}</code>
+            <p class="text-xs text-muted" style="margin: var(--space-2) 0;">${r.description || 'System Role'}</p>
+            <div style="font-size: 0.75rem; font-weight: bold; color: var(--color-primary);">${r.permission_count || 0} permissions assigned</div>
+          `;
+          grid.appendChild(c);
+        });
+
+        // Matrix Header
+        const thead = document.getElementById('admin-matrix-thead');
+        thead.innerHTML = `<tr><th>Permission Code</th>${roles.map(r => `<th style="text-align: center;">${r.display_name}<br><button class="btn btn-outline-primary btn-sm" style="font-size: 0.65rem; padding: 2px 4px; margin-top: 4px;" onclick="saveMatrix(${r.id})">Save</button></th>`).join('')}</tr>`;
+
+        // Matrix Body
+        const tbody = document.getElementById('admin-matrix-tbody');
+        tbody.innerHTML = '';
+        permissions.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${p.code}</code><br><span class="text-xs text-muted">${p.description}</span></td>
+            ${matrix.map(rm => {
+              const isG = rm.permissions.some(rp => rp.code === p.code && rp.granted);
+              return `<td style="text-align: center;"><input type="checkbox" class="matrix-cb" data-role-id="${rm.roleId}" data-perm-id="${p.id}" ${isG ? 'checked' : ''} ${rm.name === 'super_admin' ? 'disabled' : ''}></td>`;
+            }).join('')}
+          `;
+          tbody.appendChild(tr);
+        });
       }
-    } catch (err) {
-      console.error(err);
-      Toast.error('Failed to load permissions: ' + err.message);
-    }
+    } catch (err) { console.error(err); }
   }
 
-  function renderRolesGrid(roles) {
-    const grid = document.getElementById('admin-roles-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    roles.forEach(r => {
-      const isSuper = r.name === 'super_admin';
-      const c = document.createElement('div');
-      c.className = 'card';
-      c.style.padding = 'var(--space-4)';
-      c.style.borderLeft = isSuper ? '4px solid #0d9488' : '4px solid var(--color-slate-300)';
-      c.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
-          <h5 style="margin: 0; font-size: var(--font-size-sm);">${r.display_name}</h5>
-          ${isSuper ? '<span class="badge badge-success" style="font-size: 0.65rem;">Universal</span>' : `<span class="badge" style="font-size: 0.65rem; background: var(--color-slate-100);">${r.user_count || 0} users</span>`}
-        </div>
-        <code style="font-size: 0.72rem; color: var(--color-slate-400); display: block; margin-bottom: 6px;">${r.name}</code>
-        <p class="text-xs text-muted" style="margin: 0 0 8px 0; min-height: 28px; line-height: 1.4;">${r.description || 'System Access Role'}</p>
-        <div style="font-size: 0.72rem; font-weight: 700; color: var(--color-primary);">
-          <i class="fa-solid fa-key"></i> ${isSuper ? 'All Capabilities Enabled' : `${r.permission_count || 0} active permissions`}
-        </div>
-      `;
-      grid.appendChild(c);
-    });
-  }
-
-  function populateModuleFilter(permissions) {
-    const filter = document.getElementById('matrix-module-filter');
-    if (!filter) return;
-    const modules = Array.from(new Set(permissions.map(p => p.module))).sort();
-    filter.innerHTML = '<option value="all">All Modules (All Areas)</option>';
-    modules.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = m.toUpperCase() + ` Module (${permissions.filter(p=>p.module===m).length})`;
-      filter.appendChild(opt);
-    });
-  }
-
-  function populateRoleFilter(roles) {
-    const filter = document.getElementById('matrix-role-filter');
-    if (!filter) return;
-    filter.innerHTML = '<option value="all">All Roles View</option>';
-    roles.forEach(r => {
-      const opt = document.createElement('option');
-      opt.value = r.id;
-      opt.textContent = r.display_name;
-      filter.appendChild(opt);
-    });
-  }
-
-  function renderMatrixTable(data) {
-    const { roles, permissions, matrix } = data;
-    const thead = document.getElementById('admin-matrix-thead');
-    const tbody = document.getElementById('admin-matrix-tbody');
-    if (!thead || !tbody) return;
-
-    // Header Row
-    thead.innerHTML = `
-      <tr>
-        <th class="sticky-col" style="min-width: 320px;">
-          <span style="font-weight: 700; font-size: var(--font-size-sm);">Permission & Capability Scope</span>
-        </th>
-        ${roles.map(r => `
-          <th class="role-col-${r.id}" style="text-align: center; min-width: 110px;">
-            <div style="font-weight: 700; font-size: 0.8rem; white-space: nowrap;">${r.display_name}</div>
-            <code style="font-size: 0.65rem; color: #99f6e4; display: block;">${r.name}</code>
-            ${r.name === 'super_admin' 
-              ? '<span class="badge" style="background: rgba(45,212,191,0.2); color: #2dd4bf; font-size: 0.6rem; padding: 2px 6px; margin-top: 4px; display: inline-block;">All Granted</span>'
-              : `<button type="button" class="btn btn-outline btn-sm" style="font-size: 0.65rem; padding: 2px 6px; margin-top: 4px; color: white; border-color: rgba(255,255,255,0.25);" onclick="saveRolePermissions(${r.id}, this)"><i class="fa-solid fa-save"></i> Save</button>`
-            }
-          </th>
-        `).join('')}
-      </tr>
-    `;
-
-    // Body Rows
-    tbody.innerHTML = '';
-    permissions.forEach(p => {
-      const tr = document.createElement('tr');
-      tr.className = 'matrix-row';
-      tr.setAttribute('data-module', p.module);
-      tr.setAttribute('data-code', p.code);
-      tr.setAttribute('data-desc', (p.description || '').toLowerCase());
-
-      const cells = roles.map(r => {
-        const rm = matrix.find(m => m.roleId === r.id);
-        const isGranted = rm ? rm.permissions.some(rp => rp.code === p.code && rp.granted) : false;
-        const isSuper = r.name === 'super_admin';
-
-        return `
-          <td class="role-col-${r.id}" style="text-align: center;">
-            <label class="rbac-cb-wrapper" title="${r.display_name}: ${p.code}">
-              <input type="checkbox" 
-                     class="matrix-cb role-cb-${r.id}" 
-                     data-role-id="${r.id}" 
-                     data-perm-id="${p.id}" 
-                     ${isGranted || isSuper ? 'checked' : ''} 
-                     ${isSuper ? 'disabled title="Super Admin automatically retains universal privileges"' : 'onchange="setUnsavedState(true)"'}>
-            </label>
-          </td>
-        `;
-      }).join('');
-
-      tr.innerHTML = `
-        <td class="sticky-col">
-          <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: 2px;">
-            <span class="module-badge">${p.module}</span>
-            <code style="font-weight: 700; color: var(--color-navy-950); font-size: 0.78rem;">${p.code}</code>
-          </div>
-          <div class="text-xs text-muted" style="line-height: 1.3;">${p.description || 'System operation authorization'}</div>
-        </td>
-        ${cells}
-      `;
-
-      tbody.appendChild(tr);
-    });
-  }
-
-  function filterMatrix() {
-    const search = (document.getElementById('matrix-search')?.value || '').toLowerCase().trim();
-    const selectedMod = document.getElementById('matrix-module-filter')?.value || 'all';
-
-    document.querySelectorAll('#admin-matrix-tbody tr.matrix-row').forEach(tr => {
-      const mod = tr.getAttribute('data-module');
-      const code = tr.getAttribute('data-code').toLowerCase();
-      const desc = tr.getAttribute('data-desc').toLowerCase();
-
-      const matchesSearch = !search || code.includes(search) || desc.includes(search) || mod.toLowerCase().includes(search);
-      const matchesMod = selectedMod === 'all' || mod === selectedMod;
-
-      tr.style.display = (matchesSearch && matchesMod) ? '' : 'none';
-    });
-  }
-
-  function filterMatrixRoles() {
-    const selectedRoleId = document.getElementById('matrix-role-filter')?.value || 'all';
-    if (!cachedMatrixData) return;
-
-    cachedMatrixData.roles.forEach(r => {
-      const shouldShow = selectedRoleId === 'all' || selectedRoleId === String(r.id);
-      document.querySelectorAll(`.role-col-${r.id}`).forEach(el => {
-        el.style.display = shouldShow ? '' : 'none';
-      });
-    });
-  }
-
-  async function saveRolePermissions(roleId, btnEl) {
+  async function saveMatrix(roleId) {
     const cbs = document.querySelectorAll(`input.matrix-cb[data-role-id="${roleId}"]:checked`);
     const pIds = Array.from(cbs).map(c => parseInt(c.getAttribute('data-perm-id'), 10));
-    const orig = btnEl ? btnEl.innerHTML : '';
-    if (btnEl) {
-      btnEl.disabled = true;
-      btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-    }
-
     try {
-      const res = await API.put(`/admin/roles/${roleId}/permissions`, { permission_ids: pIds });
-      if (res.success) {
-        Toast.success('Role permissions updated successfully.');
-        loadRolesAndMatrix();
-      }
-    } catch (err) {
-      Toast.error(err.message || 'Failed to save permissions.');
-    } finally {
-      if (btnEl) {
-        btnEl.disabled = false;
-        btnEl.innerHTML = orig;
-      }
-    }
-  }
-
-  async function saveAllMatrixChanges() {
-    if (!cachedMatrixData) return;
-    const submitBtn = document.getElementById('btn-save-all-matrix');
-    const orig = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Matrix...';
-
-    const assignments = {};
-    cachedMatrixData.roles.forEach(r => {
-      if (r.name === 'super_admin') return;
-      const cbs = document.querySelectorAll(`input.matrix-cb[data-role-id="${r.id}"]:checked`);
-      assignments[r.id] = Array.from(cbs).map(c => parseInt(c.getAttribute('data-perm-id'), 10));
-    });
-
-    try {
-      const res = await API.put('/admin/matrix', { assignments });
-      if (res.success) {
-        Toast.success('Full RBAC Permission Matrix saved to MySQL successfully.');
-        setUnsavedState(false);
-        loadRolesAndMatrix();
-      }
-    } catch (err) {
-      Toast.error(err.message || 'Matrix update failed.');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = orig;
-    }
+      const res = await API.put('/admin/roles/' + roleId + '/permissions', { permission_ids: pIds });
+      if (res.success) Toast.success('Role permissions saved to MySQL.');
+    } catch (err) { Toast.error(err.message || 'Save failed.'); }
   }
 </script>
 
@@ -596,10 +257,14 @@
 
   <div class="toast-container"></div>
   <script src="/js/api.js"></script>
-  <script src="/js/settings.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/modal.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['super_admin', 'hospital_admin']);
+    });
+  </script>
 </body>
 </html>

@@ -85,10 +85,34 @@ async function initializeDatabase() {
       await dbConnection.query('UPDATE users SET password_hash = ?', [demoPasswordHash]);
       console.log(`[DB INIT] Seed users configured with default password: Clinic2026!`);
     } else {
-      console.log(`[DB INIT] Database "${database}" already has ${existingTables.length} tables. Skipping schema creation.`);
+      console.log(`[DB INIT] Database "${database}" has ${existingTables.length} tables. Checking content...`);
     }
 
-    console.log(`[DB INIT] Seed users configured with default password: Clinic2026!`);
+    // Auto-seed missing core data if tables exist but are empty
+    try {
+      const [deptCheck] = await dbConnection.query('SELECT COUNT(*) as count FROM departments');
+      if (deptCheck[0].count === 0) {
+        console.log('[DB INIT] Departments table is empty. Seeding departments...');
+        const migrateDept = require('./migrateDepartmentModule');
+        await migrateDept();
+      }
+    } catch (e) {
+      console.warn('[DB INIT] Notice on department auto-seed:', e.message);
+    }
+
+    try {
+      const migrateDoc = require('./migrateDoctorModule');
+      await migrateDoc();
+    } catch (e) {
+      console.warn('[DB INIT] Notice on doctor auto-seed:', e.message);
+    }
+
+    try {
+      const migrateSettings = require('./migrateSettingsModule');
+      await migrateSettings();
+    } catch (e) {
+      console.warn('[DB INIT] Notice on settings auto-seed:', e.message);
+    }
 
     // Verify row counts
     const [roleRows] = await dbConnection.query('SELECT COUNT(*) as count FROM roles');

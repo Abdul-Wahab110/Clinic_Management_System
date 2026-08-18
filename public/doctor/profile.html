@@ -130,22 +130,15 @@
     <main class="dashboard-content-grid">
       
 <div class="doctor-profile-hero" style="background: linear-gradient(135deg, var(--color-navy-950) 0%, var(--color-navy-900) 60%, var(--color-primary-dark) 100%); color: white; border-radius: var(--radius-2xl); padding: var(--space-8); margin-bottom: var(--space-6); box-shadow: var(--shadow-xl);">
-  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4);">
-    <div style="display: grid; grid-template-columns: auto 1fr; gap: var(--space-6); align-items: center;">
-      <div style="width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: var(--color-navy-950); font-size: 2.2rem; font-weight: 800; display: grid; place-items: center; border: 3px solid rgba(255,255,255,0.3);" id="doc-my-avatar">DR</div>
-      <div>
-        <div style="display: flex; gap: var(--space-2); align-items: center; margin-bottom: 4px;">
-          <span class="badge" style="background: rgba(45,212,191,0.25); color: #2dd4bf; font-weight: bold;" id="doc-my-code">DOC-2026</span>
-          <span class="badge badge-success">Active Faculty</span>
-        </div>
-        <h2 style="color: white; margin: 0 0 4px 0;" id="doc-my-name">Loading Doctor Profile...</h2>
-        <div style="color: #5eead4; font-weight: 600;" id="doc-my-spec">Specialization Title</div>
-        <div style="font-size: 0.8rem; color: var(--color-slate-300); margin-top: 4px;" id="doc-my-contact"><i class="fa-solid fa-phone"></i> -- | <i class="fa-solid fa-envelope"></i> --</div>
+  <div style="display: grid; grid-template-columns: auto 1fr; gap: var(--space-6); align-items: center;">
+    <div style="width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: var(--color-navy-950); font-size: 2.2rem; font-weight: 800; display: grid; place-items: center; border: 3px solid rgba(255,255,255,0.3);" id="doc-my-avatar">DR</div>
+    <div>
+      <div style="display: flex; gap: var(--space-2); align-items: center; margin-bottom: 4px;">
+        <span class="badge" style="background: rgba(45,212,191,0.25); color: #2dd4bf; font-weight: bold;" id="doc-my-code">DOC-2026-0001</span>
+        <span class="badge badge-success">Active Faculty</span>
       </div>
-    </div>
-    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
-      <button class="btn btn-primary btn-sm" onclick="openDocEditModal()"><i class="fa-solid fa-user-pen"></i> Edit Profile</button>
-      <button class="btn btn-outline btn-sm" style="color: white; border-color: rgba(255,255,255,0.3);" onclick="openChangePasswordModal()"><i class="fa-solid fa-key"></i> Change Password</button>
+      <h2 style="color: white; margin: 0 0 4px 0;" id="doc-my-name">Loading Doctor Profile...</h2>
+      <div style="color: #5eead4; font-weight: 600;" id="doc-my-spec">Specialization Title</div>
     </div>
   </div>
 </div>
@@ -159,8 +152,8 @@
         <div class="font-bold text-navy" id="doc-my-qual">MD, Board Certified</div>
       </div>
       <div style="margin-bottom: var(--space-4);">
-        <label class="text-xs text-muted font-bold text-uppercase">Experience & Practice</label>
-        <div class="font-bold text-navy" id="doc-my-exp">0 Years of Practice</div>
+        <label class="text-xs text-muted font-bold text-uppercase">Medical License Number</label>
+        <div><code id="doc-my-license">MD-00000</code></div>
       </div>
       <div style="margin-bottom: var(--space-4);">
         <label class="text-xs text-muted font-bold text-uppercase">Clinical Biography</label>
@@ -187,218 +180,25 @@
     </div>
   </div>
 </div>
-
-<!-- Edit Profile Modal -->
-<div class="modal-backdrop" id="modal-doc-edit" style="display: none;">
-  <div class="modal-dialog" style="max-width: 600px;">
-    <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-user-pen"></i></div>
-        <div>
-          <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Update Physician Profile</h4>
-          <span class="text-xs text-muted">Modify personal information and clinical credentials</span>
-        </div>
-      </div>
-      <button class="modal-close" data-modal-close>&times;</button>
-    </div>
-    <div class="modal-body" style="padding: var(--space-6);">
-      <form id="form-doc-edit">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Full Name <span class="required">*</span></label>
-            <input type="text" id="edit-doc-name" name="full_name" class="form-input" required minlength="2">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Contact Phone</label>
-            <input type="text" id="edit-doc-phone" name="phone" class="form-input" placeholder="+1 (555) 000-0000">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Specialization</label>
-            <input type="text" id="edit-doc-spec" name="specialization" class="form-input">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Qualifications & Degrees</label>
-            <input type="text" id="edit-doc-qual" name="qualification" class="form-input">
-          </div>
-          <div class="form-row-2">
-            <div class="form-group">
-              <label class="form-label">Room / Clinic Suite</label>
-              <input type="text" id="edit-doc-room" name="room_number" class="form-input">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Experience (Years)</label>
-              <input type="number" id="edit-doc-exp" name="experience_years" class="form-input" min="0" max="60">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Clinical Biography</label>
-            <textarea id="edit-doc-bio" name="bio" rows="3" class="form-textarea" placeholder="Summary of clinical experience, interests, and background..."></textarea>
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
-            <button type="submit" id="btn-save-doc-profile" class="btn btn-primary btn-block"><i class="fa-solid fa-floppy-disk"></i> Save Profile Changes</button>
-            <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Change Password Modal -->
-<div class="modal-backdrop" id="modal-change-pwd" style="display: none;">
-  <div class="modal-dialog" style="max-width: 460px;">
-    <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <div class="brand-icon-box" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-lock"></i></div>
-        <div>
-          <h4 class="modal-title" style="margin: 0; font-size: var(--font-size-base);">Change Account Password</h4>
-          <span class="text-xs text-muted">Update your secure login credentials</span>
-        </div>
-      </div>
-      <button class="modal-close" data-modal-close>&times;</button>
-    </div>
-    <div class="modal-body" style="padding: var(--space-6);">
-      <form id="form-change-pwd">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Current Password <span class="required">*</span></label>
-            <input type="password" id="pwd-current" name="current_password" class="form-input" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">New Password <span class="required">*</span></label>
-            <input type="password" id="pwd-new" name="new_password" class="form-input" required minlength="8">
-            <span class="form-help">Minimum 8 characters with upper, lower, digit, and special char.</span>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Confirm New Password <span class="required">*</span></label>
-            <input type="password" id="pwd-confirm" name="confirm_password" class="form-input" required minlength="8">
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); margin-top: var(--space-2);">
-            <button type="submit" id="btn-submit-pwd" class="btn btn-primary btn-block"><i class="fa-solid fa-key"></i> Update Password</button>
-            <button type="button" class="btn btn-outline" data-modal-close><i class="fa-solid fa-xmark"></i> Cancel</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
-  let currentProfile = null;
-
   document.addEventListener('DOMContentLoaded', async () => {
-    await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
-    loadDoctorProfile();
-    wireForms();
-  });
-
-  async function loadDoctorProfile() {
     try {
       const prof = await Auth.fetchProfile();
-      if (prof) {
-        currentProfile = prof;
-        const doc = prof.doctor || {};
+      if (prof && prof.doctor) {
+        const doc = prof.doctor;
         document.getElementById('doc-my-name').textContent = prof.fullName;
         document.getElementById('doc-my-avatar').textContent = prof.fullName.split(' ').map(n=>n[0]).join('').substring(0,2);
-        document.getElementById('doc-my-code').textContent = doc.doctor_code || ('DOC-' + prof.id);
+        document.getElementById('doc-my-code').textContent = doc.doctor_code || 'DOC-2026';
         document.getElementById('doc-my-spec').textContent = doc.specialization || 'Consultant Physician';
-        document.getElementById('doc-my-qual').textContent = doc.qualification || 'MD / MBBS';
-        document.getElementById('doc-my-exp').textContent = (doc.experience_years || 0) + ' Years in Clinical Practice';
+        document.getElementById('doc-my-qual').textContent = doc.qualification || 'MD';
+        document.getElementById('doc-my-license').textContent = doc.license_number || 'MD-ACTIVE';
         document.getElementById('doc-my-bio').textContent = doc.bio || 'General clinical practice.';
         document.getElementById('doc-my-dept').textContent = doc.department || 'Clinical Medicine';
         document.getElementById('doc-my-room').textContent = doc.room_number || 'Consultation Suite';
         document.getElementById('doc-my-fee').textContent = '$' + (parseFloat(doc.consultation_fee) || 0).toFixed(2);
-        document.getElementById('doc-my-contact').innerHTML = `<i class="fa-solid fa-phone"></i> ${prof.phone || 'N/A'} | <i class="fa-solid fa-envelope"></i> ${prof.email}`;
       }
     } catch (err) { console.error(err); }
-  }
-
-  function openDocEditModal() {
-    if (!currentProfile) return;
-    const doc = currentProfile.doctor || {};
-    document.getElementById('edit-doc-name').value = currentProfile.fullName || '';
-    document.getElementById('edit-doc-phone').value = currentProfile.phone || '';
-    document.getElementById('edit-doc-spec').value = doc.specialization || '';
-    document.getElementById('edit-doc-qual').value = doc.qualification || '';
-    document.getElementById('edit-doc-room').value = doc.room_number || '';
-    document.getElementById('edit-doc-exp').value = doc.experience_years || 0;
-    document.getElementById('edit-doc-bio').value = doc.bio || '';
-    document.getElementById('modal-doc-edit').style.display = 'flex';
-  }
-
-  function openChangePasswordModal() {
-    document.getElementById('form-change-pwd').reset();
-    document.getElementById('modal-change-pwd').style.display = 'flex';
-  }
-
-  function wireForms() {
-    // Edit Profile form
-    const editForm = document.getElementById('form-doc-edit');
-    if (editForm) {
-      editForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('btn-save-doc-profile');
-        const orig = submitBtn.innerHTML;
-        try {
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-          const payload = {
-            full_name: editForm.full_name.value.trim(),
-            phone: editForm.phone.value.trim() || undefined,
-            specialization: editForm.specialization.value.trim() || undefined,
-            qualification: editForm.qualification.value.trim() || undefined,
-            room_number: editForm.room_number.value.trim() || undefined,
-            experience_years: parseInt(editForm.experience_years.value, 10) || 0,
-            bio: editForm.bio.value.trim() || undefined
-          };
-          const res = await API.put('/auth/me', payload);
-          if (res.success) {
-            Toast.success('Physician profile updated successfully!');
-            document.getElementById('modal-doc-edit').style.display = 'none';
-            await loadDoctorProfile();
-          }
-        } catch (err) {
-          Toast.error(err.message || 'Failed to update profile.');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = orig;
-        }
-      });
-    }
-
-    // Change Password form
-    const pwdForm = document.getElementById('form-change-pwd');
-    if (pwdForm) {
-      pwdForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const newPwd = pwdForm.new_password.value;
-        const confirmPwd = pwdForm.confirm_password.value;
-        if (newPwd !== confirmPwd) {
-          return Toast.error('New passwords do not match.');
-        }
-        const submitBtn = document.getElementById('btn-submit-pwd');
-        const orig = submitBtn.innerHTML;
-        try {
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating...';
-          const res = await API.post('/auth/change-password', {
-            current_password: pwdForm.current_password.value,
-            new_password: newPwd
-          });
-          if (res.success) {
-            Toast.success('Password updated successfully.');
-            document.getElementById('modal-change-pwd').style.display = 'none';
-            pwdForm.reset();
-          }
-        } catch (err) {
-          Toast.error(err.message || 'Failed to update password.');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = orig;
-        }
-      });
-    }
-  }
+  });
 </script>
 
     </main>
@@ -406,10 +206,14 @@
 
   <div class="toast-container"></div>
   <script src="/js/api.js"></script>
-  <script src="/js/settings.js"></script>
   <script src="/js/toast.js"></script>
   <script src="/js/modal.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/responsive.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await Auth.guardPage(['doctor', 'super_admin', 'hospital_admin']);
+    });
+  </script>
 </body>
 </html>

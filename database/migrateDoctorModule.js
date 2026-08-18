@@ -10,7 +10,10 @@ async function migrateDoctorModule() {
 
   if (!colNames.includes('doctor_code')) {
     console.log('Adding doctor_code column to doctors table...');
-    await db.query('ALTER TABLE doctors ADD COLUMN doctor_code VARCHAR(30) UNIQUE AFTER user_id');
+    await db.query('ALTER TABLE doctors ADD COLUMN doctor_code VARCHAR(30) AFTER user_id');
+    try {
+      await db.query('CREATE UNIQUE INDEX uq_doctor_code ON doctors (doctor_code)');
+    } catch (_) {}
   }
 
   if (!colNames.includes('license_number')) {
@@ -27,6 +30,13 @@ async function migrateDoctorModule() {
     console.log('Adding profile_image column to doctors table...');
     await db.query('ALTER TABLE doctors ADD COLUMN profile_image VARCHAR(255) NULL AFTER bio');
   }
+
+  // Ensure column lengths accommodate descriptive strings
+  try {
+    await db.query('ALTER TABLE doctors MODIFY COLUMN room_number VARCHAR(150)');
+    await db.query('ALTER TABLE doctors MODIFY COLUMN specialization VARCHAR(150)');
+    await db.query('ALTER TABLE doctors MODIFY COLUMN qualification VARCHAR(150)');
+  } catch (_) {}
 
   // 2. Ensure doctor_schedules table exists and has proper columns
   await db.query(`

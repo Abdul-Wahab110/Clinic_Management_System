@@ -72,7 +72,7 @@ async function initDepartments() {
 
   try {
     const res = await API.get('/departments');
-    if (res.success && res.data && res.data.length > 0) {
+    if (res.success && Array.isArray(res.data) && res.data.length > 0) {
       container.innerHTML = '';
       if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- Select Clinical Department --</option>';
       if (contactDeptSelect) contactDeptSelect.innerHTML = '<option value="">-- General / No Preference --</option>';
@@ -138,8 +138,13 @@ async function initDepartments() {
           contactDeptSelect.appendChild(opt2);
         }
       });
+    } else {
+      if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- No Departments in Database (Run Seeds) --</option>';
+      if (contactDeptSelect) contactDeptSelect.innerHTML = '<option value="">-- General / No Preference --</option>';
+      container.innerHTML = `<p class="text-muted text-center" style="grid-column: 1 / -1; padding: var(--space-8);">No departments found in MySQL. Please run <code>npm run db:init</code> to seed departments.</p>`;
     }
   } catch (err) {
+    if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- Error Loading Departments --</option>';
     container.innerHTML = `<div class="card" style="grid-column: 1 / -1; padding: var(--space-6); text-align: center; color: var(--color-danger);">Unable to load clinical departments: ${escapeHtml(err.message)}</div>`;
   }
 }
@@ -161,7 +166,8 @@ async function initDoctors(departmentId = null) {
       if (docStat) docStat.textContent = `${docs.length}+`;
 
       if (docs.length === 0) {
-        container.innerHTML = `<p class="text-muted text-center" style="grid-column: 1 / -1; padding: var(--space-8);">No specialists available in this department right now.</p>`;
+        if (doctorSelect) doctorSelect.innerHTML = '<option value="">-- No Specialists Available --</option>';
+        container.innerHTML = `<p class="text-muted text-center" style="grid-column: 1 / -1; padding: var(--space-8);">No specialists available in MySQL right now.</p>`;
         return;
       }
 
