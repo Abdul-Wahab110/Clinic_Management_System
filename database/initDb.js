@@ -18,45 +18,75 @@ async function initializeDatabase() {
   console.log(`[DB INIT] Connecting to MySQL at ${host}:${port} as ${user}...`);
 
   let rootConnection;
+  let dbConnection;
   try {
-    // 1. Initial connection without specifying database
-    rootConnection = await mysql.createConnection({
-      host,
-      port,
-      user,
-      password,
-      multipleStatements: true
-    });
+    const isCloud = host !== '127.0.0.1' && host !== 'localhost';
+    const sslConfig = isCloud ? { rejectUnauthorized: false } : undefined;
 
-    console.log(`[DB INIT] Creating database "${database}" if not exists...`);
-    await rootConnection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
-    await rootConnection.end();
+    if (!isCloud) {
+      // 1. Initial local connection without specifying database
+      try {
+        rootConnection = await mysql.createConnection({
+          host,
+          port,
+          user,
+          password,
+          multipleStatements: true
+        });
+
+        console.log(`[DB INIT] Creating database "${database}" if not exists...`);
+        await rootConnection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
+        await rootConnection.end();
+      } catch (e) {
+        console.warn(`[DB INIT] Notice on create database: ${e.message}`);
+      }
+    }
 
     // 2. Connect to the specific database
-    const dbConnection = await mysql.createConnection({
+    dbConnection = await mysql.createConnection({
       host,
       port,
       user,
       password,
       database,
-      multipleStatements: true
+      multipleStatements: true,
+      ssl: sslConfig
     });
 
-    console.log(`[DB INIT] Connected to database "${database}". Applying schema...`);
-    const schemaPath = path.join(__dirname, 'schema.sql');
-    const schemaSql = fs.readFileSync(schemaPath, 'utf8');
-    await dbConnection.query(schemaSql);
-    console.log(`[DB INIT] Schema applied successfully.`);
+    console.log(`[DB INIT] Connected to database "${database}". Checking schema...`);
+    const [existingTables] = await dbConnection.query('SHOW TABLES');
+    
+    if (existingTables.length === 0) {
+      console.log(`[DB INIT] Applying schema to "${database}"...`);
+      const schemaPath = path.join(__dirname, 'schema.sql');
+      let schemaSql = fs.readFileSync(schemaPath, 'utf8');
+      
+      if (isCloud) {
+        schemaSql = schemaSql
+          .replace(/CREATE DATABASE IF NOT EXISTS.*?;/gi, '')
+          .replace(/USE `clinic_management`;/gi, '')
+          .replace(/USE clinic_management;/gi, '');
+      }
+      
+      await dbConnection.query(schemaSql);
+      console.log(`[DB INIT] Schema applied successfully.`);
 
-    console.log(`[DB INIT] Applying seed data...`);
-    const seedsPath = path.join(__dirname, 'seeds.sql');
-    const seedsSql = fs.readFileSync(seedsPath, 'utf8');
-    await dbConnection.query(seedsSql);
+      console.log(`[DB INIT] Applying seed data...`);
+      const seedsPath = path.join(__dirname, 'seeds.sql');
+      let seedsSql = fs.readFileSync(seedsPath, 'utf8');
+      if (isCloud) {
+        seedsSql = seedsSql.replace(/USE `clinic_management`;/gi, '').replace(/USE clinic_management;/gi, '');
+      }
+      await dbConnection.query(seedsSql);
 
-    // Set genuine bcrypt hash for all demo users (Password: Clinic2026!)
-    const salt = await bcrypt.genSalt(10);
-    const demoPasswordHash = await bcrypt.hash('Clinic2026!', salt);
-    await dbConnection.query('UPDATE users SET password_hash = ?', [demoPasswordHash]);
+      // Set genuine bcrypt hash for all demo users (Password: Clinic2026!)
+      const salt = await bcrypt.genSalt(10);
+      const demoPasswordHash = await bcrypt.hash('Clinic2026!', salt);
+      await dbConnection.query('UPDATE users SET password_hash = ?', [demoPasswordHash]);
+      console.log(`[DB INIT] Seed users configured with default password: Clinic2026!`);
+    } else {
+      console.log(`[DB INIT] Database "${database}" already has ${existingTables.length} tables. Skipping schema creation.`);
+    }
 
     console.log(`[DB INIT] Seed users configured with default password: Clinic2026!`);
 

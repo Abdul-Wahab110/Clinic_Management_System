@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node database/initDb.js && node server/server.js",
     "dev": "nodemon server/server.js",
     "build": "node database/buildMpaPages.js",
     "test": "node database/testEndToEndHospitalWorkflows.js",

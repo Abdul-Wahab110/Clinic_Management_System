@@ -12,7 +12,8 @@ const pool = mysql.createPool({
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
-  dateStrings: true
+  dateStrings: true,
+  ssl: (config.db.host && config.db.host !== '127.0.0.1' && config.db.host !== 'localhost') ? { rejectUnauthorized: false } : undefined
 });
 
 // Helper for test connection / health check
