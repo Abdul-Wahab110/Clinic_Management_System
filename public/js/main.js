@@ -71,17 +71,38 @@ async function initDepartments() {
   if (!container) return;
 
   try {
-    const res = await API.get('/departments');
-    if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+    let depts = [];
+    try {
+      const res = await API.get('/departments');
+      if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+        depts = res.data;
+      }
+    } catch (e) {
+      console.warn('Notice on /departments, trying fallback endpoint:', e.message);
+    }
+
+    // Resilient fallback: Try /doctors/departments if /departments was empty or errored
+    if (depts.length === 0) {
+      try {
+        const docDeptRes = await API.get('/doctors/departments');
+        if (docDeptRes && docDeptRes.success && Array.isArray(docDeptRes.data) && docDeptRes.data.length > 0) {
+          depts = docDeptRes.data;
+        }
+      } catch (e) {
+        console.warn('Notice on fallback /doctors/departments:', e.message);
+      }
+    }
+
+    if (depts.length > 0) {
       container.innerHTML = '';
       if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- Select Clinical Department --</option>';
       if (contactDeptSelect) contactDeptSelect.innerHTML = '<option value="">-- General / No Preference --</option>';
 
       // Update stat count if stat element exists
       const deptStat = document.getElementById('stat-departments-count');
-      if (deptStat) deptStat.textContent = `${res.data.length}+`;
+      if (deptStat) deptStat.textContent = `${depts.length}+`;
 
-      res.data.slice(0, 8).forEach((dept) => {
+      depts.slice(0, 8).forEach((dept) => {
         const card = document.createElement('div');
         card.className = 'card card-interactive';
         card.style.display = 'flex';
@@ -124,7 +145,7 @@ async function initDepartments() {
       });
 
       // Populate department selectors
-      res.data.forEach(dept => {
+      depts.forEach(dept => {
         if (selectDropdown) {
           const opt = document.createElement('option');
           opt.value = dept.id;
@@ -148,9 +169,9 @@ async function initDepartments() {
         });
       }
     } else {
-      if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- No Departments in Database (Run Seeds) --</option>';
+      if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- No Departments in Database --</option>';
       if (contactDeptSelect) contactDeptSelect.innerHTML = '<option value="">-- General / No Preference --</option>';
-      container.innerHTML = `<p class="text-muted text-center" style="grid-column: 1 / -1; padding: var(--space-8);">No departments found in MySQL. Please run <code>npm run db:init</code> to seed departments.</p>`;
+      container.innerHTML = `<p class="text-muted text-center" style="grid-column: 1 / -1; padding: var(--space-8);">No departments found in MySQL.</p>`;
     }
   } catch (err) {
     if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- Error Loading Departments --</option>';
