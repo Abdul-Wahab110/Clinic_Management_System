@@ -3,7 +3,9 @@
  * Centralized Fetch wrapper with error handling & JWT authorization
  */
 const API = (() => {
-  const BASE_URL = '/api/v1';
+  const isDevOtherPort = typeof window !== 'undefined' && 
+    (window.location.protocol === 'file:' || (['localhost', '127.0.0.1'].includes(window.location.hostname) && window.location.port !== '5000' && window.location.port !== ''));
+  const BASE_URL = isDevOtherPort ? 'http://localhost:5000/api/v1' : '/api/v1';
 
   function getToken() {
     return localStorage.getItem('auth_token');
