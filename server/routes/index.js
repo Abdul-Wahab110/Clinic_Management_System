@@ -71,9 +71,16 @@ v1Router.use('/audit', auditRoutes);
 v1Router.use('/settings', settingsRoutes);
 v1Router.use('/', doctorRoutes);
 v1Router.use('/appointments', appointmentRoutes);
-v1Router.use('/', portalRoutes);
-v1Router.use('/', mpaRoutes);
+v1Router.use('/categories', (req, res, next) => {
+  req.url = '/categories' + (req.url.startsWith('/') ? req.url.slice(1) : req.url);
+  blogRoutes(req, res, next);
+});
+v1Router.use('/posts', (req, res, next) => {
+  req.url = '/posts' + (req.url.startsWith('/') ? req.url.slice(1) : req.url);
+  blogRoutes(req, res, next);
+});
 
 router.use('/v1', v1Router);
+router.use('/', v1Router);
 
 module.exports = router;
