@@ -112,7 +112,7 @@ async function initDepartments() {
             
             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-slate-100); padding-top: var(--space-3);">
               <span class="badge badge-primary" style="font-size: 0.68rem;">
-                <i class="fa-solid fa-user-doctor"></i> ${dept.doctor_count || 0} Specialists
+                <i class="fa-solid fa-user-doctor"></i> ${dept.doctors_count || dept.doctor_count || 0} Specialists
               </span>
               <button class="btn btn-outline-primary btn-xs" onclick="filterDoctorsByDept(${dept.id}, '${escapeHtml(dept.name)}')">
                 View Faculty &rarr;
@@ -138,6 +138,15 @@ async function initDepartments() {
           contactDeptSelect.appendChild(opt2);
         }
       });
+
+      // Dynamic filter: when department changes, re-filter doctors dropdown
+      if (selectDropdown && !selectDropdown.dataset.listenerAttached) {
+        selectDropdown.dataset.listenerAttached = 'true';
+        selectDropdown.addEventListener('change', (e) => {
+          const selectedDeptId = e.target.value ? parseInt(e.target.value, 10) : null;
+          initDoctors(selectedDeptId);
+        });
+      }
     } else {
       if (selectDropdown) selectDropdown.innerHTML = '<option value="">-- No Departments in Database (Run Seeds) --</option>';
       if (contactDeptSelect) contactDeptSelect.innerHTML = '<option value="">-- General / No Preference --</option>';
